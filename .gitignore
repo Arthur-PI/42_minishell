@@ -1,0 +1,6 @@
+bin/
+**/.DS_Store
+a.out
+**/*.o
+tags
+binary_name
