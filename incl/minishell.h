@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   binary_name.h                                      :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apigeon <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/14 12:16:34 by apigeon           #+#    #+#             */
-/*   Updated: 2022/07/14 12:16:37 by apigeon          ###   ########.fr       */
+/*   Created: 2022/10/19 18:20:25 by apigeon           #+#    #+#             */
+/*   Updated: 2022/10/19 18:20:45 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BINARY_NAME_H
-# define BINARY_NAME_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "libft.h"
 

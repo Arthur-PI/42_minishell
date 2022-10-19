@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/10/19 18:15:29 by apigeon          ###   ########.fr        #
+#    Updated: 2022/10/19 18:20:04 by apigeon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ LFLAGS	= -L$(LIBFT_DIR)
 LINKS	= -lft
 
 ### EXECUTABLE ###
-NAME	= binary_name
-ARGS	= args
+NAME	= minishell
+ARGS	= 
 
 ### INCLUDES ###
 OBJ_DIR		= bin
@@ -35,7 +35,7 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 SRCS	= 	main.c
 
 ### HEADER FILES ###
-H_FILES	= binary_name.h
+H_FILES	= minishell.h
 HEADERS	= $(addprefix $(H_DIR)/, $(H_FILES))
 
 ### OBJECTS ###

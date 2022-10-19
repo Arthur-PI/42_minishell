@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apigeon <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/14 12:10:26 by apigeon           #+#    #+#             */
-/*   Updated: 2022/07/14 12:16:51 by apigeon          ###   ########.fr       */
+/*   Created: 2022/10/19 18:20:54 by apigeon           #+#    #+#             */
+/*   Updated: 2022/10/19 18:21:10 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "binary_name.h"
+#include "minishell.h"
 
 int	main(void)
 {
