@@ -6,13 +6,16 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:25 by apigeon           #+#    #+#             */
-/*   Updated: 2022/10/19 18:20:45 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/10/20 11:58:48 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "libft.h"
 
 #endif
