@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:25 by apigeon           #+#    #+#             */
-/*   Updated: 2022/10/20 11:58:48 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/10/24 20:08:54 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft.h"
+# include "echo.h"
 
 #endif

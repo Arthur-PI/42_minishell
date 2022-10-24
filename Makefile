@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/10/24 18:35:47 by tperes           ###   ########.fr        #
+#    Updated: 2022/10/24 19:38:45 by apigeon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,31 +17,29 @@ CFLAGS	= -Wall -Wextra
 #CFLAGS	+= -Werror
 CFLAGS	+= -lreadline
 CFLAGS	+= -g
+CFLAGS	+= -MMD -MP
 INCLUDE	= -I$(H_DIR) -I$(LIBFT_DIR)/$(H_DIR)
 LFLAGS	= -L$(LIBFT_DIR)
 LINKS	= -lft
 
 ### EXECUTABLE ###
 NAME	= minishell
-ARGS	= 
 
 ### INCLUDES ###
 OBJ_DIR		= bin
-BUILTIN_DIR	= builtins
 SRC_DIR		= src
 H_DIR		= incl
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 ### SOURCE FILES ###
-SRCS	= 	main.c builtins/echo.c builtins/pwd.c   
-
-### HEADER FILES ###
-H_FILES	= minishell.h
-HEADERS	= $(addprefix $(H_DIR)/, $(H_FILES))
+SRCS	= 	main.c \
+			builtins/echo.c \
+			builtins/pwd.c \
 
 ### OBJECTS ###
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+DEPS	= $(OBJS:.o=.d)
 
 ### COLORS ###
 RESET	= \033[0m
@@ -69,16 +67,13 @@ $(LIBFT):
 	@echo "$(NAME): $(GREEN)Compiling $(LIBFT_DIR)$(RESET)"
 	@$(MAKE) addon -C $(LIBFT_DIR)
 
-$(NAME):	$(LIBFT) $(OBJ_DIR) $(OBJS)
+$(NAME):	$(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) $(LFLAGS) $(OBJS) $(LINKS) -o $(NAME)
 	@echo "$(NAME): $(BLUE)Creating program file -> $(WHITE)$(notdir $@)... $(GREEN)[Done]$(RESET)"
 	@echo "$(NAME): $(GREEN)Project successfully compiled$(RESET)"
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/$(BUILTIN_DIR)
-
-$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(HEADERS)
+$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "$(NAME): $(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(GREEN)[Done]$(RESET)"
 
@@ -101,3 +96,5 @@ fclean:	clean
 re:	fclean all
 
 .PHONY:	all clean fclean re
+
+-include $(DEPS)

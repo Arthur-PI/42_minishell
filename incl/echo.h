@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:56:15 by tperes            #+#    #+#             */
-/*   Updated: 2022/10/24 18:06:06 by tperes           ###   ########.fr       */
+/*   Updated: 2022/10/24 20:23:21 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # include <stdio.h>
 
-typedef struct s_var{
+typedef struct s_var {
 	int	i;
 	int	newline;
 }				t_var;
+
+int	echo(int ac, char **av);
 
 #endif
