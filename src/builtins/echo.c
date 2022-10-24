@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:54:55 by tperes            #+#    #+#             */
-/*   Updated: 2022/10/24 16:37:12 by tperes           ###   ########.fr       */
+/*   Updated: 2022/10/24 18:05:21 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	echo_newline(t_var *var, char **av)
 		{
 			var->newline = 1;
 			var->i = 1;
-			break;
+			break ;
 		}
 		o++;
 	}
@@ -33,7 +33,7 @@ void	echo_newline(t_var *var, char **av)
 
 int	echo(int ac, char **av)
 {
-	t_var 	var;
+	t_var	var;
 
 	var.i = 1;
 	var.newline = 1;

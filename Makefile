@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/10/20 12:04:50 by apigeon          ###   ########.fr        #
+#    Updated: 2022/10/24 18:35:47 by tperes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,14 @@ ARGS	=
 
 ### INCLUDES ###
 OBJ_DIR		= bin
+BUILTIN_DIR	= builtins
 SRC_DIR		= src
 H_DIR		= incl
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 ### SOURCE FILES ###
-SRCS	= 	main.c
+SRCS	= 	main.c builtins/echo.c builtins/pwd.c   
 
 ### HEADER FILES ###
 H_FILES	= minishell.h
@@ -75,6 +76,7 @@ $(NAME):	$(LIBFT) $(OBJ_DIR) $(OBJS)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/$(BUILTIN_DIR)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(HEADERS)
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@

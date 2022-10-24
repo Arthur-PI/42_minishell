@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   echo.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 16:38:27 by tperes            #+#    #+#             */
-/*   Updated: 2022/10/24 16:59:14 by tperes           ###   ########.fr       */
+/*   Created: 2022/10/24 15:56:15 by tperes            #+#    #+#             */
+/*   Updated: 2022/10/24 18:06:06 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
+#ifndef ECHO_H
+# define ECHO_H
 
-int	pwd(void)
-{
-	char buf[256];
-	
-	getcwd(buf, sizeof(buf));
-	printf("%s\n", buf);
-	return(0);
-}
+# include <stdio.h>
+
+typedef struct s_var{
+	int	i;
+	int	newline;
+}				t_var;
+
+#endif
