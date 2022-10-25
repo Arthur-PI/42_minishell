@@ -6,11 +6,11 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:54:55 by tperes            #+#    #+#             */
-/*   Updated: 2022/10/24 18:05:21 by tperes           ###   ########.fr       */
+/*   Updated: 2022/10/25 15:08:56 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "echo.h"
+#include "../../incl/echo.h"
 
 void	echo_newline(t_var *var, char **av)
 {
@@ -38,7 +38,11 @@ int	echo(int ac, char **av)
 	var.i = 1;
 	var.newline = 1;
 	if (ac > 1)
+	{
 		echo_newline(&var, av);
+		if (av[1][0] == '-' && !av[1][1])
+			var.i = 2;
+	}
 	while (var.i < ac)
 	{
 		printf("%s", av[var.i]);
@@ -50,3 +54,9 @@ int	echo(int ac, char **av)
 		printf("\n");
 	return (0);
 }
+/*
+int	main(int ac, char **av)
+{
+	echo(ac, av);
+	return (0);
+}*/
