@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/10/24 19:38:45 by apigeon          ###   ########.fr        #
+#    Updated: 2022/10/26 15:20:38 by tperes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 SRCS	= 	main.c \
 			builtins/echo.c \
 			builtins/pwd.c \
+			builtins/exit.c \
 
 ### OBJECTS ###
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:38:27 by tperes            #+#    #+#             */
-/*   Updated: 2022/10/25 15:27:45 by tperes           ###   ########.fr       */
+/*   Updated: 2022/10/25 17:15:16 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 - lien symbolique
 */
 
-int	pwd(int ac, char **av)
+int	pwd(int ac)
 {
 	char	buf[MAXPATHLEN];
 
@@ -35,8 +35,8 @@ int	pwd(int ac, char **av)
 	return (0);
 }
 /*
-int	main(int ac, char **av)
+int	main(int ac)
 {
-	pwd(ac, av);
+	pwd(ac);
 	return (0);
 }*/
