@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:25 by apigeon           #+#    #+#             */
-/*   Updated: 2022/10/26 15:23:09 by tperes           ###   ########.fr       */
+/*   Updated: 2022/10/28 17:59:24 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "libft.h"
-# include "echo.h"
 
-int	my_exit(int ac, char **av);
+# include "libft.h"
+# include "builtins.h"
 
 #endif

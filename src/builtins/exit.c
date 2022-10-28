@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:09:07 by tperes            #+#    #+#             */
-/*   Updated: 2022/10/26 16:10:17 by tperes           ###   ########.fr       */
+/*   Updated: 2022/10/28 17:55:40 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "minishell.h"
+#include "builtins.h"
 
 /*tests essayes
 

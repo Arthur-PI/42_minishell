@@ -6,3 +6,5 @@ tags
 binary_name
 minishell
 **/*.swp
+tags.lock
+tags.temp

@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:38:27 by tperes            #+#    #+#             */
-/*   Updated: 2022/10/25 17:15:16 by tperes           ###   ########.fr       */
+/*   Updated: 2022/10/28 17:54:48 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/param.h>
+#include "builtins.h"
 
-/* TO DO
-
+/* TODO
 - variable env
 - lien symbolique
 */
-
 int	pwd(int ac)
 {
 	char	buf[MAXPATHLEN];
@@ -34,9 +30,11 @@ int	pwd(int ac)
 	printf("%s\n", buf);
 	return (0);
 }
+
 /*
 int	main(int ac)
 {
 	pwd(ac);
 	return (0);
-}*/
+}
+*/
