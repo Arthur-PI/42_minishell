@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:54:55 by tperes            #+#    #+#             */
-/*   Updated: 2022/10/28 17:57:54 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/10/28 18:10:50 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,3 @@ int	echo(int ac, char **av)
 		printf("\n");
 	return (0);
 }
-
-/*
-int	main(int ac, char **av)
-{
-	echo(ac, av);
-	return (0);
-}*/

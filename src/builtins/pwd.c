@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:38:27 by tperes            #+#    #+#             */
-/*   Updated: 2022/10/28 17:54:48 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/10/28 18:11:49 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,3 @@ int	pwd(int ac)
 	printf("%s\n", buf);
 	return (0);
 }
-
-/*
-int	main(int ac)
-{
-	pwd(ac);
-	return (0);
-}
-*/

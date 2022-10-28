@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/10/26 15:20:38 by tperes           ###   ########.fr        #
+#    Updated: 2022/10/28 18:52:38 by apigeon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,12 @@
 CC		= cc
 CFLAGS	= -Wall -Wextra
 #CFLAGS	+= -Werror
-CFLAGS	+= -lreadline
+#CFLAGS	+= -lreadline
 CFLAGS	+= -g
 CFLAGS	+= -MMD -MP
 INCLUDE	= -I$(H_DIR) -I$(LIBFT_DIR)/$(H_DIR)
 LFLAGS	= -L$(LIBFT_DIR)
-LINKS	= -lft
+LINKS	= -lft -lreadline
 
 ### EXECUTABLE ###
 NAME	= minishell
@@ -33,10 +33,16 @@ LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 ### SOURCE FILES ###
-SRCS	= 	main.c \
-			builtins/echo.c \
+SRCS	=	builtins/echo.c \
 			builtins/pwd.c \
 			builtins/exit.c \
+
+TEST	?= 0
+ifeq ($(TEST),1)
+	SRCS	+= test_main.c
+else
+	SRCS	+= main.c
+endif
 
 ### OBJECTS ###
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
@@ -58,7 +64,7 @@ UNAME_S = $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	VALGRIND = leaks --list --groupByType --atExit --
 else
-	VALGRIND = valgrind --track-origins=yes --leak-check=full
+	VALGRIND = valgrind --track-origins=yes --leak-check=full #--show-leak-kinds=all
 endif
 
 ### RULES ###
