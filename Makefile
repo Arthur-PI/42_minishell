@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/10/28 18:52:38 by apigeon          ###   ########.fr        #
+#    Updated: 2022/10/30 11:08:12 by apigeon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 SRCS	=	builtins/echo.c \
 			builtins/pwd.c \
 			builtins/exit.c \
+			signal.c \
 
 TEST	?= 0
 ifeq ($(TEST),1)

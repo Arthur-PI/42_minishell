@@ -8,3 +8,5 @@ minishell
 **/*.swp
 tags.lock
 tags.temp
+.env
+
