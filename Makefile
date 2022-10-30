@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/10/30 11:08:12 by apigeon          ###   ########.fr        #
+#    Updated: 2022/10/30 11:13:22 by apigeon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,30 @@
 ### COMPILATION ###
 CC		= cc
 CFLAGS	= -Wall -Wextra
-#CFLAGS	+= -Werror
-#CFLAGS	+= -lreadline
-CFLAGS	+= -g
 CFLAGS	+= -MMD -MP
 INCLUDE	= -I$(H_DIR) -I$(LIBFT_DIR)/$(H_DIR)
 LFLAGS	= -L$(LIBFT_DIR)
 LINKS	= -lft -lreadline
+
+### ENV VARIABLES ###
+-include .env
+DEBUG	?= false
+TEST	?= false
+NOERROR	?= false
+
+ifeq ($(DEBUG),true)
+	CFLAGS += -g
+endif
+
+ifeq ($(NOERROR),false)
+	CFLAGS += -Werror
+endif
+
+ifeq ($(TEST),true)
+	SRCS	= test_main.c
+else
+	SRCS	= main.c
+endif
 
 ### EXECUTABLE ###
 NAME	= minishell
@@ -33,17 +50,10 @@ LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 ### SOURCE FILES ###
-SRCS	=	builtins/echo.c \
+SRCS	+=	builtins/echo.c \
 			builtins/pwd.c \
 			builtins/exit.c \
 			signal.c \
-
-TEST	?= 0
-ifeq ($(TEST),1)
-	SRCS	+= test_main.c
-else
-	SRCS	+= main.c
-endif
 
 ### OBJECTS ###
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
