@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 18:20:25 by apigeon           #+#    #+#             */
-/*   Updated: 2022/10/31 14:52:52 by apigeon          ###   ########.fr       */
+/*   Created: 2022/10/31 14:50:12 by apigeon           #+#    #+#             */
+/*   Updated: 2022/10/31 15:01:56 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "parser.h"
 
-# include <stdio.h>
-# include <signal.h>
-# include <termios.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+static void	print_tokens(t_list *tokens)
+{
+	t_token	*token;
+	while (tokens)
+	{
+		token = tokens->content;
+		printf("Token: value->%s, type->%d\n", token->value, token->type);
+		tokens = tokens->next;
+	}
+}
 
-# include "libft.h"
-# include "builtins.h"
-# include "parser.h"
+void	*parse_line(char *line)
+{
+	t_list	*tokens;
 
-void	handle_signals(void);
-
-#endif
+	tokens = get_tokens(line);
+	print_tokens(tokens);
+	return (NULL);
+}

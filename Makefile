@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/10/30 11:13:22 by apigeon          ###   ########.fr        #
+#    Updated: 2022/10/31 14:53:21 by apigeon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,8 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 SRCS	+=	builtins/echo.c \
 			builtins/pwd.c \
 			builtins/exit.c \
+			parser/parse.c \
+			parser/lexer.c \
 			signal.c \
 
 ### OBJECTS ###
