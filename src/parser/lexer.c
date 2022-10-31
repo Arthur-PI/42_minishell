@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:27:40 by apigeon           #+#    #+#             */
-/*   Updated: 2022/10/31 15:06:49 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/10/31 17:34:02 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,28 @@ t_list*	extract_token(char *line, int start, int end)
 	return (el);
 }
 
+int	ft_isspace(char c)
+{
+	if (c == ' ' || (c >= '\t' && c <= 'r'))
+		return (true);
+	return (false);
+}
+
+int	skip_quote(char *line, int i)
+{
+	char	quote;
+
+	if (line[i] == '\'' || line[i] == '"')
+	{
+		quote = line[i];
+		i++;
+		while (line[i] && line[i] != quote)
+			i++;
+	}
+	i++;
+	return (i);
+}
+
 t_list*	get_tokens(char *line)
 {
 	int		i;
@@ -69,11 +91,11 @@ t_list*	get_tokens(char *line)
 	while (line[i])
 	{
 		start = i;
-		while (line[i] && line[i] != ' ')
-			i++;
+		while (line[i] && !ft_isspace(line[i]))
+			i = skip_quote(line, i);
 		end = i;
 		ft_lstadd_back(&lst, extract_token(line, start, end));
-		while (line[i] == ' ')
+		while (ft_isspace(line[i]))
 			i++;
 	}
 	return (lst);
