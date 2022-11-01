@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/10/31 14:53:21 by apigeon          ###   ########.fr        #
+#    Updated: 2022/11/01 12:54:05 by apigeon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,7 @@ UNAME_S = $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	VALGRIND = leaks --list --groupByType --atExit --
 else
-	VALGRIND = valgrind --track-origins=yes --leak-check=full #--show-leak-kinds=all
+	VALGRIND = valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all --suppressions=.ignore_readline_leaks
 endif
 
 ### RULES ###

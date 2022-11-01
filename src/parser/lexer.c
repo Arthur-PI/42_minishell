@@ -6,13 +6,13 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:27:40 by apigeon           #+#    #+#             */
-/*   Updated: 2022/10/31 17:34:02 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/01 12:36:16 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-char*	ft_strndup(char *src, int len)
+char	*ft_strndup(char *src, int len)
 {
 	int		i;
 	char	*new;
@@ -45,7 +45,7 @@ int	get_token_type(char *token_value)
 	return (WORD);
 }
 
-t_list*	extract_token(char *line, int start, int end)
+t_list	*extract_token(char *line, int start, int end)
 {
 	t_list	*el;
 	t_token	*token;
@@ -55,13 +55,6 @@ t_list*	extract_token(char *line, int start, int end)
 	token->type = get_token_type(token->value);
 	el = ft_lstnew(token);
 	return (el);
-}
-
-int	ft_isspace(char c)
-{
-	if (c == ' ' || (c >= '\t' && c <= 'r'))
-		return (true);
-	return (false);
 }
 
 int	skip_quote(char *line, int i)
@@ -79,13 +72,13 @@ int	skip_quote(char *line, int i)
 	return (i);
 }
 
-t_list*	get_tokens(char *line)
+t_list	*get_tokens(char *line)
 {
 	int		i;
 	int		start;
 	int		end;
 	t_list	*lst;
-	
+
 	lst = NULL;
 	i = 0;
 	while (line[i])
