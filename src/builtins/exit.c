@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:09:07 by tperes            #+#    #+#             */
-/*   Updated: 2022/10/28 17:55:40 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/01 14:54:46 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 - exit aa
 - exit aa aa
 - exit 0
-
+ TODO only one '-' or one '+' and n whitspaces before and after for the atoi
+ TODO take care of values below 0 and above 255
+ TODO take care of values above max int and max long
 */
 
 int	my_exit(int ac, char **av)
@@ -41,7 +43,7 @@ int	my_exit(int ac, char **av)
 	}
 	if (ac > 2)
 	{
-		printf("minishell: too many arguments\n");
+		printf("minishell: exit: too many arguments\n");
 		return (1);
 	}
 	exit(status);

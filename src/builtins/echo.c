@@ -1,56 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   echo2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:54:55 by tperes            #+#    #+#             */
-/*   Updated: 2022/10/28 18:10:50 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/01 14:39:38 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static void	echo_newline(t_var *var, char **av)
+static int	echo_newline(char **av)
 {
-	int	o;
+	int	i;
 
-	o = 1;
-	while (av[1][0] == '-' && av[1][o])
+	if (av[1][0] == '-')
 	{
-		var->newline = false;
-		var->i = 2;
-		if (av[1][o] != 'n')
+		i = 1;
+		while (av[1][i])
 		{
-			var->newline = true;
-			var->i = 1;
-			break ;
+			if (av[1][i] != 'n')
+				return (false);
+			i++;
 		}
-		o++;
+		return (i > 1);
 	}
+	return (false);
 }
 
 int	echo(int ac, char **av)
 {
-	t_var	var;
+	int	i;
+	int	newline_option;
 
-	var.i = 1;
-	var.newline = true;
+	i = 1;
+	newline_option = false;
 	if (ac > 1)
 	{
-		echo_newline(&var, av);
-		if (av[1][0] == '-' && !av[1][1])
-			var.i = 2;
+		newline_option = echo_newline(av);
+		if (newline_option || ft_strcmp(av[1], "-") == 0)
+			i++;
 	}
-	while (var.i < ac)
+	while (i < ac)
 	{
-		printf("%s", av[var.i]);
-		var.i++;
-		if (var.i != ac)
+		printf("%s", av[i]);
+		i++;
+		if (i != ac)
 			printf(" ");
 	}
-	if (var.newline == true)
+	if (!newline_option)
 		printf("\n");
 	return (0);
 }

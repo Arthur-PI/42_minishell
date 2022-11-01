@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 18:04:44 by apigeon           #+#    #+#             */
-/*   Updated: 2022/10/28 18:28:14 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/01 14:29:07 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	test_exit(int ac, char **av)
 
 int	main(int ac, char **av)
 {
-	printf("This is the test main !\n");
 	(void)ac;
 	(void)av;
+	test_echo(ac, av);
 	return (0);
 }
