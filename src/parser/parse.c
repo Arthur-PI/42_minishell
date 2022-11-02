@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:50:12 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/01 15:56:22 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/02 09:29:00 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ static void	print_tokens(t_list *tokens)
 	}
 }
 
-void	free_token(void *pointer)
+void	free_token(void *ptr)
 {
 	t_token	*token;
 
-	token = pointer;
+	token = ptr;
 	free(token->value);
 	free(token);
 }
@@ -38,6 +38,8 @@ void	*parse_line(char *line)
 	t_list	*tokens;
 
 	tokens = get_tokens(line);
+	if (!tokens)
+		return (NULL);
 	print_tokens(tokens);
 	ft_lstclear(&tokens, &free_token);
 	return (NULL);

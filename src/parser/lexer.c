@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:27:40 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/01 12:36:16 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/02 10:30:56 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ char	*ft_strndup(char *src, int len)
 	return (new);
 }
 
-int	get_token_type(char *token_value)
+t_token_type	get_token_type(char *token_value)
 {
 	if (ft_strcmp(token_value, "|") == 0)
-		return (PIPE);
+		return (TOKEN_PIPE);
 	else if (ft_strcmp(token_value, "<") == 0)
-		return (REDIRECT_INPUT);
+		return (TOKEN_RD_IN);
 	else if (ft_strcmp(token_value, ">") == 0)
-		return (REDIRECT_OUTPUT);
+		return (TOKEN_RD_OUT);
 	else if (ft_strcmp(token_value, "<<") == 0)
-		return (REDIRECT_HEREDOC);
+		return (TOKEN_RD_HEREDOC);
 	else if (ft_strcmp(token_value, ">>") == 0)
-		return (REDIRECT_APPEND);
-	return (WORD);
+		return (TOKEN_RD_APPEND);
+	return (TOKEN_WORD);
 }
 
 t_list	*extract_token(char *line, int start, int end)
@@ -51,9 +51,21 @@ t_list	*extract_token(char *line, int start, int end)
 	t_token	*token;
 
 	token = malloc(sizeof(*token));
+	if (!token)
+		return (NULL);
 	token->value = ft_strndup(line + start, end - start);
+	if (!token->value)
+	{
+		free(token);
+		return (NULL);
+	}
 	token->type = get_token_type(token->value);
 	el = ft_lstnew(token);
+	if (!el)
+	{
+		free(token->value);
+		free(token);
+	}
 	return (el);
 }
 
@@ -78,6 +90,7 @@ t_list	*get_tokens(char *line)
 	int		start;
 	int		end;
 	t_list	*lst;
+	t_list	*el;
 
 	lst = NULL;
 	i = 0;
@@ -87,7 +100,13 @@ t_list	*get_tokens(char *line)
 		while (line[i] && !ft_isspace(line[i]))
 			i = skip_quote(line, i);
 		end = i;
-		ft_lstadd_back(&lst, extract_token(line, start, end));
+		el = extract_token(line, start, end);
+		if (!el)
+		{
+			ft_lstclear(&lst, &free_token);
+			return (NULL);
+		}
+		ft_lstadd_back(&lst, el);
 		while (ft_isspace(line[i]))
 			i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:54 by apigeon           #+#    #+#             */
-/*   Updated: 2022/10/31 14:51:27 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/02 10:48:29 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,13 @@ int	main(int ac, char **av)
 		line = readline(prompt);
 		if (!line)
 			exit(2);
-		if (*line)
+		if (!*line)
 		{
-			add_history(line);
-			parse_line(line);
+			free(line);
+			continue ;
 		}
+		add_history(line);
+		parse_line(line);
 		free(line);
 	}
 	rl_clear_history();

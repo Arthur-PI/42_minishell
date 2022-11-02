@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:39 by apigeon           #+#    #+#             */
-/*   Updated: 2022/10/31 17:21:26 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/02 10:31:31 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,24 @@
 # include <stdbool.h>
 # include "libft.h"
 
-enum e_token_type
+typedef enum e_token_type
 {
-	PIPE,
-	REDIRECT_INPUT,
-	REDIRECT_OUTPUT,
-	REDIRECT_HEREDOC,
-	REDIRECT_APPEND,
-	WORD,
-};
+	TOKEN_PIPE,
+	TOKEN_RD_IN,
+	TOKEN_RD_OUT,
+	TOKEN_RD_APPEND,
+	TOKEN_RD_HEREDOC,
+	TOKEN_WORD,
+}			t_token_type;
 
 typedef struct s_token
 {
-	int		type;
-	char	*value;
+	t_token_type	type;
+	char			*value;
 }				t_token;
 
-void*	parse_line(char *line);
-t_list*	get_tokens(char *line);
+void	*parse_line(char *line);
+t_list	*get_tokens(char *line);
+void	free_token(void *ptr);
 
 #endif
