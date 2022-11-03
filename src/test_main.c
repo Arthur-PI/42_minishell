@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 18:04:44 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/01 14:29:07 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/01 21:17:57 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,36 @@ int	test_pwd(int ac)
 
 int	test_exit(int ac, char **av)
 {
-	my_exit(ac, av);
-	ft_printf("%s\n", "ok");
-	return (0);
+	char	*line;
+	int		i;
+
+	i = 0;
+	while (i < 5)
+	{
+		line = get_next_line(0);
+		printf("%s", line);
+		if (my_exit(ac, av) == 1)
+			return (1);
+		i++;
+		free(line);
+	}
+	return (my_exit(ac, av));
 }
 
-int	main(int ac, char **av)
+int	test_cd(int ac, char **av)
+{
+	return (cd(ac, av));
+}
+
+int	test_env(int ac, char **av, char **env)
+{
+	return (my_env(ac, av, env));
+}
+
+int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	test_echo(ac, av);
+	test_env(ac, av, env);
 	return (0);
 }
