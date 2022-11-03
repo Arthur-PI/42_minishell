@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:35:44 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/03 15:38:05 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/03 20:09:04 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,59 @@ TODO free et lstclear
 TODO norm
 */
 
-int	my_env(int ac, char **av, char **env)
+t_env	*create_env(char *env)
 {
+	t_env	*new_env;
 	int		i;
 	int		j;
-	t_env	*envi;
 
 	i = 0;
-	envi = malloc(sizeof(t_env));
-	if (envi == NULL)
-		return (0);
-	envi->list = NULL;
+	new_env = malloc(sizeof(*new_env));
+	if (!new_env)
+		return (NULL);
+	while (env[i] != '=')
+		i++;
+	new_env->name = ft_strndup(env, i);
+	i++;
+	j = i;
+	while (env[j])
+		j++;
+	new_env->value = ft_strndup(env + i, j - i);
+	return (new_env);
+}
+
+t_list	*tab_to_list(char **env)
+{
+	t_list	*lst_env;
+	int		i;
+
+	i = 0;
+	lst_env = NULL;
+	while (env[i])
+	{
+		ft_lstadd_back(&lst_env, ft_lstnew(create_env(env[i])));
+		i++;
+	}
+	return (lst_env);
+}
+
+int	my_env(int ac, char **av, t_list *lst)
+{
+	t_env	*env;
+
 	if (ac == 1)
 	{
-		while (env[i])
+		while (lst != NULL)
 		{
-			envi->tab = ft_split(env[i], '=');
-			j = 0;
-			while (envi->tab[j])
-			{	
-				if (j == 0)
-					envi->name = envi->tab[j];
-				else if (j == 1)
-					envi->value = envi->tab[j];
-				j++;
-			}
-			ft_lstadd_back(&envi->list, ft_lstnew(envi));
-			printf("%s\n", env[i]);
-			i++;
+			env = lst->content;
+			printf("%s=%s\n", env->name, env->value);
+			lst = lst->next;
 		}
 	}
 	return (0);
 }
-
 // Fonction 1: char** -> t_list de t_env
 // Fonction 2: affiche tout ce qu'il y a dans la t_list de t_env
-// Fonction 3: on creer et ajoute un t_env a la t_list
+// Fonction 3: on cree et ajoute un t_env a la t_list
 // Fonction 4: on supprime un t_env de la t_list
 // Fonction 5: t_list -> char **

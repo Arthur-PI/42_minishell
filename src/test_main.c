@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 18:04:44 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/01 21:17:57 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/03 19:56:55 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ int	test_cd(int ac, char **av)
 
 int	test_env(int ac, char **av, char **env)
 {
-	return (my_env(ac, av, env));
+	t_list	*lst;
+
+	lst = tab_to_list(env);
+	return (my_env(ac, av, my_export(ac, av)));
 }
 
 int	main(int ac, char **av, char **env)
