@@ -6,29 +6,11 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:27:40 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/02 10:30:56 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/03 19:21:53 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-char	*ft_strndup(char *src, int len)
-{
-	int		i;
-	char	*new;
-
-	new = malloc(len + 1);
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (src[i] && i < len)
-	{
-		new[i] = src[i];
-		i++;
-	}
-	new[i] = 0;
-	return (new);
-}
 
 t_token_type	get_token_type(char *token_value)
 {
