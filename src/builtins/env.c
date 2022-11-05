@@ -6,18 +6,15 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:35:44 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/03 20:09:04 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/05 12:16:40 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-/*
-- env -> prints the environment variables
-TODO free et lstclear
-TODO norm
-*/
-
+/* TODO free et lstclear
+ * TODO norm
+ */
 t_env	*create_env(char *env)
 {
 	t_env	*new_env;
@@ -30,12 +27,12 @@ t_env	*create_env(char *env)
 		return (NULL);
 	while (env[i] != '=')
 		i++;
-	new_env->name = ft_strndup(env, i);
+	new_env->name = ft_substr(env, 0, i);
 	i++;
 	j = i;
 	while (env[j])
 		j++;
-	new_env->value = ft_strndup(env + i, j - i);
+	new_env->value = ft_substr(env, i, j - i);
 	return (new_env);
 }
 

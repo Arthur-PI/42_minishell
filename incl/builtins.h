@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:51:12 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/03 19:52:29 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/05 12:13:34 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include <sys/param.h>
 # include "libft.h"
 
-typedef struct s_env{
+typedef struct s_env
+{
 	char	*name;
 	char	*value;
 }				t_env;
@@ -27,10 +28,9 @@ typedef struct s_env{
 int		pwd(int ac);
 int		echo(int ac, char **av);
 int		my_exit(int ac, char **av);
-int 	cd(int ac, char **av);
-t_list 	*my_export(int ac, char **av);
+int		cd(int ac, char **av);
+t_list	*my_export(int ac, char **av);
 t_list	*tab_to_list(char **env);
 int		my_env(int ac, char **av, t_list *lst);
-char	*ft_strndup(char *s, int n);
 
 #endif
