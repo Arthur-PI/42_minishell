@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:39 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/03 11:49:40 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/05 12:06:03 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include "libft.h"
+
+# define ERROR_MALLOC 1
+# define NO_ERROR 0
 
 typedef enum e_token_type
 {
@@ -56,8 +59,10 @@ typedef struct s_command
 	t_list	*redirects;
 }				t_command;
 
-void	*parse_line(char *line);
-t_list	*get_tokens(char *line);
-void	free_token(void *ptr);
+int				is_operator(char c);
+void			free_token(void *ptr);
+void			*parse_line(char *line);
+t_list			*get_tokens(char *line);
+t_token_type	get_token_type(char *token_value);
 
 #endif

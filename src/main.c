@@ -6,46 +6,58 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:54 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/02 10:48:29 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/05 12:01:47 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	usage(char *prog_name)
+void	usage(char *prog_name)
 {
 	printf("%s: too many arguments\n", prog_name);
-	return (1);
 }
 
-/*
- * TODO parse input and get the right struct
- * TODO exec input with the parsed line
- * TODO free the structure of the parsed line
- * */
-int	main(int ac, char **av)
+/* TODO make an exit function that free what is in g_minishell
+ */
+char	*get_line(void)
 {
 	char	*line;
 	char	*prompt;
 
-	if (ac > 1)
-		return (usage(av[0]));
-	handle_signals();
 	prompt = "minishell->";
+	line = readline(prompt);
+	if (!line)
+		exit(1);
+	else if (*line)
+		add_history(line);
+	return (line);
+}
+
+/* TODO exec commands
+ * TODO free commands if not NULL
+ */
+void	routine(void)
+{
+	char	*line;
+	t_list	*commands;
+
+	(void)commands;
 	while (1)
 	{
-		line = readline(prompt);
-		if (!line)
-			exit(2);
-		if (!*line)
-		{
-			free(line);
-			continue ;
-		}
-		add_history(line);
-		parse_line(line);
+		line = get_line();
+		commands = parse_line(line);
 		free(line);
 	}
-	rl_clear_history();
+}
+
+/* TODO Extract and format the envp variables in a t_list
+ */
+int	main(int ac, char **av, char **envp)
+{	
+	if (ac > 1)
+		return (usage(av[0]), 1);
+	(void)envp;
+	handle_signals();
+	routine();
 	return (0);
 }

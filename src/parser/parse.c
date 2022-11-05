@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:50:12 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/03 11:17:34 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/05 12:08:08 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,23 @@ void	free_token(void *ptr)
 	t_token	*token;
 
 	token = ptr;
-	free(token->value);
-	free(token);
+	if (token)
+	{
+		free(token->value);
+		free(token);
+	}
 }
 
+/* TODO make an exit function that clear g_minishell
+ * TODO parse tokens to commands
+ */
 void	*parse_line(char *line)
 {
 	t_list	*tokens;
 
 	tokens = get_tokens(line);
 	if (!tokens)
-		return (NULL);
+		exit(2);
 	print_tokens(tokens);
 	ft_lstclear(&tokens, &free_token);
 	return (NULL);

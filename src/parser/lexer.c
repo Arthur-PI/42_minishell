@@ -6,52 +6,45 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:27:40 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/03 19:21:53 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/05 12:07:09 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_token_type	get_token_type(char *token_value)
+static t_token	*create_token(char *value)
 {
-	if (ft_strcmp(token_value, "|") == 0)
-		return (TOKEN_PIPE);
-	else if (ft_strcmp(token_value, "<") == 0)
-		return (TOKEN_RD_IN);
-	else if (ft_strcmp(token_value, ">") == 0)
-		return (TOKEN_RD_OUT);
-	else if (ft_strcmp(token_value, "<<") == 0)
-		return (TOKEN_RD_HEREDOC);
-	else if (ft_strcmp(token_value, ">>") == 0)
-		return (TOKEN_RD_APPEND);
-	return (TOKEN_WORD);
+	t_token	*token;
+
+	if (value == NULL)
+		return (NULL);
+	token = malloc(sizeof(*token));
+	if (!token)
+		return (NULL);
+	token->value = value;
+	token->type = get_token_type(token->value);
+	return (token);
 }
 
-t_list	*extract_token(char *line, int start, int end)
+/* TODO make an exit function that clears g_minishell
+ */
+static void	add_token(t_list **lst, char *line, int start, int end)
 {
 	t_list	*el;
 	t_token	*token;
 
-	token = malloc(sizeof(*token));
-	if (!token)
-		return (NULL);
-	token->value = ft_strndup(line + start, end - start);
-	if (!token->value)
-	{
-		free(token);
-		return (NULL);
-	}
-	token->type = get_token_type(token->value);
+	token = create_token(ft_substr(line, start, end - start));
 	el = ft_lstnew(token);
-	if (!el)
+	ft_lstadd_back(lst, el);
+	if (!el || !token)
 	{
-		free(token->value);
-		free(token);
+		free_token(token);
+		ft_lstclear(lst, &free_token);
+		exit(1);
 	}
-	return (el);
 }
 
-int	skip_quote(char *line, int i)
+static int	skip_quote(char *line, int i)
 {
 	char	quote;
 
@@ -66,29 +59,40 @@ int	skip_quote(char *line, int i)
 	return (i);
 }
 
+static int	extract_operator(t_list **lst, char *line, int i)
+{
+	char	*s;
+
+	s = line + i;
+	if (ft_strncmp(s, "<<", 2) == 0 || ft_strncmp(s, ">>", 2) == 0)
+	{
+		add_token(lst, line, i, i + 2);
+		return (i + 2);
+	}
+	add_token(lst, line, i, i + 1);
+	return (i + 1);
+}
+
 t_list	*get_tokens(char *line)
 {
 	int		i;
 	int		start;
 	int		end;
 	t_list	*lst;
-	t_list	*el;
 
 	lst = NULL;
 	i = 0;
 	while (line[i])
 	{
 		start = i;
-		while (line[i] && !ft_isspace(line[i]))
+		while (line[i] && !ft_isspace(line[i]) && !is_operator(line[i]))
 			i = skip_quote(line, i);
 		end = i;
-		el = extract_token(line, start, end);
-		if (!el)
-		{
-			ft_lstclear(&lst, &free_token);
-			return (NULL);
-		}
-		ft_lstadd_back(&lst, el);
+		printf("start=%d; end=%d\n", start, end);
+		if (start != end)
+			add_token(&lst, line, start, end);
+		if (is_operator(line[i]))
+			i = extract_operator(&lst, line, i);
 		while (ft_isspace(line[i]))
 			i++;
 	}
