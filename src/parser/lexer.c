@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:27:40 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/05 12:07:09 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/08 09:44:53 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ t_list	*get_tokens(char *line)
 		while (line[i] && !ft_isspace(line[i]) && !is_operator(line[i]))
 			i = skip_quote(line, i);
 		end = i;
-		printf("start=%d; end=%d\n", start, end);
 		if (start != end)
 			add_token(&lst, line, start, end);
 		if (is_operator(line[i]))
