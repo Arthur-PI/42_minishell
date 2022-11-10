@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:51:12 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/05 12:13:34 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/10 15:24:08 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ int		pwd(int ac);
 int		echo(int ac, char **av);
 int		my_exit(int ac, char **av);
 int		cd(int ac, char **av);
-t_list	*my_export(int ac, char **av);
-t_list	*tab_to_list(char **env);
+t_list		*tab_to_list(char **env);
+t_env		*create_env(char *env);
 int		my_env(int ac, char **av, t_list *lst);
+int		my_export(int ac, char **av, t_list *lst);
 
 #endif

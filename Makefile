@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/11/05 12:06:31 by apigeon          ###   ########.fr        #
+#    Updated: 2022/11/10 15:10:01 by tperes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRCS	+=	builtins/echo.c \
 			builtins/exit.c \
 			builtins/cd.c \
 			builtins/env.c \
+			builtins/export.c \
 			parser/parse.c \
 			parser/lexer.c \
 			parser/token_utils.c \
