@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:39 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/05 12:06:03 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/11 00:36:45 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ void			free_token(void *ptr);
 void			*parse_line(char *line);
 t_list			*get_tokens(char *line);
 t_token_type	get_token_type(char *token_value);
+char			*remove_quotes(char *s);
 
 #endif
