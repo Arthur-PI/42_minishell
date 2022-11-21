@@ -6,14 +6,14 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:35:44 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/10 15:26:25 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/15 16:50:37 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-/* TODO free et lstclear
- * TODO norm
+/* TODO invalid read of size 8 avec free(lst) ligne 75
+ * TODO norme
  */
 
 t_env	*create_env(char *env)
@@ -37,16 +37,22 @@ t_env	*create_env(char *env)
 	return (new_env);
 }
 
-t_list	*tab_to_list(char **env)
+t_list	*tab_to_list(char **env, char **av)
 {
 	t_list	*lst_env;
-	int		i;
+	int	i;
 
 	i = 0;
 	lst_env = NULL;
 	while (env[i])
 	{
 		ft_lstadd_back(&lst_env, ft_lstnew(create_env(env[i])));
+		i++;
+	}
+	i = 1;
+	while (av[i])
+	{
+		ft_lstadd_back(&lst_env, ft_lstnew(create_env(av[i])));
 		i++;
 	}
 	return (lst_env);
@@ -63,6 +69,10 @@ int	my_env(int ac, char **av, t_list *lst)
 		{
 			env = lst->content;
 			printf("%s=%s\n", env->name, env->value);
+			free(env->name);
+			free(env->value);
+			free(env);
+			free(lst);
 			lst = lst->next;
 		}
 	}

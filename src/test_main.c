@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 18:04:44 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/10 15:42:28 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/21 10:09:44 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,44 @@ int	test_cd(int ac, char **av)
 int	test_env(int ac, char **av, char **env)
 {
 	t_list	*lst;
+	
+	lst = tab_to_list(env, av);
+	my_env(ac, av, lst);
+	return (0);
+}
+
+int	test_export(int ac, char **av, char **env)
+{
+	t_list	*lst;
+	
+	lst = tab_to_list(env, av);
+	my_export(ac, av, lst);
+	return (0);
+}
+
+int	test_unset(int ac, char **av, char **env)
+{
+	t_list	*list;
 	t_env	*envs;
 
-
-	lst = tab_to_list(env);
-	my_export(ac, av, lst);
-	while (lst != NULL)
+	list = my_unset(ac, av, tab_to_list(env, av));
+	while (list != NULL)
 	{
-		envs = lst->content;
-		printf("%s=%s\n", envs->name, envs->value);
-		lst = lst->next;
+		envs = list->content;
+	//	printf("%s=%s\n", envs->name, envs->value);
+		free(envs->name);
+		free(envs->value);
+		free(envs);
+		free(list);
+		list = list->next;
 	}
-	return (my_export(ac, av, lst));
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	test_env(ac, av, env);
+	test_export(ac, av, env);
 	return (0);
 }
