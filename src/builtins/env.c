@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:35:44 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/15 16:50:37 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/22 21:12:52 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 t_env	*create_env(char *env)
 {
 	t_env	*new_env;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	new_env = malloc(sizeof(*new_env));
@@ -40,7 +40,7 @@ t_env	*create_env(char *env)
 t_list	*tab_to_list(char **env, char **av)
 {
 	t_list	*lst_env;
-	int	i;
+	int		i;
 
 	i = 0;
 	lst_env = NULL;

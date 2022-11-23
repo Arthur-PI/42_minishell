@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/15 16:50:43 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/22 21:19:27 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*ft_delete(t_list *lst, char **av)
 {
 	t_list	*lst_new;
 	t_env	*env;
-	int	i;
+	int		i;
 
 	lst_new = NULL;
 	while (lst != NULL)
@@ -28,7 +28,7 @@ t_list	*ft_delete(t_list *lst, char **av)
 		i = 1;
 		while (av[i])
 		{
-			if (ft_strncmp(av[i], env->name, ft_strlen(env->name)) == 0 
+			if (ft_strncmp(av[i], env->name, ft_strlen(env->name)) == 0
 				&& ft_strlen(av[i]) == ft_strlen(env->name))
 			{
 				free(env->name);
@@ -50,7 +50,6 @@ t_list	*ft_delete(t_list *lst, char **av)
 	}
 	return (lst_new);
 }
-
 
 t_list	*my_unset(int ac, char **av, t_list *lst)
 {

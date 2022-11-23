@@ -6,16 +6,11 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:08:12 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/21 10:18:23 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/22 21:25:17 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-
-/*
-TODO export test test
-TODO fonction NAME => majuscule, minuscule, ne commence pas par un chiffre, underscore
-*/
 
 int	valid_name(char *av)
 {
@@ -32,11 +27,9 @@ int	valid_name(char *av)
 			printf("export: not an identifier: %s\n", av);
 			return (0);
 		}
-		if ((av[i] < '0') ||
-			(av[i] > '9' && av[i] < 'A') ||
-			(av[i] > 'Z' && av[i] < '_') ||
-			(av[i] > '_' && av[i] < 'a') ||
-			(av[i] > 'z'))
+		if ((av[i] < '0') || (av[i] > '9' && av[i] < 'A')
+			|| (av[i] > 'Z' && av[i] < '_')
+			|| (av[i] > '_' && av[i] < 'a') || (av[i] > 'z'))
 		{
 			while (av[i] != '=')
 				i++;
@@ -48,6 +41,8 @@ int	valid_name(char *av)
 	}
 	return (1);
 }
+
+//TODO export test test
 
 int	my_export(int ac, char **av, t_list *lst)
 {
@@ -67,7 +62,7 @@ int	my_export(int ac, char **av, t_list *lst)
 			{
 				if (av[i + 1])
 					i++;
-				else 
+				else
 					break ;
 			}
 			ft_lstadd_back(&lst, ft_lstnew(create_env(av[i])));
@@ -75,5 +70,4 @@ int	my_export(int ac, char **av, t_list *lst)
 		}
 	}
 	return (0);
-
 }
