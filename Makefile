@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/11/05 12:06:31 by apigeon          ###   ########.fr        #
+#    Updated: 2022/11/12 18:46:19 by apigeon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,10 @@ SRCS	+=	builtins/echo.c \
 			builtins/env.c \
 			parser/parse.c \
 			parser/lexer.c \
+			parser/substitute.c \
 			parser/token_utils.c \
 			signal.c \
+			utils.c \
 
 ### OBJECTS ###
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

@@ -6,46 +6,42 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 12:04:17 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/11 00:36:26 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/26 22:52:02 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	is_quote(char c)
+static char	*get_token_name(t_token_type type)
 {
-	if (c == '\'' || c == '"')
-		return (true);
-	return (false);
+	if (type == TOKEN_PIPE)
+		return (ft_strdup("PIPE\t"));
+	else if (type == TOKEN_RD_IN)
+		return (ft_strdup("RD_IN\t"));
+	else if (type == TOKEN_RD_OUT)
+		return (ft_strdup("RD_OUT\t"));
+	else if (type == TOKEN_RD_APPEND)
+		return (ft_strdup("RD_APPEND"));
+	else if (type == TOKEN_RD_HEREDOC)
+		return (ft_strdup("RD_HEREDOC"));
+	else if (type == TOKEN_WORD)
+		return (ft_strdup("WORD\t"));
+	return (ft_strdup("NONE\t"));
 }
 
-char	*remove_quotes(char *s)
+void	print_tokens(t_list *tokens)
 {
-	int		i;
-	int		nb_quotes;
-	char	current_quote;
+	char	*type;
+	t_token	*token;
 
-	i = 0;
-	nb_quotes = 0;
-	current_quote = 0;
-	while (s[i])
+	while (tokens)
 	{
-		if (is_quote(s[i]) && current_quote == 0)
-		{
-			nb_quotes++;
-			current_quote = s[i];
-		}
-		else if (s[i] == current_quote)
-		{
-			nb_quotes++;
-			current_quote = 0;
-		}
-		else
-			s[i - nb_quotes] = s[i];
-		i++;
+		token = tokens->content;
+		type = get_token_name(token->type);
+		printf("Token: %s->\t%s\n", type, token->value);
+		tokens = tokens->next;
+		free(type);
 	}
-	s[i - nb_quotes] = s[i];
-	return (s);
 }
 
 t_token_type	get_token_type(char *token_value)

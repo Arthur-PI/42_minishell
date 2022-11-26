@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 18:20:25 by apigeon           #+#    #+#             */
-/*   Updated: 2022/10/31 14:52:52 by apigeon          ###   ########.fr       */
+/*   Created: 2022/11/26 22:54:42 by apigeon           #+#    #+#             */
+/*   Updated: 2022/11/26 22:54:44 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef UTILS_H
+# define UTILS_H
 
-# include <stdio.h>
-# include <signal.h>
-# include <termios.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
+# include <stdbool.h>
 # include "libft.h"
-# include "builtins.h"
-# include "parser.h"
-# include "utils.h"
 
-typedef struct s_minishell
-{
-	t_list	*envs;
-}				t_minishell;
-
-t_minishell	g_minishell;
-
-void	handle_signals(void);
+char	*ft_concat(char *s1, char *s2);
+int		is_name_char(int c);
+int		is_quote(int c);
 
 #endif

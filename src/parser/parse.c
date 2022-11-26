@@ -6,43 +6,11 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:50:12 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/05 12:08:08 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/26 22:52:44 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-static char	*get_token_name(t_token_type type)
-{
-	if (type == TOKEN_PIPE)
-		return (ft_strdup("PIPE\t"));
-	else if (type == TOKEN_RD_IN)
-		return (ft_strdup("RD_IN\t"));
-	else if (type == TOKEN_RD_OUT)
-		return (ft_strdup("RD_OUT\t"));
-	else if (type == TOKEN_RD_APPEND)
-		return (ft_strdup("RD_APPEND"));
-	else if (type == TOKEN_RD_HEREDOC)
-		return (ft_strdup("RD_HEREDOC"));
-	else if (type == TOKEN_WORD)
-		return (ft_strdup("WORD\t"));
-	return (ft_strdup("NONE\t"));
-}
-
-static void	print_tokens(t_list *tokens)
-{
-	char	*type;
-	t_token	*token;
-
-	while (tokens)
-	{
-		token = tokens->content;
-		type = get_token_name(token->type);
-		printf("Token: %s->\t%s\n", type, token->value);
-		tokens = tokens->next;
-		free(type);
-	}
-}
 
 void	free_token(void *ptr)
 {
@@ -56,6 +24,32 @@ void	free_token(void *ptr)
 	}
 }
 
+void	lst_remove_quotes(t_list *lst)
+{
+	t_token	*token;
+
+	while (lst)
+	{
+		token = lst->content;
+		remove_quotes(token->value);
+		lst = lst->next;
+	}
+}
+
+/* TODO protect malloc error and exit properly
+ */
+void	lst_replace_envs(t_list *lst)
+{
+	t_token	*token;
+
+	while (lst)
+	{
+		token = lst->content;
+		token->value = replace_envs(token->value);
+		lst = lst->next;
+	}
+}
+
 /* TODO make an exit function that clear g_minishell
  * TODO parse tokens to commands
  */
@@ -66,6 +60,8 @@ void	*parse_line(char *line)
 	tokens = get_tokens(line);
 	if (!tokens)
 		exit(2);
+	lst_remove_quotes(tokens);
+	lst_replace_envs(tokens);
 	print_tokens(tokens);
 	ft_lstclear(&tokens, &free_token);
 	return (NULL);
