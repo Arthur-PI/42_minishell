@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:33:41 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/24 17:11:58 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/28 17:30:08 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include <stdio.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include "libft.h"
 
 int	exec(char **av, char *cmd);
+int	pipex(char *line);
 
 #endif

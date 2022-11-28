@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 18:04:44 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/28 14:12:26 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/28 18:24:44 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,17 @@ int	test_exec(int ac, char **av)
 	return (0);
 }
 
+int	test_pipe(int ac, char **av)
+{
+	char	*line;
+
+	(void)ac;
+	(void)av;
+	line = "/usr/bin/ls -l";
+	pipex(line);
+	return (0);
+}
+
 /*
 int	test_env(int ac, char **av, char **env)
 {
@@ -82,6 +93,6 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
-	test_exec(ac, av);
+	test_pipe(ac, av);
 	return (0);
 }
