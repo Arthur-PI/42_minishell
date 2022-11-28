@@ -15,12 +15,11 @@
 /* TODO invalid read of size 8 avec free(lst) ligne 75
  * TODO norme
  */
-
 t_env	*create_env(char *env)
 {
-	t_env	*new_env;
 	int		i;
 	int		j;
+	t_env	*new_env;
 
 	i = 0;
 	new_env = malloc(sizeof(*new_env));
@@ -28,15 +27,18 @@ t_env	*create_env(char *env)
 		return (NULL);
 	while (env[i] != '=')
 		i++;
+	// TODO FIX ft_substr peut return NULL (free new_env)
 	new_env->name = ft_substr(env, 0, i);
 	i++;
 	j = i;
 	while (env[j])
 		j++;
+	// TODO FIX ft_substr peut return NULL (free new_env et new_env->name)
 	new_env->value = ft_substr(env, i, j - i);
 	return (new_env);
 }
 
+// TODO FIX: Pk ya 2 args ???? 1 c'etait tres bien
 t_list	*tab_to_list(char **env, char **av)
 {
 	t_list	*lst_env;
@@ -46,18 +48,25 @@ t_list	*tab_to_list(char **env, char **av)
 	lst_env = NULL;
 	while (env[i])
 	{
+		// TODO FIX ft_lstnew peut return NULL, a gerer (exit proprement et free lst_env)
+		// TODO FIX pareil pour create_env, peut return NULL, a gerer proprement
 		ft_lstadd_back(&lst_env, ft_lstnew(create_env(env[i])));
 		i++;
 	}
 	i = 1;
 	while (av[i])
 	{
+		// TODO FIX ft_lstnew peut return NULL, a gerer (exit proprement et free lst_env)
+		// TODO FIX pareil pour create_env, peut return NULL, a gerer proprement
 		ft_lstadd_back(&lst_env, ft_lstnew(create_env(av[i])));
 		i++;
 	}
 	return (lst_env);
 }
 
+// TODO FIX pas besoin de l'arg t_list *lst pcq normalement
+// les env sont dans g_minishell->envs
+// TODO FIX pk cette fonction free les envs ??? faire une fonction a par qui fait ca
 int	my_env(int ac, char **av, t_list *lst)
 {
 	t_env	*env;

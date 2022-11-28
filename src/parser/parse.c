@@ -36,20 +36,6 @@ void	lst_remove_quotes(t_list *lst)
 	}
 }
 
-/* TODO protect malloc error and exit properly
- */
-void	lst_replace_envs(t_list *lst)
-{
-	t_token	*token;
-
-	while (lst)
-	{
-		token = lst->content;
-		token->value = replace_envs(token->value);
-		lst = lst->next;
-	}
-}
-
 /* TODO make an exit function that clear g_minishell
  * TODO parse tokens to commands
  */
@@ -61,7 +47,6 @@ void	*parse_line(char *line)
 	if (!tokens)
 		exit(2);
 	lst_remove_quotes(tokens);
-	lst_replace_envs(tokens);
 	print_tokens(tokens);
 	ft_lstclear(&tokens, &free_token);
 	return (NULL);

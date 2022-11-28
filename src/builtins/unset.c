@@ -12,9 +12,14 @@
 
 #include "builtins.h"
 
-//TODO Norme
+// TODO Norme
 // TODO free -> invalid read of size 8 3x (main et ft_delete) comme pour my_env
-
+// ADVICE faire une fonction qui prends un char* et te redonne l'env qui correspond
+// dans la t_list d'envs (qui est dans g_minishell je le rappelle). Comme ca t'as
+// juste a recup l'env avec la fonction, le delete et passer au suivant.
+// et en plus moi j'aurais bien besoin de cette fonction 👉👈
+// ADVICE faire une fonction qui prend un t_env* et le free
+// TODO FIX utiliser g_minishell au lieu de se passer l'arg lst
 t_list	*ft_delete(t_list *lst, char **av)
 {
 	t_list	*lst_new;
@@ -28,6 +33,8 @@ t_list	*ft_delete(t_list *lst, char **av)
 		i = 1;
 		while (av[i])
 		{
+			// TODO FIX pas besoin strncmp, strcmp est plus simple ici
+			// et en plus du coup pas besoin de la 2eme partie du if
 			if (ft_strncmp(av[i], env->name, ft_strlen(env->name)) == 0
 				&& ft_strlen(av[i]) == ft_strlen(env->name))
 			{
