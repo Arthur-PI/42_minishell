@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 18:04:44 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/11 00:37:11 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/28 14:12:26 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@ int	test_cd(int ac, char **av)
 	return (cd(ac, av));
 }
 
+int	test_exec(int ac, char **av)
+{
+	char	*cmd;
+
+	(void)ac;
+	cmd = "/usr/bin/ls";
+	exec(av, cmd);
+	return (0);
+}
+
 /*
 int	test_env(int ac, char **av, char **env)
 {
@@ -72,6 +82,6 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
-	test_remove_quotes(ac, av);
+	test_exec(ac, av);
 	return (0);
 }
