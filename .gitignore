@@ -10,3 +10,5 @@ tags.lock
 tags.temp
 .env
 
+compile_commands.json
+.cache

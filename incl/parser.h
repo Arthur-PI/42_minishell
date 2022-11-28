@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:39 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/11 00:36:45 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/26 22:52:41 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 
 # include <stdio.h>
 # include <stdbool.h>
+# include "minishell.h"
 # include "libft.h"
+# include "utils.h"
+# include "builtins.h"
 
 # define ERROR_MALLOC 1
 # define NO_ERROR 0
@@ -64,6 +67,8 @@ void			free_token(void *ptr);
 void			*parse_line(char *line);
 t_list			*get_tokens(char *line);
 t_token_type	get_token_type(char *token_value);
-char			*remove_quotes(char *s);
+void			remove_quotes(char *s);
+char			*replace_envs(char *s);
+void			print_tokens(t_list *tokens);
 
 #endif
