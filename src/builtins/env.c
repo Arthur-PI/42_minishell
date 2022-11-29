@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:35:44 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/22 21:12:52 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/29 15:10:30 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 /* TODO invalid read of size 8 avec free(lst) ligne 75
  * TODO norme
  */
+
+void	free_env(void *ptr)
+{
+	t_env	*env;
+
+	env = ptr;
+	if (env)
+	{
+		free(env->name);
+		free(env->value);
+		free(env);
+	}
+}
+
 t_env	*create_env(char *env)
 {
 	int		i;
@@ -29,12 +43,16 @@ t_env	*create_env(char *env)
 		i++;
 	// TODO FIX ft_substr peut return NULL (free new_env)
 	new_env->name = ft_substr(env, 0, i);
+	if (ft_substr(env, 0, i) == NULL)
+		return (free(new_env), NULL);
 	i++;
 	j = i;
 	while (env[j])
 		j++;
 	// TODO FIX ft_substr peut return NULL (free new_env et new_env->name)
 	new_env->value = ft_substr(env, i, j - i);
+	if (ft_substr(env, 0, i) == NULL)
+		return (free(new_env->name), free(new_env), NULL);
 	return (new_env);
 }
 
@@ -78,10 +96,11 @@ int	my_env(int ac, char **av, t_list *lst)
 		{
 			env = lst->content;
 			printf("%s=%s\n", env->name, env->value);
-			free(env->name);
-			free(env->value);
-			free(env);
-			free(lst);
+		//	free(env->name);
+		//	free(env->value);
+		//	free(env);
+		//	free(lst);
+			ft_lstdelone(lst, &free_env);
 			lst = lst->next;
 		}
 	}

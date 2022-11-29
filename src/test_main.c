@@ -6,11 +6,14 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 18:04:44 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/21 10:29:02 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/29 16:00:45 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtins.h"
+#include "libft.h"
+#include "parser.h"
+#include <string.h>
 
 int	test_echo(int ac, char **av)
 {
@@ -45,7 +48,7 @@ int	test_cd(int ac, char **av)
 	return (cd(ac, av));
 }
 
-/*
+
 int	test_env(int ac, char **av, char **env)
 {
 	t_list	*lst;
@@ -63,7 +66,7 @@ int	test_export(int ac, char **av, char **env)
 	my_export(ac, av, lst);
 	return (0);
 }
-
+/*
 int	test_unset(int ac, char **av, char **env)
 {
 	t_list	*list;
@@ -101,6 +104,6 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
-	test_remove_quotes(ac, av);
+	test_env(ac, av, env);
 	return (0);
 }
