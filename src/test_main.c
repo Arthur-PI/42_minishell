@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 18:04:44 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/28 18:24:44 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/28 21:39:22 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	test_pipe(int ac, char **av)
 
 	(void)ac;
 	(void)av;
-	line = "/usr/bin/ls -l";
+	line = "/usr/bin/ls -l | /usr/bin/grep tea | /usr/bin/wc -l";
 	pipex(line);
 	return (0);
 }
