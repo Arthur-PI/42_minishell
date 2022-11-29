@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+extern t_minishell	g_minishell;
+
 /* remove quotes (single or double) that surround a WORD.
  * e.g: abc" J'arrive "def' ici".'  -> abc J'arrive def ici".
  * e.g: "Bonjour j'arrive."  -> Bonjour j'arrive
