@@ -29,8 +29,6 @@ typedef struct s_minishell
 	t_list	*envs;
 }				t_minishell;
 
-t_minishell	g_minishell;
-
 void	handle_signals(void);
 
 #endif
