@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/22 21:19:27 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/29 19:17:41 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,9 @@ t_list	*ft_delete(t_list *lst, char **av)
 		{
 			// TODO FIX pas besoin strncmp, strcmp est plus simple ici
 			// et en plus du coup pas besoin de la 2eme partie du if
-			if (ft_strncmp(av[i], env->name, ft_strlen(env->name)) == 0
-				&& ft_strlen(av[i]) == ft_strlen(env->name))
+			if (ft_strcmp(av[i], env->name) == 0)
 			{
-				free(env->name);
-				free(env->value);
-				free(env);
+				free_env(env);
 				free(lst);
 				lst = lst->next;
 				if (lst == NULL)
@@ -52,7 +49,6 @@ t_list	*ft_delete(t_list *lst, char **av)
 		if (lst == NULL)
 			break ;
 		ft_lstadd_back(&lst_new, ft_lstnew(env));
-		free(lst);
 		lst = lst->next;
 	}
 	return (lst_new);

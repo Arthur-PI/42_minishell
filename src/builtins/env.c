@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:35:44 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/29 15:10:30 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/29 19:00:36 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	free_env(void *ptr)
 	}
 }
 
+// FIXED ? ft_substr peut return NULL (free new_env)
+// FIXED ? ft_substr peut return NULL (free new_env et new_env->name)
+
 t_env	*create_env(char *env)
 {
 	int		i;
@@ -41,23 +44,39 @@ t_env	*create_env(char *env)
 		return (NULL);
 	while (env[i] != '=')
 		i++;
-	// TODO FIX ft_substr peut return NULL (free new_env)
 	new_env->name = ft_substr(env, 0, i);
-	if (ft_substr(env, 0, i) == NULL)
+	if (new_env->name == NULL)
 		return (free(new_env), NULL);
 	i++;
 	j = i;
 	while (env[j])
 		j++;
-	// TODO FIX ft_substr peut return NULL (free new_env et new_env->name)
 	new_env->value = ft_substr(env, i, j - i);
-	if (ft_substr(env, 0, i) == NULL)
+	if (new_env->value == NULL)
 		return (free(new_env->name), free(new_env), NULL);
 	return (new_env);
 }
 
-// TODO FIX: Pk ya 2 args ???? 1 c'etait tres bien
-t_list	*tab_to_list(char **env, char **av)
+// FIXED ? ft_lstnew peut return NULL, a gerer (exit proprement et free lst_env)
+// FIXED ? pareil pour create_env, peut return NULL, a gerer proprement
+t_list	*add_env(t_list *lst, char *env)
+{
+	t_list	*new;
+	t_env	*envs;
+
+	envs = create_env(env);
+	new = ft_lstnew(envs);
+	ft_lstadd_back(&lst, new);
+	if (envs == NULL || new == NULL)
+	{
+		free_env(envs);
+		ft_lstclear(&lst, &free_env);
+		exit(1);
+	}
+	return (lst);
+}
+
+t_list	*tab_to_list(char **env)
 {
 	t_list	*lst_env;
 	int		i;
@@ -66,17 +85,7 @@ t_list	*tab_to_list(char **env, char **av)
 	lst_env = NULL;
 	while (env[i])
 	{
-		// TODO FIX ft_lstnew peut return NULL, a gerer (exit proprement et free lst_env)
-		// TODO FIX pareil pour create_env, peut return NULL, a gerer proprement
-		ft_lstadd_back(&lst_env, ft_lstnew(create_env(env[i])));
-		i++;
-	}
-	i = 1;
-	while (av[i])
-	{
-		// TODO FIX ft_lstnew peut return NULL, a gerer (exit proprement et free lst_env)
-		// TODO FIX pareil pour create_env, peut return NULL, a gerer proprement
-		ft_lstadd_back(&lst_env, ft_lstnew(create_env(av[i])));
+		lst_env = add_env(lst_env, env[i]);
 		i++;
 	}
 	return (lst_env);
@@ -84,7 +93,6 @@ t_list	*tab_to_list(char **env, char **av)
 
 // TODO FIX pas besoin de l'arg t_list *lst pcq normalement
 // les env sont dans g_minishell->envs
-// TODO FIX pk cette fonction free les envs ??? faire une fonction a par qui fait ca
 int	my_env(int ac, char **av, t_list *lst)
 {
 	t_env	*env;
@@ -96,11 +104,7 @@ int	my_env(int ac, char **av, t_list *lst)
 		{
 			env = lst->content;
 			printf("%s=%s\n", env->name, env->value);
-		//	free(env->name);
-		//	free(env->value);
-		//	free(env);
-		//	free(lst);
-			ft_lstdelone(lst, &free_env);
+			free_env(env);
 			lst = lst->next;
 		}
 	}

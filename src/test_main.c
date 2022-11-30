@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 18:04:44 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/29 16:00:45 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/29 19:09:49 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	test_env(int ac, char **av, char **env)
 {
 	t_list	*lst;
 	
-	lst = tab_to_list(env, av);
+	lst = tab_to_list(env);
 	my_env(ac, av, lst);
 	return (0);
 }
@@ -62,30 +62,28 @@ int	test_export(int ac, char **av, char **env)
 {
 	t_list	*lst;
 	
-	lst = tab_to_list(env, av);
+	(void)env;
+	lst = tab_to_list(env);
 	my_export(ac, av, lst);
 	return (0);
 }
-/*
+
 int	test_unset(int ac, char **av, char **env)
 {
 	t_list	*list;
 	t_env	*envs;
 
-	list = my_unset(ac, av, tab_to_list(env, av));
+	list = my_unset(ac, av, tab_to_list(env));
 	while (list != NULL)
 	{
 		envs = list->content;
-	//	printf("%s=%s\n", envs->name, envs->value);
-		free(envs->name);
-		free(envs->value);
-		free(envs);
-		free(list);
+		printf("%s=%s\n", envs->name, envs->value);
+		free_env(envs);
 		list = list->next;
 	}
 	return (0);
 }
-*/
+
 
 int	test_remove_quotes(int ac, char **av)
 {
@@ -104,6 +102,6 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
-	test_env(ac, av, env);
+	test_unset(ac, av, env);
 	return (0);
 }

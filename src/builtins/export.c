@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:08:12 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/22 21:25:17 by tperes           ###   ########.fr       */
+/*   Updated: 2022/11/29 18:54:57 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	valid_name(char *av)
 int	my_export(int ac, char **av, t_list *lst)
 {
 	int	i;
+//	t_env	*env;
 
 	if (ac == 1)
 	{
@@ -58,6 +59,13 @@ int	my_export(int ac, char **av, t_list *lst)
 	else
 	{
 		i = 1;
+	/*	while (lst != NULL)
+		{
+			env = lst->content;
+			printf("%s=%s\n", env->name, env->value);
+			free_env(env);
+			lst = lst->next;
+		}*/
 		while (av[i])
 		{
 			if (valid_name(av[i]) == 0)
@@ -67,13 +75,12 @@ int	my_export(int ac, char **av, t_list *lst)
 				else
 					break ;
 			}
-			// TODO FIX ft_lstnew peut return NULL, a gerer (bien tout free)
-			// TODO FIX create_env peut return NULL, a gerer (bien tout free)
-			// ADVICE comme c'est la meme chose que dans tab_to_list() je te conseille
-			// de faire une fonction qui creer l'env l'element de la list et l'ajoute
-			// a la lst tout en gerant les erreurs ca fera d'une pierre 2 coups
-			ft_lstadd_back(&lst, ft_lstnew(create_env(av[i])));
+			lst = add_env(lst, av[i]);
+		//	env = lst->content;
+		//	printf("%s=%s\n", env->name, env->value);
+		//	free_env(env);
 			i++;
+
 		}
 	}
 	return (0);
