@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/01 12:15:03 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/01 16:09:13 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ extern t_minishell	g_minishell;
 
 // TODO Norme
 // TODO free -> invalid read of size 8 3x (main et ft_delete) comme pour my_env
-// ADVICE faire une fonction qui prends un char* et te redonne l'env qui correspond
-// dans la t_list d'envs (qui est dans g_minishell je le rappelle). Comme ca t'as
-// juste a recup l'env avec la fonction, le delete et passer au suivant.
+// ADVICE faire une fonction qui prends un char* et te redonne l'env qui
+// correspond dans la t_list d'envs (qui est dans g_minishell je le rappelle). 
+//Comme ca t'as juste a recup l'env avec la fonction, le delete et 
+// passer au suivant.
 // et en plus moi j'aurais bien besoin de cette fonction 👉👈
 // FIXED ? utiliser g_minishell au lieu de se passer l'arg lst
 
@@ -67,6 +68,42 @@ t_list	*ft_delete(char *av)
 	return (lst_new);
 }
 
+// TODO fonction qui check les arguments de unset
+static char	*print_name(char *av)
+{
+	int	i;
+
+	i = 0;
+	while (av[i] != '=')
+		i++;
+	av[i] = '\0';
+	printf("unset: %s: invalid parameter name\n", av);
+	return (av);
+}
+
+static int	check_arg(char *av)
+{
+	int	i;
+
+	i = 0;
+	while (av[i])
+	{
+		if (av[i] < '0')
+			return (print_name(av), 0);
+		else if (av[i] > '9' && av[i] < 'A')
+			return (print_name(av), 0);
+		else if (av[i] > 'Z' && av[i] < '_')
+			return (print_name(av), 0);
+		else if (av[i] > '_' && av[i] < 'a')
+			return (print_name(av), 0);
+		else if (av[i] > 'z')
+			return (print_name(av), 0);
+		else
+			i++;
+	}
+	return (1);
+}
+
 int	my_unset(int ac, char **av, char **env)
 {
 	int	i;
@@ -77,6 +114,13 @@ int	my_unset(int ac, char **av, char **env)
 	{
 		while (av[i])
 		{
+			if (!check_arg(av[i]))
+			{
+				if (av[i + 1])
+					i++;
+				else
+					break ;
+			}
 			g_minishell.envs = ft_delete(av[i]);
 			i++;
 		}
