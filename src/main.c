@@ -6,11 +6,13 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:54 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/05 12:01:47 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/11/26 22:49:50 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_minishell	g_minishell;
 
 void	usage(char *prog_name)
 {
@@ -51,12 +53,16 @@ void	routine(void)
 }
 
 /* TODO Extract and format the envp variables in a t_list
+ * TODO Deal with error on envp transformation
  */
 int	main(int ac, char **av, char **envp)
 {	
 	if (ac > 1)
 		return (usage(av[0]), 1);
 	(void)envp;
+	g_minishell.envs = NULL;
+	// if (envp && envp[0] && !g_minishell.envs)
+	//	return (1);
 	handle_signals();
 	routine();
 	return (0);

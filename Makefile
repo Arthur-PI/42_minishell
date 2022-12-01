@@ -6,7 +6,11 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/11/28 17:28:09 by tperes           ###   ########.fr        #
+=======
+#    Updated: 2022/11/11 09:03:25 by tperes           ###   ########.fr        #
+>>>>>>> main
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,12 +59,19 @@ SRCS	+=	builtins/echo.c \
 			builtins/exit.c \
 			builtins/cd.c \
 			builtins/env.c \
+			builtins/export.c \
+			builtins/unset.c \
 			parser/parse.c \
 			parser/lexer.c \
+			parser/substitute.c \
 			parser/token_utils.c \
 			signal.c \
+<<<<<<< HEAD
 			execution/exec.c \
 			execution/pipe.c \
+=======
+			utils.c \
+>>>>>>> main
 
 ### OBJECTS ###
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
@@ -82,7 +93,7 @@ UNAME_S = $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	VALGRIND = leaks --list --groupByType --atExit --
 else
-	VALGRIND = valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all --suppressions=.ignore_readline_leaks
+	VALGRIND = valgrind --track-origins=yes --leak-check=full --suppressions=.ignore_readline_leaks
 endif
 
 ### RULES ###
