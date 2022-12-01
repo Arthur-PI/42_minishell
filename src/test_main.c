@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 18:04:44 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/29 19:09:49 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/01 12:14:17 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "libft.h"
 #include "parser.h"
 #include <string.h>
+
+t_minishell	g_minishell;
 
 int	test_echo(int ac, char **av)
 {
@@ -51,20 +53,26 @@ int	test_cd(int ac, char **av)
 
 int	test_env(int ac, char **av, char **env)
 {
-	t_list	*lst;
-	
-	lst = tab_to_list(env);
-	my_env(ac, av, lst);
+	my_env(ac, av, env);
 	return (0);
 }
 
 int	test_export(int ac, char **av, char **env)
 {
-	t_list	*lst;
-	
-	(void)env;
-	lst = tab_to_list(env);
-	my_export(ac, av, lst);
+	t_env	*envs;
+
+	g_minishell.envs = tab_to_list(env);
+	my_export(ac, av, env);
+	if (ac > 1)
+	{
+		while (g_minishell.envs != NULL)
+		{
+			envs = g_minishell.envs->content;
+			printf("%s=%s\n", envs->name, envs->value);
+			free_env(envs);
+			g_minishell.envs = g_minishell.envs->next;
+		}
+	}
 	return (0);
 }
 
@@ -73,7 +81,8 @@ int	test_unset(int ac, char **av, char **env)
 	t_list	*list;
 	t_env	*envs;
 
-	list = my_unset(ac, av, tab_to_list(env));
+	my_unset(ac, av, env);
+	list = g_minishell.envs;
 	while (list != NULL)
 	{
 		envs = list->content;
@@ -83,7 +92,6 @@ int	test_unset(int ac, char **av, char **env)
 	}
 	return (0);
 }
-
 
 int	test_remove_quotes(int ac, char **av)
 {
