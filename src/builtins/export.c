@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:08:12 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/01 15:43:05 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/05 17:57:39 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	valid_name(char *av)
 
 // TODO export test test
 // FIXED ? encore une fois pas besoin de t_list *lst
-// TODO FIX probleme, si un name et pas valid et qu'il
+// FIXED ? probleme, si un name et pas valid et qu'il
 // y en a un apres il va l'ajouter direct sans checker
 // si il est valide, je conseille plutot un else ici pour add_env
 int	my_export(int ac, char **av, char **env)
@@ -108,7 +108,8 @@ int	my_export(int ac, char **av, char **env)
 				else
 					break ;
 			}
-			g_minishell.envs = add_env(lst, av[i]);
+			else
+				g_minishell.envs = add_env(lst, av[i]);
 			i++;
 		}
 	}

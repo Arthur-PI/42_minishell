@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/01 16:09:13 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/05 17:57:21 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	check_arg(char *av)
 	return (1);
 }
 
-// TODO FIX pareil que pour export, si check_arg est faux
+// FIXED ? pareil que pour export, si check_arg est faux
 // tu vas delete celui d'apres sans le checker. Un else
 int	my_unset(int ac, char **av, char **env)
 {
@@ -115,7 +115,8 @@ int	my_unset(int ac, char **av, char **env)
 				else
 					break ;
 			}
-			g_minishell.envs = ft_delete(av[i]);
+			else
+				g_minishell.envs = ft_delete(av[i]);
 			i++;
 		}
 	}
