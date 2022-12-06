@@ -84,10 +84,8 @@ int	valid_name(char *av)
 }
 
 // TODO export test test
-// FIXED ? encore une fois pas besoin de t_list *lst
-// FIXED ? probleme, si un name et pas valid et qu'il
-// y en a un apres il va l'ajouter direct sans checker
-// si il est valide, je conseille plutot un else ici pour add_env
+// export NAME=VALUE NAME NAME=VALUE
+// TODO FIX ne pas break
 int	my_export(int ac, char **av, char **env)
 {
 	int		i;
