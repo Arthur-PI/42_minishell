@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/01 16:09:13 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/05 17:57:21 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,8 @@ extern t_minishell	g_minishell;
 
 // TODO Norme
 // TODO free -> invalid read of size 8 3x (main et ft_delete) comme pour my_env
-// ADVICE faire une fonction qui prends un char* et te redonne l'env qui
-// correspond dans la t_list d'envs (qui est dans g_minishell je le rappelle). 
-//Comme ca t'as juste a recup l'env avec la fonction, le delete et 
-// passer au suivant.
-// et en plus moi j'aurais bien besoin de cette fonction 👉👈
-// FIXED ? utiliser g_minishell au lieu de se passer l'arg lst
-
-//pas d'accord => FIX pas besoin strncmp, strcmp est plus simple ici
-// et en plus du coup pas besoin de la 2eme partie du if
-
+// TODO FIX -> je comprends mais je pense juste que tu comprends mal
+// comment fonctionne strcmp et c'est pour ca, j'explique discord
 t_env	*get_env_el(char *av)
 {
 	t_env	*envs;
@@ -104,6 +96,8 @@ static int	check_arg(char *av)
 	return (1);
 }
 
+// FIXED ? pareil que pour export, si check_arg est faux
+// tu vas delete celui d'apres sans le checker. Un else
 int	my_unset(int ac, char **av, char **env)
 {
 	int	i;
@@ -121,7 +115,8 @@ int	my_unset(int ac, char **av, char **env)
 				else
 					break ;
 			}
-			g_minishell.envs = ft_delete(av[i]);
+			else
+				g_minishell.envs = ft_delete(av[i]);
 			i++;
 		}
 	}
