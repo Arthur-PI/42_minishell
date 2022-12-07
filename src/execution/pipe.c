@@ -6,11 +6,15 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/05 17:50:20 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/07 16:10:10 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "minishell.h"
+#include "builtins.h"
+
+extern t_minishell	g_minishell;
 
 int	redir_input(int tmpin)
 {
@@ -22,6 +26,33 @@ int	redir_input(int tmpin)
 //	else
 	fdin = dup(tmpin);
 	return (fdin);
+}
+
+char	*get_path_cmd(char *cmd)
+{
+	t_env	*env;
+	t_list	*lst;
+	char	**path;
+	int	i;
+
+	lst = g_minishell.envs;
+	while (lst != NULL)
+	{
+		env = lst->content;
+		if (env == get_env_el("PATH"))
+			break ;
+		lst = lst->next;
+	}
+	path = ft_split(env->value, ':');
+	i = 0;
+	while (path[i])
+	{
+		path[i] = ft_strjoin(path[i], "/");
+		if (access(ft_strjoin(path[i], cmd), F_OK) == 0)
+			return (ft_strjoin(path[i], cmd));
+		i++;
+	}
+	return (NULL);
 }
 
 /*int	redir_output(int fdout)
@@ -64,7 +95,7 @@ int	pipex(char *line)
 		cmd_args = ft_split(cmd[i], ' ');
 		dup2(fdin, 0);
 		close(fdin);
-		if (i == 2)
+		if (i == 0)
 			fdout = dup(tpout);
 		else
 		{
@@ -74,7 +105,10 @@ int	pipex(char *line)
 		}
 		dup2(fdout, 1);
 		close(fdout);
-		exec(cmd_args, cmd_args[0]);
+	//	if (cmd_args[0] == builtin(cmd_args[0]))
+	//		exec_builtin(ac, av, env);
+	//	else
+		exec(cmd_args, get_path_cmd(cmd_args[0]));
 		i++;
 	}
 	return (dup2(tpin, 0), dup2(tpout, 1), close(tpin), close(tpout), 0);
