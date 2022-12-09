@@ -14,14 +14,14 @@
 
 t_minishell	g_minishell;
 
-void	usage(char *prog_name)
+static void	usage(char *prog_name)
 {
 	printf("%s: too many arguments\n", prog_name);
 }
 
 /* TODO make an exit function that free what is in g_minishell
  */
-char	*get_line(void)
+static char	*get_line(void)
 {
 	char	*line;
 	char	*prompt;
@@ -38,7 +38,7 @@ char	*get_line(void)
 /* TODO exec commands
  * TODO free commands if not NULL
  */
-void	routine(void)
+static void	routine(void)
 {
 	char	*line;
 	t_list	*commands;
@@ -52,17 +52,13 @@ void	routine(void)
 	}
 }
 
-/* TODO Extract and format the envp variables in a t_list
- * TODO Deal with error on envp transformation
- */
 int	main(int ac, char **av, char **envp)
 {	
 	if (ac > 1)
 		return (usage(av[0]), 1);
-	(void)envp;
-	g_minishell.envs = NULL;
-	// if (envp && envp[0] && !g_minishell.envs)
-	//	return (1);
+	g_minishell.envs = tab_to_list(envp);
+	if (envp && envp[0] && !g_minishell.envs)
+		return (1);
 	handle_signals();
 	routine();
 	return (0);
