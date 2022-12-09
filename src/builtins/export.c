@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:08:12 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/05 17:57:39 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/09 13:24:26 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,14 @@ int	valid_name(char *av)
 // FIXED ? probleme, si un name et pas valid et qu'il
 // y en a un apres il va l'ajouter direct sans checker
 // si il est valide, je conseille plutot un else ici pour add_env
-int	my_export(int ac, char **av, char **env)
+int	my_export(int ac, char **av)
 {
 	int		i;
 	t_list	*lst;
 
 	lst = g_minishell.envs;
 	if (ac == 1)
-		return (my_env(ac, av, env));
+		return (my_env(ac, av));
 	else
 	{
 		i = 1;
