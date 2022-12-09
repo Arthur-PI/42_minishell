@@ -24,33 +24,6 @@ void	free_token(void *ptr)
 	}
 }
 
-void	lst_remove_quotes(t_list *lst)
-{
-	t_token	*token;
-
-	while (lst)
-	{
-		token = lst->content;
-		remove_quotes(token->value);
-		lst = lst->next;
-	}
-}
-
-// TODO leaks on replace_envs return assigment
-// TODO split the new value in TOKEN_WORD
-void	lst_expand_var(t_list *lst)
-{
-	t_token	*token;
-
-	while (lst)
-	{
-		token = lst->content;
-		if (token->type == TOKEN_WORD)
-			token->value = replace_envs(token->value);
-		lst = lst->next;
-	}
-}
-
 /* TODO make an exit function that clear g_minishell
  * TODO parse tokens to commands
  */
@@ -61,8 +34,8 @@ void	*parse_line(char *line)
 	tokens = get_tokens(line);
 	if (!tokens)
 		exit(2);
-	lst_remove_quotes(tokens);
 	lst_expand_var(tokens);
+	lst_remove_quotes(tokens);
 	print_tokens(tokens);
 	ft_lstclear(&tokens, &free_token);
 	return (NULL);

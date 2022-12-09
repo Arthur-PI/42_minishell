@@ -70,5 +70,8 @@ t_token_type	get_token_type(char *token_value);
 void			remove_quotes(char *s);
 char			*replace_envs(char *s);
 void			print_tokens(t_list *tokens);
+t_token			*new_token(char *value, t_token_type type);
+void			lst_remove_quotes(t_list *lst);
+void			lst_expand_var(t_list *lst);
 
 #endif

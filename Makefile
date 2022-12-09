@@ -26,7 +26,7 @@ TEST	?= false
 NOERROR	?= false
 
 ifeq ($(DEBUG),true)
-	CFLAGS += -g
+	CFLAGS += -g3
 endif
 
 ifeq ($(NOERROR),false)
@@ -61,6 +61,8 @@ SRCS	+=	builtins/echo.c \
 			parser/lexer.c \
 			parser/substitute.c \
 			parser/token_utils.c \
+			parser/lst_utils.c \
+			parser/remove_quotes.c \
 			signal.c \
 			utils.c \
 
