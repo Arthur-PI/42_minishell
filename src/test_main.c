@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 18:04:44 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/01 16:56:31 by tperes           ###   ########.fr       */
+/*   Created: 2022/12/08 17:18:02 by tperes            #+#    #+#             */
+/*   Updated: 2022/12/09 13:49:35 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,21 @@ int	test_exec(int ac, char **av)
 	return (0);
 }
 
-int	test_pipe(int ac, char **av)
+int	test_pipe(int ac, char **av, char **env)
 {
 	char	*line;
 
 	(void)ac;
 	(void)av;
-	line = "/usr/bin/ls -l | /usr/bin/grep tea | /usr/bin/wc -l";
+	g_minishell.envs = tab_to_list(env);
+	line = "cat Makefile | wc -l";
 	pipex(line);
 	return (0);
 }
 
-int	test_env(int ac, char **av, char **env)
+int	test_env(int ac, char **av)
 {
-	my_env(ac, av, env);
+	my_env(ac, av);
 	return (0);
 }
 
@@ -81,8 +82,9 @@ int	test_export(int ac, char **av, char **env)
 {
 	t_env	*envs;
 
-	g_minishell.envs = tab_to_list(env);
-	my_export(ac, av, env);
+//	g_minishell.envs = tab_to_list(env);
+	(void)env;
+	my_export(ac, av);
 	if (ac > 1)
 	{
 		while (g_minishell.envs != NULL)
@@ -101,7 +103,8 @@ int	test_unset(int ac, char **av, char **env)
 	t_list	*list;
 	t_env	*envs;
 
-	my_unset(ac, av, env);
+	(void)env;
+	my_unset(ac, av);
 	list = g_minishell.envs;
 	while (list != NULL)
 	{
@@ -125,11 +128,40 @@ int	test_remove_quotes(int ac, char **av)
 	return (0);
 }
 
+int	test_lst_command(void)
+{
+	int	i;
+	t_command	*command;
+	t_list	*cmd;
+	char	*line;
+
+	line = "ls -l | grep tea | wc -l";
+	i = 0;
+	cmd = list_cmd(line);
+	while (cmd != NULL)
+	{
+		command = cmd->content;
+		printf("cmd_full %s\ncmd %s\n", command->cmd_full, command->cmd);
+		while (command->args[i])
+		{
+			if (command->args[i][0] == '|')
+				i++;
+			printf("args = %s\n", command->args[i]);
+			i++;
+		}
+		printf("\n");
+		cmd = cmd->next;
+	}
+	return (0);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
 	(void)env;
-	test_pipe(ac, av);
+	g_minishell.envs = tab_to_list(env);
+	test_pipe(ac, av, env);
 	return (0);
 }
+
