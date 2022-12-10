@@ -13,3 +13,4 @@ tags.temp
 compile_commands.json
 .cache
 .vscode
+testfile.txt

@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 00:44:10 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/10 00:51:50 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/10 17:59:12 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	extract_word(const char *s, uint start, uint end, t_list **new)
 	t_token	*token;
 	char	*word;
 
-	if (s[end + 1] == 0)
+	if (s[end] && s[end + 1] == 0)
 		end++;
 	word = ft_substr(s, start, end - start);
 	token = new_token(word, TOKEN_WORD);
@@ -51,7 +51,7 @@ static t_list	*split_token(char *s)
 	quote = 0;
 	start = 0;
 	new = NULL;
-	while (s[i++])
+	while (s[++i])
 	{
 		if (is_quote(s[i]) && quote == 0)
 			quote = s[i];

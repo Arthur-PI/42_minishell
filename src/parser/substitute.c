@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 18:40:58 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/26 22:53:48 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/10 21:34:44 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ char	*replace_envs(char *s)
 		i++;
 	}
 	new = ft_concat(new, ft_substr(s, start, i - start));
+	free(s);
 	return (new);
 }

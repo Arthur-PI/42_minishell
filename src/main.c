@@ -6,10 +6,12 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:54 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/26 22:49:50 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/10 21:31:35 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtins.h"
+#include "libft.h"
 #include "minishell.h"
 
 t_minishell	g_minishell;
@@ -29,7 +31,7 @@ static char	*get_line(void)
 	prompt = "minishell->";
 	line = readline(prompt);
 	if (!line)
-		exit(1);
+		return (NULL);
 	else if (*line)
 		add_history(line);
 	return (line);
@@ -47,9 +49,12 @@ static void	routine(void)
 	while (1)
 	{
 		line = get_line();
+		if (!line)
+			break ;
 		commands = parse_line(line);
 		free(line);
 	}
+	ft_lstclear(&g_minishell.envs, free_env);
 }
 
 int	main(int ac, char **av, char **envp)
