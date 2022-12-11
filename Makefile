@@ -6,14 +6,14 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/12/10 21:49:21 by apigeon          ###   ########.fr        #
+#    Updated: 2022/12/11 15:23:10 by apigeon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 ### COMPILATION ###
 CC		= cc
-CFLAGS	= -Wall -Wextra -Wuninitialized
+CFLAGS	= -Wall -Wextra
 CFLAGS	+= -MMD -MP
 INCLUDE	= -I$(H_DIR) -I$(LIBFT_DIR)/$(H_DIR)
 LFLAGS	= -L$(LIBFT_DIR)
@@ -66,6 +66,7 @@ SRCS	+=	builtins/echo.c \
 			parser/command_utils.c \
 			parser/valid_syntax.c \
 			parser/tokens_to_commands.c \
+			parser/heredoc.c \
 			signal.c \
 			utils.c \
 

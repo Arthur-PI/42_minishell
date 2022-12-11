@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 18:23:23 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/10 21:46:21 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/11 15:20:21 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static void	free_redirect(void *ptr)
 	if (rd)
 	{
 		free(rd->file);
+		if (rd->type == RD_HEREDOC)
+			close(rd->fd);
 		free(rd);
 	}
 }

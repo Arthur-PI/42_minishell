@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:54 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/10 21:31:35 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/11 13:55:34 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*get_line(void)
 	char	*line;
 	char	*prompt;
 
-	prompt = "minishell->";
+	prompt = "minishell$ ";
 	line = readline(prompt);
 	if (!line)
 		return (NULL);

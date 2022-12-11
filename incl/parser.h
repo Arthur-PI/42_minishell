@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:39 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/10 21:48:42 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/11 15:21:53 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void			print_commands(t_list *commands);
 int				valid_syntax(t_list *tokens);
 void			free_command(void *ptr);
 t_list			*tokens_to_commands(t_list *tokens);
+int				handle_heredoc(char *stop);
 
 #endif

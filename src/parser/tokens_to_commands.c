@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 21:48:03 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/10 21:48:30 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/11 15:21:29 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,29 @@ static t_redirect_type	get_redirection_type(t_token_type type)
 		return (RD_HEREDOC);
 }
 
-static void	add_redirect(t_command *cmd, t_list *rd_type, t_list *file)
+static int	add_redirect(t_command *cmd, t_list *rd_type, t_list *file)
 {
-	t_redirect	*rd;
+	int				fd;
+	t_redirect		*rd;
+	t_redirect_type	type;
 
+	fd = 1;
+	type = get_redirection_type(((t_token *) rd_type)->type);
+	if (type == RD_HEREDOC)
+		fd = handle_heredoc(((t_token *)file->content)->value);
+	if (fd == -1)
+		return (false);
 	rd = malloc(sizeof(*rd));
 	rd->file = ft_strdup(((t_token *)file->content)->value);
-	rd->type = get_redirection_type(((t_token *) rd_type)->type);
-	rd->fd = 1;
+	rd->type = type;
+	rd->fd = fd;
 	ft_lstadd_back(&cmd->redirects, ft_lstnew(rd));
+	return (true);
 }
 
 t_list	*tokens_to_commands(t_list *tokens)
 {
+	int			ret;
 	t_list		*commands;
 	t_token		*token;
 	t_command	*command;
@@ -104,9 +114,11 @@ t_list	*tokens_to_commands(t_list *tokens)
 				command = create_command(NULL);
 			if (token->type == TOKEN_RD_OUT || token->type == TOKEN_RD_APPEND
 				|| commands == NULL)
-				add_redirect(command, tokens, tokens->next);
+				ret = add_redirect(command, tokens, tokens->next);
 			else
-				add_redirect(commands->content, tokens, tokens->next);
+				ret = add_redirect(commands->content, tokens, tokens->next);
+			if (!ret)
+				return (NULL);
 			tokens = tokens->next;
 		}
 		tokens = tokens->next;
