@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/01 16:09:13 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/11 19:57:12 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_env	*get_env_el(char *av)
 {
 	t_env	*envs;
 
+	envs = NULL;
 	while (g_minishell.envs != NULL)
 	{
 		envs = g_minishell.envs->content;
