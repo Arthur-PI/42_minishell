@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:35:44 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/30 10:48:37 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/12 17:21:56 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	free_env(void *ptr)
 
 // FIXED ? ft_substr peut return NULL (free new_env)
 // FIXED ? ft_substr peut return NULL (free new_env et new_env->name)
-
 t_env	*create_env(char *env)
 {
 	int		i;
@@ -61,6 +60,8 @@ t_env	*create_env(char *env)
 
 // FIXED ? ft_lstnew peut return NULL, a gerer (exit proprement et free lst_env)
 // FIXED ? pareil pour create_env, peut return NULL, a gerer proprement
+// TODO FIX si envs NULL -> Erreur, NULL pointer free
+// TODO FIX ne pas crash si erreur, juste cascade le NULL
 t_list	*add_env(t_list *lst, char *env)
 {
 	t_list	*new;
@@ -80,8 +81,8 @@ t_list	*add_env(t_list *lst, char *env)
 
 t_list	*tab_to_list(char **env)
 {
-	t_list	*lst_env;
 	int		i;
+	t_list	*lst_env;
 
 	i = 0;
 	lst_env = NULL;
@@ -95,13 +96,13 @@ t_list	*tab_to_list(char **env)
 
 // FIXED ? pas besoin de l'arg t_list *lst pcq normalement
 // les env sont dans g_minishell->envs
-int	my_env(int ac, char **av, char **env)
+// TODO FIX pk free_env(envs) ??
+int	my_env(int ac, char **av)
 {
 	t_env	*envs;
 	t_list	*lst;
 
 	(void)av;
-	g_minishell.envs = tab_to_list(env);
 	lst = g_minishell.envs;
 	if (ac == 1)
 	{
@@ -109,7 +110,6 @@ int	my_env(int ac, char **av, char **env)
 		{
 			envs = lst->content;
 			printf("%s=%s\n", envs->name, envs->value);
-			free_env(envs);
 			lst = lst->next;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:08:12 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/01 15:43:05 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/12 17:16:28 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ static char	*print_name(char *av)
 	return (av);
 }
 
+// TODO JSP ADVICE? alors j'avais pas pense a une fonction qui check
+// tous les chars en meme temps mais pk pas. Aussi au lieu d'eliminer
+// les chars que tu veux pas, c'est mieux de return 1 avec les chars
+// que tu veux, et aussi n'oublie dans la libft ya des fonctions comme
+// isalpha et isdigit. Je conseil aussi en plus de cette fonction si 
+// tu veux la garder d'en faire une qui check seuleument 1 char comme
+// isdigit par exemple
 static int	check_char(char *av)
 {
 	int	i;
@@ -78,14 +85,17 @@ int	valid_name(char *av)
 
 // TODO export test test
 // FIXED ? encore une fois pas besoin de t_list *lst
-int	my_export(int ac, char **av, char **env)
+// FIXED ? probleme, si un name et pas valid et qu'il
+// y en a un apres il va l'ajouter direct sans checker
+// si il est valide, je conseille plutot un else ici pour add_env
+int	my_export(int ac, char **av)
 {
 	int		i;
-	t_list	*lst;
+//	t_list	*lst;
 
-	lst = g_minishell.envs;
+//	lst = g_minishell.envs;
 	if (ac == 1)
-		return (my_env(ac, av, env));
+		return (my_env(ac, av));
 	else
 	{
 		i = 1;
@@ -98,7 +108,8 @@ int	my_export(int ac, char **av, char **env)
 				else
 					break ;
 			}
-			g_minishell.envs = add_env(lst, av[i]);
+			else
+				g_minishell.envs = add_env(g_minishell.envs, av[i]);
 			i++;
 		}
 	}
