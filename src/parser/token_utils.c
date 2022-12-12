@@ -59,6 +59,20 @@ t_token_type	get_token_type(char *token_value)
 	return (TOKEN_WORD);
 }
 
+t_token	*new_token(char *value, t_token_type type)
+{
+	t_token	*token;
+
+	if (value == NULL)
+		return (NULL);
+	token = malloc(sizeof(*token));
+	if (!token)
+		return (NULL);
+	token->value = value;
+	token->type = type;
+	return (token);
+}
+
 int	is_operator(char c)
 {
 	if (c == '|' || c == '<' || c == '>')

@@ -14,16 +14,7 @@
 
 static t_token	*create_token(char *value)
 {
-	t_token	*token;
-
-	if (value == NULL)
-		return (NULL);
-	token = malloc(sizeof(*token));
-	if (!token)
-		return (NULL);
-	token->value = value;
-	token->type = get_token_type(token->value);
-	return (token);
+	return (new_token(value, get_token_type(value)));
 }
 
 /* TODO make an exit function that clears g_minishell

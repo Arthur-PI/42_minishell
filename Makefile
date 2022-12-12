@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/12/08 18:15:52 by tperes           ###   ########.fr        #
+#    Updated: 2022/12/12 12:04:21 by tperes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,10 @@
 ### COMPILATION ###
 CC		= cc
 CFLAGS	= -Wall -Wextra
+CFLAGS	+= -Wshadow -Wpedantic -Wuninitialized -Wmissing-include-dirs -Wundef -Winvalid-pch
+CFLAGS	+= -Winit-self -Wswitch-enum -Wswitch-default -Wformat=2 -Wformat-nonliteral -Wformat-security -Wformat-y2k
+CFLAGS	+= -Wdouble-promotion -Wfloat-equal -Wpointer-arith
+CFLAGS	+= -Wconditional-uninitialized
 CFLAGS	+= -MMD -MP
 INCLUDE	= -I$(H_DIR) -I$(LIBFT_DIR)/$(H_DIR)
 LFLAGS	= -L$(LIBFT_DIR)
@@ -26,7 +30,7 @@ TEST	?= false
 NOERROR	?= false
 
 ifeq ($(DEBUG),true)
-	CFLAGS += -g
+	CFLAGS += -g3 -Os
 endif
 
 ifeq ($(NOERROR),false)
@@ -61,6 +65,12 @@ SRCS	+=	builtins/echo.c \
 			parser/lexer.c \
 			parser/substitute.c \
 			parser/token_utils.c \
+			parser/lst_utils.c \
+			parser/remove_quotes.c \
+			parser/command_utils.c \
+			parser/valid_syntax.c \
+			parser/tokens_to_commands.c \
+			parser/heredoc.c \
 			signal.c \
 			execution/exec.c \
 			execution/pipe.c \

@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:50:12 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/26 22:52:44 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/11 14:39:10 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,29 @@ void	free_token(void *ptr)
 	}
 }
 
-void	lst_remove_quotes(t_list *lst)
-{
-	t_token	*token;
-
-	while (lst)
-	{
-		token = lst->content;
-		remove_quotes(token->value);
-		lst = lst->next;
-	}
-}
-
 /* TODO make an exit function that clear g_minishell
  * TODO parse tokens to commands
+ * TODO exit with proper exit function
+ * TODO exec command
  */
 void	*parse_line(char *line)
 {
 	t_list	*tokens;
+	t_list	*commands;
 
 	tokens = get_tokens(line);
 	if (!tokens)
 		exit(2);
+	lst_expand_var(tokens);
 	lst_remove_quotes(tokens);
 	print_tokens(tokens);
+	if (valid_syntax(tokens))
+	{
+		commands = tokens_to_commands(tokens);
+		if (commands)
+			print_commands(commands);
+		ft_lstclear(&commands, &free_command);
+	}
 	ft_lstclear(&tokens, &free_token);
 	return (NULL);
 }

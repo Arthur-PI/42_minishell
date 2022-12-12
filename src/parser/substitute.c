@@ -6,45 +6,13 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 18:40:58 by apigeon           #+#    #+#             */
-/*   Updated: 2022/11/26 22:53:48 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/10 21:34:44 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern t_minishell	g_minishell;
-
-/* remove quotes (single or double) that surround a WORD.
- * e.g: abc" J'arrive "def' ici".'  -> abc J'arrive def ici".
- * e.g: "Bonjour j'arrive."  -> Bonjour j'arrive
- */
-void	remove_quotes(char *s)
-{
-	int		i;
-	int		nb_quotes;
-	char	current_quote;
-
-	i = 0;
-	nb_quotes = 0;
-	current_quote = 0;
-	while (s[i])
-	{
-		if (is_quote(s[i]) && current_quote == 0)
-		{
-			nb_quotes++;
-			current_quote = s[i];
-		}
-		else if (s[i] == current_quote)
-		{
-			nb_quotes++;
-			current_quote = 0;
-		}
-		else
-			s[i - nb_quotes] = s[i];
-		i++;
-	}
-	s[i - nb_quotes] = s[i];
-}
 
 /* extract the env variable such as $NAME in a string
  * given the start of the $ sign.
@@ -96,36 +64,47 @@ static char	*get_env_value(char *name)
 	return (env_value);
 }
 
+static char	*replace_env(char *s, char *old, uint *end, uint *start)
+{
+	char	*env;
+	char	*env_value;
+
+	old = ft_concat(old, ft_substr(s, *start, (*end) - (*start)));
+	env = extract_env_name(s, *end);
+	env_value = get_env_value(env);
+	old = ft_concat(old, env_value);
+	if (env)
+		*end += ft_strlen(env);
+	free(env);
+	*start = (*end) + 1;
+	return (old);
+}
+
 // return a copy of s with all environment variables replace by there values.
 // e.g. s = "Hello i am $NAME, and i'm $AGE. Thank you"
 // -> "Hello i am Arthur, and i'm 21. Thank you"
 char	*replace_envs(char *s)
 {
-	int		i;
-	int		start;
-	char	*env;
-	char	*env_value;
+	uint	i;
+	uint	start;
+	char	quote;
 	char	*new;
 
 	i = 0;
 	start = 0;
-	env = NULL;
 	new = NULL;
+	quote = 0;
 	while (s[i])
 	{
-		if (s[i] == '$')
-		{
-			new = ft_concat(new, ft_substr(s, start, i - start));
-			env = extract_env_name(s, i);
-			env_value = get_env_value(env);
-			new = ft_concat(new, env_value);
-			if (env)
-				i += ft_strlen(env);
-			free(env);
-			start = i + 1;
-		}
+		if (is_quote(s[i]) && quote == 0)
+			quote = s[i];
+		else if (is_quote(s[i]) && s[i] == quote)
+			quote = 0;
+		if (quote != '\'' && s[i] == '$')
+			new = replace_env(s, new, &i, &start);
 		i++;
 	}
 	new = ft_concat(new, ft_substr(s, start, i - start));
+	free(s);
 	return (new);
 }
