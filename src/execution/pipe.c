@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/12 17:27:34 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/12 20:52:42 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	builtins(int ac, char **av)
 	else if (ft_strcmp(av[0], "cd") == 0)
 		return (cd(ac, av));
 	else if (ft_strcmp(av[0], "exit") == 0)
-		return (printf(my_exit(ac, av));
+		return (my_exit(ac, av));
 	else if (ft_strcmp(av[0], "pwd") == 0)
 		return (pwd(ac));
 	else if (ft_strcmp(av[0], "env") == 0)
