@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:35:44 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/30 10:48:37 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/12 17:21:56 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,12 @@ t_list	*tab_to_list(char **env)
 // FIXED ? pas besoin de l'arg t_list *lst pcq normalement
 // les env sont dans g_minishell->envs
 // TODO FIX pk free_env(envs) ??
-int	my_env(int ac, char **av, char **env)
+int	my_env(int ac, char **av)
 {
 	t_env	*envs;
 	t_list	*lst;
 
 	(void)av;
-	g_minishell.envs = tab_to_list(env);
 	lst = g_minishell.envs;
 	if (ac == 1)
 	{
@@ -111,7 +110,6 @@ int	my_env(int ac, char **av, char **env)
 		{
 			envs = lst->content;
 			printf("%s=%s\n", envs->name, envs->value);
-			free_env(envs);
 			lst = lst->next;
 		}
 	}

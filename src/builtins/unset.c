@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/05 17:57:21 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/12 12:03:55 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_env	*get_env_el(char *av)
 {
 	t_env	*envs;
 
+	envs = NULL;
 	while (g_minishell.envs != NULL)
 	{
 		envs = g_minishell.envs->content;
@@ -98,12 +99,12 @@ static int	check_arg(char *av)
 
 // FIXED ? pareil que pour export, si check_arg est faux
 // tu vas delete celui d'apres sans le checker. Un else
-int	my_unset(int ac, char **av, char **env)
+int	my_unset(int ac, char **av)
 {
 	int	i;
 
 	i = 1;
-	g_minishell.envs = tab_to_list(env);
+//	g_minishell.envs = tab_to_list(env);
 	if (ac > 1)
 	{
 		while (av[i])

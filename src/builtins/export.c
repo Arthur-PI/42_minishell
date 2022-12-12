@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:08:12 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/05 17:57:39 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/12 20:51:07 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,12 @@ int	valid_name(char *av)
 // TODO export test test
 // export NAME=VALUE NAME NAME=VALUE
 // TODO FIX ne pas break
-int	my_export(int ac, char **av, char **env)
+int	my_export(int ac, char **av)
 {
 	int		i;
-	t_list	*lst;
 
-	lst = g_minishell.envs;
 	if (ac == 1)
-		return (my_env(ac, av, env));
+		return (my_env(ac, av));
 	else
 	{
 		i = 1;
@@ -107,7 +105,7 @@ int	my_export(int ac, char **av, char **env)
 					break ;
 			}
 			else
-				g_minishell.envs = add_env(lst, av[i]);
+				g_minishell.envs = add_env(g_minishell.envs, av[i]);
 			i++;
 		}
 	}

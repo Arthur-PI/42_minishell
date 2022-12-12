@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:25 by apigeon           #+#    #+#             */
-/*   Updated: 2022/10/31 14:52:52 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/12 12:03:12 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,16 @@
 # include "libft.h"
 # include "builtins.h"
 # include "parser.h"
+# include "execution.h"
 # include "utils.h"
 
 typedef struct s_minishell
 {
+	int		signal;
 	t_list	*envs;
 }				t_minishell;
 
 void	handle_signals(void);
+void	handle_signals_heredoc(void);
 
 #endif
