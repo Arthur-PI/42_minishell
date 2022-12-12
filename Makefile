@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/12/12 12:04:21 by tperes           ###   ########.fr        #
+#    Updated: 2022/12/12 13:27:02 by tperes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS	= -Wall -Wextra
 CFLAGS	+= -Wshadow -Wpedantic -Wuninitialized -Wmissing-include-dirs -Wundef -Winvalid-pch
 CFLAGS	+= -Winit-self -Wswitch-enum -Wswitch-default -Wformat=2 -Wformat-nonliteral -Wformat-security -Wformat-y2k
 CFLAGS	+= -Wdouble-promotion -Wfloat-equal -Wpointer-arith
-CFLAGS	+= -Wconditional-uninitialized
+#CFLAGS	+= -Wconditional-uninitialized
 CFLAGS	+= -MMD -MP
 INCLUDE	= -I$(H_DIR) -I$(LIBFT_DIR)/$(H_DIR)
 LFLAGS	= -L$(LIBFT_DIR)
@@ -74,7 +74,6 @@ SRCS	+=	builtins/echo.c \
 			signal.c \
 			execution/exec.c \
 			execution/pipe.c \
-			execution/command_utils.c \
 			utils.c \
 
 ### OBJECTS ###
