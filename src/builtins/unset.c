@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/12 12:03:55 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/12 23:06:06 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,17 @@ extern t_minishell	g_minishell;
 t_env	*get_env_el(char *av)
 {
 	t_env	*envs;
+	t_list	*lst;
 
 	envs = NULL;
-	while (g_minishell.envs != NULL)
+	lst = g_minishell.envs;
+	while (lst != NULL)
 	{
-		envs = g_minishell.envs->content;
+		envs = lst->content;
 		if (ft_strncmp(av, envs->name, ft_strlen(envs->name)) == 0
 			&& ft_strlen(av) == ft_strlen(envs->name))
 			return (envs);
-		g_minishell.envs = g_minishell.envs->next;
+		lst = lst->next;
 	}
 	return (envs);
 }
