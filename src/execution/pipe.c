@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/12 20:52:42 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/12 23:17:57 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*get_path_cmd(char *cmd)
 	t_env	*env;
 	t_list	*lst;
 	char	**path;
-	int	i;
+	int		i;
 
 	lst = g_minishell.envs;
 	while (lst != NULL)
@@ -53,13 +53,12 @@ char	*get_path_cmd(char *cmd)
 	return (NULL);
 }
 
-//pas sure du return(1) => a revoir
 int	builtins(int ac, char **av)
 {
 	if (ft_strcmp(av[0], "echo") == 0)
 		return (echo(ac, av));
 	else if (ft_strcmp(av[0], "cd") == 0)
-		return (cd(ac, av));
+		return (printf("my cd\n"), cd(ac, av));
 	else if (ft_strcmp(av[0], "exit") == 0)
 		return (my_exit(ac, av));
 	else if (ft_strcmp(av[0], "pwd") == 0)
@@ -71,7 +70,7 @@ int	builtins(int ac, char **av)
 	else if (ft_strcmp(av[0], "export") == 0)
 		return (my_export(ac, av));
 	else
-		return (1);
+		return (2);
 }
 
 int	nbr_args(char **av)
@@ -105,8 +104,8 @@ int	pipex(t_list *command)
 	int	tpout;
 	int	fdin;
 	int	fdout;
-	t_command	*cmd;
 	int	fd_pipe[2];
+	t_command	*cmd;
 
 	tpin = dup(0);
 	tpout = dup(1);
@@ -128,7 +127,7 @@ int	pipex(t_list *command)
 		}
 		dup2(fdout, 1);
 		close(fdout);
-		if (builtins(nbr_args(cmd->args), cmd->args) == 1)
+		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
 			exec(cmd->args, get_path_cmd(cmd->args[0]));
 		command = command->next;
 	}
