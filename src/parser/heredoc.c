@@ -12,7 +12,7 @@
 
 #include "parser.h"
 
-t_minishell	g_minishell;
+extern t_minishell	g_minishell;
 
 static void	heredoc_readlines(char *stop, int fd)
 {

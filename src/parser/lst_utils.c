@@ -57,15 +57,14 @@ static t_list	*split_token(char *s)
 			quote = s[i];
 		else if (is_quote(s[i]) && s[i] == quote)
 			quote = 0;
-		if (!quote && (s[i] == ' ' || s[i + 1] == 0))
+		if (!quote && s[i] == ' ')
 		{
 			if (start != i)
 				extract_word(s, start, i, &new);
 			start = i + 1;
 		}
 	}
-	if (i == 0)
-		extract_word(s, 0, 0, &new);
+	extract_word(s, start, i, &new);
 	return (new);
 }
 

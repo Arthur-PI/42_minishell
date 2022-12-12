@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <unistd.h>
 
-t_minishell	g_minishell;
+extern t_minishell	g_minishell;
 
 static void	sighandler(int signum)
 {
