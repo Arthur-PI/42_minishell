@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/09 13:32:45 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/12 17:27:34 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,44 +53,6 @@ char	*get_path_cmd(char *cmd)
 	return (NULL);
 }
 
-t_command	*create_cmd(char *line, int j)
-{
-	t_command	*new_cmd;
-	int			i;
-	int			start;
-	int			len;
-
-	new_cmd = malloc(sizeof(*new_cmd));
-	if (!new_cmd)
-		return (NULL);
-	i = 0;
-	while (line[i])
-		i++;
-	new_cmd->cmd_full = line;
-	len = len_cmd(line, j);
-	start = start_cmd(line, j);
-	new_cmd->cmd = ft_substr(line, start, len - start);
-	new_cmd->args = ft_split(new_cmd->cmd, ' ');
-	return (new_cmd);
-}
-
-t_list	*add_cmd(t_list *lst, char *line, int i)
-{
-	t_list	*new;
-	t_command	*command;
-
-	command = create_cmd(line, i);
-	new = ft_lstnew(command);
-	ft_lstadd_back(&lst, new);
-	if (command == NULL || new == NULL)
-	{
-		free_cmd(command);
-		ft_lstclear(&lst, &free_cmd);
-		exit(1);
-	}
-	return (lst);
-}
-
 //pas sure du return(1) => a revoir
 int	builtins(int ac, char **av)
 {
@@ -99,7 +61,7 @@ int	builtins(int ac, char **av)
 	else if (ft_strcmp(av[0], "cd") == 0)
 		return (cd(ac, av));
 	else if (ft_strcmp(av[0], "exit") == 0)
-		return (my_exit(ac, av));
+		return (printf(my_exit(ac, av));
 	else if (ft_strcmp(av[0], "pwd") == 0)
 		return (pwd(ac));
 	else if (ft_strcmp(av[0], "env") == 0)
@@ -137,14 +99,13 @@ int	nbr_args(char **av)
 	return (fdout);
 }*/
 
-int	pipex(char *line)
+int	pipex(t_list *command)
 {
 	int	tpin;
 	int	tpout;
 	int	fdin;
 	int	fdout;
-	t_command	*command;
-	t_list	*cmd;
+	t_command	*cmd;
 	int	fd_pipe[2];
 
 	tpin = dup(0);
@@ -152,13 +113,12 @@ int	pipex(char *line)
 	fdin = redir_input(tpin);
 	if (fdin == -1)
 		return (0);
-	cmd = list_cmd(line);
-	while (cmd != NULL)
+	while (command != NULL)
 	{
-		command = cmd->content;
+		cmd = command->content;
 		dup2(fdin, 0);
 		close(fdin);
-		if (cmd->next == NULL)
+		if (command->next == NULL)
 			fdout = dup(tpout);
 		else
 		{
@@ -168,9 +128,9 @@ int	pipex(char *line)
 		}
 		dup2(fdout, 1);
 		close(fdout);
-		if (builtins(nbr_args(command->args), command->args) == 1)
-			exec(command->args, get_path_cmd(command->args[0]));
-		cmd = cmd->next;
+		if (builtins(nbr_args(cmd->args), cmd->args) == 1)
+			exec(cmd->args, get_path_cmd(cmd->args[0]));
+		command = command->next;
 	}
 	return (dup2(tpin, 0), dup2(tpout, 1), close(tpin), close(tpout), 0);
 }

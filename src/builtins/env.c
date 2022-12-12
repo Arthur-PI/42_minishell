@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:35:44 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/09 13:23:38 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/12 17:21:56 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ int	my_env(int ac, char **av)
 	t_list	*lst;
 
 	(void)av;
-//	g_minishell.envs = tab_to_list(env);
 	lst = g_minishell.envs;
 	if (ac == 1)
 	{
@@ -111,7 +110,6 @@ int	my_env(int ac, char **av)
 		{
 			envs = lst->content;
 			printf("%s=%s\n", envs->name, envs->value);
-			free_env(envs);
 			lst = lst->next;
 		}
 	}

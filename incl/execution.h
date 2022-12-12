@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:33:41 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/08 18:17:55 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/12 13:25:14 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 int		exec(char **av, char *cmd);
 
 	/*pipe.c*/
-int		pipex(char *line);
+int		pipex(t_list *command);
 
 	/*command_utils.c*/
 int		nbr_pipes(char *line, char c);
