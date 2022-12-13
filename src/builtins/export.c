@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "minishell.h"
 
 extern t_minishell	g_minishell;
 

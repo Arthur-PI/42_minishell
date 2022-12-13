@@ -33,6 +33,7 @@ char	*get_path_cmd(char *cmd)
 	char	**path;
 	int		i;
 
+	env = NULL;
 	lst = g_minishell.envs;
 	while (lst != NULL)
 	{
@@ -98,6 +99,7 @@ int	nbr_args(char **av)
 	return (fdout);
 }*/
 
+// TODO FIX handle pipe return value in case of error (-1)
 int	pipex(t_list *command)
 {
 	int	tpin;

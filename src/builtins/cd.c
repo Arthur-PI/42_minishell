@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "minishell.h"
 
 extern t_minishell	g_minishell;
 /*
@@ -20,13 +19,13 @@ extern t_minishell	g_minishell;
 - cd with many arguments
 TODO cd with no argument
 */
-
 char	*home(void)
 {
 	t_env	*env;
 	t_list	*lst;
 	char	*home;
 
+	home = NULL;
 	lst = g_minishell.envs;
 	while (lst != NULL)
 	{
@@ -38,6 +37,7 @@ char	*home(void)
 	return (home);
 }
 
+// TODO FIX handle chdir return value in case of error
 int	cd(int ac, char **av)
 {
 
