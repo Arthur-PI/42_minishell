@@ -6,11 +6,12 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:32:29 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/24 17:23:34 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/13 17:20:45 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include <errno.h>
 
 int	exec(char **av, char *cmd)
 {
@@ -24,7 +25,5 @@ int	exec(char **av, char *cmd)
 		if (execve(cmd, av, NULL) == -1)
 			perror("Error");
 	}
-	else
-		wait(NULL);
-	return (0);
+	return (ret);
 }
