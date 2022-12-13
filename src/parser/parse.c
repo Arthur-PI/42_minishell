@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:50:12 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/12 17:11:54 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/13 17:59:50 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*parse_line(char *line)
 		if (commands)
 		{
 		//	print_commands(commands);
-			pipex(commands);
+			executing(commands);
 		}
 		ft_lstclear(&commands, &free_command);
 	}

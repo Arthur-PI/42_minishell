@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/13 17:28:18 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/13 18:14:12 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,22 +99,12 @@ int	nbr_args(char **av)
 	return (fdout);
 }*/
 
-int	pipex(t_list *command)
+int	pipex(int fdin, int tpout, int ret, t_list *command)
 {
-	int	tpin;
-	int	tpout;
-	int	fdin;
 	int	fdout;
 	int	fd_pipe[2];
-	int	ret;
 	t_command	*cmd;
 
-	tpin = dup(0);
-	tpout = dup(1);
-	ret = 0;
-	fdin = redir_input(tpin);
-	if (fdin == -1)
-		return (0);
 	while (command != NULL)
 	{
 		cmd = command->content;
@@ -124,7 +114,8 @@ int	pipex(t_list *command)
 			fdout = dup(tpout);
 		else
 		{
-			pipe(fd_pipe);
+			if (pipe(fd_pipe) == -1)
+				return (-1);
 			fdout = fd_pipe[1];
 			fdin = fd_pipe[0];
 		}
@@ -134,6 +125,23 @@ int	pipex(t_list *command)
 			ret = exec(cmd->args, get_path_cmd(cmd->args[0]));
 		command = command->next;
 	}
+	return (ret);
+}
+
+int	executing(t_list *command)
+{
+	int	tpin;
+	int	tpout;
+	int	fdin;
+	int	ret;
+
+	tpin = dup(0);
+	ret = 0;
+	tpout = dup(1);
+	fdin = redir_input(tpin);
+	if (fdin == -1)
+		return (0);
+	ret = pipex(fdin, tpout, ret, command);
 	if (ret != 0)
 		waitpid(ret, NULL, 0);
 	return (dup2(tpin, 0), dup2(tpout, 1), close(tpin), close(tpout), 0);
