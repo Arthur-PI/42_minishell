@@ -6,11 +6,12 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/12 23:17:57 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/13 17:28:18 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include <errno.h>
 
 extern t_minishell	g_minishell;
 
@@ -105,10 +106,12 @@ int	pipex(t_list *command)
 	int	fdin;
 	int	fdout;
 	int	fd_pipe[2];
+	int	ret;
 	t_command	*cmd;
 
 	tpin = dup(0);
 	tpout = dup(1);
+	ret = 0;
 	fdin = redir_input(tpin);
 	if (fdin == -1)
 		return (0);
@@ -128,8 +131,10 @@ int	pipex(t_list *command)
 		dup2(fdout, 1);
 		close(fdout);
 		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
-			exec(cmd->args, get_path_cmd(cmd->args[0]));
+			ret = exec(cmd->args, get_path_cmd(cmd->args[0]));
 		command = command->next;
 	}
+	if (ret != 0)
+		waitpid(ret, NULL, 0);
 	return (dup2(tpin, 0), dup2(tpout, 1), close(tpin), close(tpout), 0);
 }
