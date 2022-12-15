@@ -70,7 +70,7 @@ static int	add_redirect(t_command *cmd, t_list *rd_type, t_list *file)
 	t_redirect_type	type;
 
 	fd = 1;
-	type = get_redirection_type(((t_token *) rd_type)->type);
+	type = get_redirection_type(((t_token *) rd_type->content)->type);
 	if (type == RD_HEREDOC)
 		fd = handle_heredoc(((t_token *)file->content)->value);
 	if (fd == -1)
