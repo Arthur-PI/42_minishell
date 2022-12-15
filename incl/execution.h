@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:33:41 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/13 18:09:02 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/14 15:47:14 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdio.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include "minishell.h"
 # include "builtins.h"
 # include "parser.h"

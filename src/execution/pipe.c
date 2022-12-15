@@ -6,24 +6,43 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/13 18:14:12 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/15 10:02:09 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "parser.h"
 #include <errno.h>
 
 extern t_minishell	g_minishell;
 
-int	redir_input(int tmpin)
+int	redir_input(int tmpin, t_list *command)
 {
 	int		fdin;
-//	t_redirect	*redirect;
+	int		i;
+	t_command	*cmd;
+	t_redirect_type	type;
+	t_redirect	*redirect;
 
-//	if (redirect.file)
-//		fdin = open(redirect.file, O_RDONLY);
-//	else
-	fdin = dup(tmpin);
+	i = 0;
+	while (command != NULL)
+	{
+		cmd = command->content;
+		while (cmd->redirects != NULL)
+		{
+			i++;
+			redirect = cmd->redirects->content;
+			type = RD_OUT;
+		//	if (redirect->type == RD_IN)
+			printf("%d %d\n", type, redirect->type);
+			if (redirect->file)		
+				fdin = open(redirect->file, O_RDONLY);
+			else
+				fdin = dup(tmpin);
+			cmd->redirects = cmd->redirects->next;
+		}
+		command = command->next;
+	}
 	return (fdin);
 }
 
@@ -84,13 +103,11 @@ int	nbr_args(char **av)
 	return (i);
 }
 
-/*int	redir_output(int fdout)
+/*int	redir_output(int tpout, t_list *command)
 {
-	int		tmpout;
 	t_redirect	*redirect;
 	char		*new_file;
 
-	tmpout = dup(0);
 	new_file = cmd_args;
 	if (redirect.file)
 		fdout = open(redirect.file, O_TRUNC)
@@ -138,7 +155,7 @@ int	executing(t_list *command)
 	tpin = dup(0);
 	ret = 0;
 	tpout = dup(1);
-	fdin = redir_input(tpin);
+	fdin = redir_input(tpin, command);
 	if (fdin == -1)
 		return (0);
 	ret = pipex(fdin, tpout, ret, command);
