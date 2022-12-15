@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 extern t_minishell	g_minishell;
@@ -67,14 +68,25 @@ static char	*get_env_value(char *name)
 static char	*replace_env(char *s, char *old, uint *end, uint *start)
 {
 	char	*env;
+	char	*tmp;
 	char	*env_value;
 
-	old = ft_concat(old, ft_substr(s, *start, (*end) - (*start)));
+	tmp = ft_substr(s, *start, (*end) - (*start));
+	if (!tmp)
+		return (NULL);
+	old = ft_concat(old, tmp);
+	if (!old)
+		return (free(tmp), NULL);
 	env = extract_env_name(s, *end);
+	if (!env)
+		return (free(tmp), free(old), NULL);
 	env_value = get_env_value(env);
+	if (!env_value)
+		return (free(tmp), free(old), free(env_value), NULL);
 	old = ft_concat(old, env_value);
-	if (env)
-		*end += ft_strlen(env);
+	if (!old)
+		return (free(tmp), free(env_value), NULL);
+	*end += ft_strlen(env);
 	free(env);
 	*start = (*end) + 1;
 	return (old);
@@ -90,19 +102,22 @@ char	*replace_envs(char *s)
 	char	quote;
 	char	*new;
 
-	i = 0;
+	i = -1;
 	start = 0;
 	new = NULL;
 	quote = 0;
-	while (s[i])
+	while (s[++i])
 	{
 		if (is_quote(s[i]) && quote == 0)
 			quote = s[i];
 		else if (is_quote(s[i]) && s[i] == quote)
 			quote = 0;
 		if (quote != '\'' && s[i] == '$')
+		{
 			new = replace_env(s, new, &i, &start);
-		i++;
+			if (!new)
+				return (s);
+		}
 	}
 	new = ft_concat(new, ft_substr(s, start, i - start));
 	free(s);

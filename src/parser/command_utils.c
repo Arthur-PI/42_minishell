@@ -57,7 +57,7 @@ static void	free_redirect(void *ptr)
 	if (rd)
 	{
 		free(rd->file);
-		if (rd->type == RD_HEREDOC)
+		if (rd->fd != 1)
 			close(rd->fd);
 		free(rd);
 	}

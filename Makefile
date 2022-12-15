@@ -70,6 +70,7 @@ SRCS	+=	builtins/echo.c \
 			parser/valid_syntax.c \
 			parser/tokens_to_commands.c \
 			parser/heredoc.c \
+			parser/lst_remove_quotes.c \
 			signal.c \
 			execution/exec.c \
 			execution/pipe.c \

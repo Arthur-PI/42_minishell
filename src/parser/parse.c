@@ -25,9 +25,6 @@ void	free_token(void *ptr)
 }
 
 /* TODO make an exit function that clear g_minishell
- * TODO parse tokens to commands
- * TODO exit with proper exit function
- * TODO exec command
  */
 void	*parse_line(char *line)
 {
@@ -36,18 +33,16 @@ void	*parse_line(char *line)
 
 	tokens = get_tokens(line);
 	if (!tokens)
-		exit(2);
-	lst_expand_var(tokens);
-	lst_remove_quotes(tokens);
-	print_tokens(tokens);
+		return (NULL);
+	if (lst_expand_var(tokens) == -1)
+		return (ft_lstclear(&tokens, &free_token), NULL);
+	if (lst_remove_quotes(tokens) == -1)
+		return (printf("Error: unclosed quote\n"), ft_lstclear(&tokens, &free_token), NULL);
 	if (valid_syntax(tokens))
 	{
 		commands = tokens_to_commands(tokens);
 		if (commands)
-		{
-		//	print_commands(commands);
 			pipex(commands);
-		}
 		ft_lstclear(&commands, &free_command);
 	}
 	ft_lstclear(&tokens, &free_token);
