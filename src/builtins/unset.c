@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/12 23:06:06 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/14 15:22:43 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,7 @@ int	my_unset(int ac, char **av)
 	{
 		while (av[i])
 		{
-			if (!check_arg(av[i]))
-			{
-				if (av[i + 1])
-					i++;
-				else
-					break ;
-			}
-			else
+			if (check_arg(av[i]))
 				g_minishell.envs = ft_delete(av[i]);
 			i++;
 		}
