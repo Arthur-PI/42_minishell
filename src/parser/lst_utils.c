@@ -6,25 +6,12 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 00:44:10 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/10 17:59:12 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/15 21:24:35 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	lst_remove_quotes(t_list *lst)
-{
-	t_token	*token;
-
-	while (lst)
-	{
-		token = lst->content;
-		remove_quotes(token->value);
-		lst = lst->next;
-	}
-}
-
-// TODO handle all mallocs
 static void	extract_word(const char *s, uint start, uint end, t_list **new)
 {
 	t_list	*tmp;
@@ -39,7 +26,6 @@ static void	extract_word(const char *s, uint start, uint end, t_list **new)
 	ft_lstadd_back(new, tmp);
 }
 
-// TODO handle all mallocs
 static t_list	*split_token(char *s)
 {
 	uint	i;
@@ -68,13 +54,31 @@ static t_list	*split_token(char *s)
 	return (new);
 }
 
-// TODO leaks on replace_envs return assigment
-// TODO split the new value in TOKEN_WORD
-// TODO protect malloc everywhere
-void	lst_expand_var(t_list *lst)
+static int	split_words(t_list *lst)
 {
 	t_list	*new;
 	t_list	*last;
+	t_token	*token;
+
+	token = lst->content;
+	new = split_token(token->value);
+	if (!new)
+		return (-1);
+	free_token(lst->content);
+	lst->content = new->content;
+	last = ft_lstlast(new);
+	last->next = lst->next;
+	if (last != new)
+	{
+		lst->next = new->next;
+		lst = last;
+	}
+	free(new);
+	return (1);
+}
+
+int	lst_expand_var(t_list *lst)
+{
 	t_token	*token;
 
 	while (lst)
@@ -83,18 +87,12 @@ void	lst_expand_var(t_list *lst)
 		if (token->type == TOKEN_WORD)
 		{
 			token->value = replace_envs(token->value);
-			new = split_token(token->value);
-			free_token(lst->content);
-			lst->content = new->content;
-			last = ft_lstlast(new);
-			last->next = lst->next;
-			if (last != new)
-			{
-				lst->next = new->next;
-				lst = last;
-			}
-			free(new);
+			if (!token->value)
+				return (-1);
+			if (split_words(lst) == -1)
+				return (-1);
 		}
 		lst = lst->next;
 	}
+	return (1);
 }
