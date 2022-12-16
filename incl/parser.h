@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:39 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/16 13:35:21 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/16 18:38:15 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 # define ERROR_MALLOC 1
 # define NO_ERROR 0
+
+# define FILE_ERROR_MSG "Error: '%s' not such file/directory or permission denied\n"
 
 typedef enum e_token_type
 {

@@ -6,11 +6,12 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 21:48:03 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/11 15:21:29 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/16 18:38:32 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include <sys/fcntl.h>
 
 // TODO deal with malloc protection
 static void	string_array_add(char ***array, char *s)
@@ -63,16 +64,31 @@ static t_redirect_type	get_redirection_type(t_token_type type)
 		return (RD_HEREDOC);
 }
 
+static int	open_fd(t_redirect_type type, t_token *name)
+{
+	int		fd;
+	char	*s;
+
+	s = name->value;
+	if (type == RD_HEREDOC)
+		fd = handle_heredoc(s);
+	else
+	{
+		fd = open(s, O_RDONLY);
+		if (fd == -1)
+			printf(FILE_ERROR_MSG, s);
+	}
+	return (fd);
+}
+
 static bool	add_redirect(t_command *cmd, t_list *rd_type, t_list *file)
 {
 	int				fd;
 	t_redirect		*rd;
 	t_redirect_type	type;
 
-	fd = 1;
 	type = get_redirection_type(((t_token *) rd_type->content)->type);
-	if (type == RD_HEREDOC)
-		fd = handle_heredoc(((t_token *)file->content)->value);
+	fd = open_fd(type, file->content);
 	if (fd == -1)
 		return (false);
 	rd = malloc(sizeof(*rd));
