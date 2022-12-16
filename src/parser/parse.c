@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:50:12 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/12 17:11:54 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/16 11:06:22 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ void	*parse_line(char *line)
 	{
 		commands = tokens_to_commands(tokens);
 		if (commands)
-			pipex(commands);
+		{
+		//	print_commands(commands);
+			executing(commands);
+		}
 		ft_lstclear(&commands, &free_command);
 	}
 	ft_lstclear(&tokens, &free_token);

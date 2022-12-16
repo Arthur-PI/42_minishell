@@ -6,26 +6,15 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/13 17:28:18 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/16 10:57:02 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "parser.h"
 #include <errno.h>
 
 extern t_minishell	g_minishell;
-
-int	redir_input(int tmpin)
-{
-	int		fdin;
-//	t_redirect	*redirect;
-
-//	if (redirect.file)
-//		fdin = open(redirect.file, O_RDONLY);
-//	else
-	fdin = dup(tmpin);
-	return (fdin);
-}
 
 char	*get_path_cmd(char *cmd)
 {
@@ -85,48 +74,25 @@ int	nbr_args(char **av)
 	return (i);
 }
 
-/*int	redir_output(int fdout)
-{
-	int		tmpout;
-	t_redirect	*redirect;
-	char		*new_file;
-
-	tmpout = dup(0);
-	new_file = cmd_args;
-	if (redirect.file)
-		fdout = open(redirect.file, O_TRUNC)
-	else
-		fdout = open(new_file, O_CREAT | O_WRONLY);
-	return (fdout);
-}*/
-
 // TODO FIX handle pipe return value in case of error (-1)
-int	pipex(t_list *command)
+int	pipex(int fdin, int tpout, int ret, t_list *command)
 {
-	int	tpin;
-	int	tpout;
-	int	fdin;
-	int	fdout;
-	int	fd_pipe[2];
-	int	ret;
 	t_command	*cmd;
+	int			fdout;
+	int			fd_pipe[2];
 
-	tpin = dup(0);
-	tpout = dup(1);
-	ret = 0;
-	fdin = redir_input(tpin);
-	if (fdin == -1)
-		return (0);
 	while (command != NULL)
 	{
+
 		cmd = command->content;
 		dup2(fdin, 0);
 		close(fdin);
 		if (command->next == NULL)
-			fdout = dup(tpout);
+			fdout = redir_output(tpout, fdin, command);
 		else
 		{
-			pipe(fd_pipe);
+			if (pipe(fd_pipe) == -1)
+				return (-1);
 			fdout = fd_pipe[1];
 			fdin = fd_pipe[0];
 		}
@@ -136,6 +102,23 @@ int	pipex(t_list *command)
 			ret = exec(cmd->args, get_path_cmd(cmd->args[0]));
 		command = command->next;
 	}
+	return (ret);
+}
+
+int	executing(t_list *command)
+{
+	int	tpin;
+	int	tpout;
+	int	fdin;
+	int	ret;
+
+	tpin = dup(0);
+	ret = 0;
+	tpout = dup(1);
+	fdin = redir_input(tpin, command);
+	if (fdin == -1)
+		return (0);
+	ret = pipex(fdin, tpout, ret, command);
 	if (ret != 0)
 		waitpid(ret, NULL, 0);
 	return (dup2(tpin, 0), dup2(tpout, 1), close(tpin), close(tpout), 0);
