@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
-#include "libft.h"
 #include "minishell.h"
 
 t_minishell	g_minishell;

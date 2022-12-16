@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/15 10:02:09 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/16 10:57:02 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,6 @@
 
 extern t_minishell	g_minishell;
 
-int	redir_input(int tmpin, t_list *command)
-{
-	int		fdin;
-	int		i;
-	t_command	*cmd;
-	t_redirect_type	type;
-	t_redirect	*redirect;
-
-	i = 0;
-	while (command != NULL)
-	{
-		cmd = command->content;
-		while (cmd->redirects != NULL)
-		{
-			i++;
-			redirect = cmd->redirects->content;
-			type = RD_OUT;
-		//	if (redirect->type == RD_IN)
-			printf("%d %d\n", type, redirect->type);
-			if (redirect->file)		
-				fdin = open(redirect->file, O_RDONLY);
-			else
-				fdin = dup(tmpin);
-			cmd->redirects = cmd->redirects->next;
-		}
-		command = command->next;
-	}
-	return (fdin);
-}
-
 char	*get_path_cmd(char *cmd)
 {
 	t_env	*env;
@@ -53,6 +23,7 @@ char	*get_path_cmd(char *cmd)
 	char	**path;
 	int		i;
 
+	env = NULL;
 	lst = g_minishell.envs;
 	while (lst != NULL)
 	{
@@ -103,32 +74,21 @@ int	nbr_args(char **av)
 	return (i);
 }
 
-/*int	redir_output(int tpout, t_list *command)
-{
-	t_redirect	*redirect;
-	char		*new_file;
-
-	new_file = cmd_args;
-	if (redirect.file)
-		fdout = open(redirect.file, O_TRUNC)
-	else
-		fdout = open(new_file, O_CREAT | O_WRONLY);
-	return (fdout);
-}*/
-
+// TODO FIX handle pipe return value in case of error (-1)
 int	pipex(int fdin, int tpout, int ret, t_list *command)
 {
-	int	fdout;
-	int	fd_pipe[2];
 	t_command	*cmd;
+	int			fdout;
+	int			fd_pipe[2];
 
 	while (command != NULL)
 	{
+
 		cmd = command->content;
 		dup2(fdin, 0);
 		close(fdin);
 		if (command->next == NULL)
-			fdout = dup(tpout);
+			fdout = redir_output(tpout, fdin, command);
 		else
 		{
 			if (pipe(fd_pipe) == -1)
