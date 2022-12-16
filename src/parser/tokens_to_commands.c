@@ -63,7 +63,7 @@ static t_redirect_type	get_redirection_type(t_token_type type)
 		return (RD_HEREDOC);
 }
 
-static int	add_redirect(t_command *cmd, t_list *rd_type, t_list *file)
+static bool	add_redirect(t_command *cmd, t_list *rd_type, t_list *file)
 {
 	int				fd;
 	t_redirect		*rd;
@@ -85,7 +85,6 @@ static int	add_redirect(t_command *cmd, t_list *rd_type, t_list *file)
 
 t_list	*tokens_to_commands(t_list *tokens)
 {
-	int			ret;
 	t_list		*commands;
 	t_token		*token;
 	t_command	*command;
@@ -112,12 +111,7 @@ t_list	*tokens_to_commands(t_list *tokens)
 		{
 			if (command == NULL)
 				command = create_command(NULL);
-			if (token->type == TOKEN_RD_OUT || token->type == TOKEN_RD_APPEND
-				|| commands == NULL)
-				ret = add_redirect(command, tokens, tokens->next);
-			else
-				ret = add_redirect(commands->content, tokens, tokens->next);
-			if (!ret)
+			if (!add_redirect(command, tokens, tokens->next))
 				return (NULL);
 			tokens = tokens->next;
 		}
