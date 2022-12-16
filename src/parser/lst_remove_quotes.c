@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 22:13:31 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/15 22:24:43 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/16 13:32:46 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int	lst_remove_quotes(t_list *lst)
 	{
 		token = lst->content;
 		if (!is_quotes_valid(token->value))
+		{
+			printf("Error: unclosed quote\n");
 			return (-1);
+		}
 		remove_quotes(token->value);
 		lst = lst->next;
 	}

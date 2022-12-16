@@ -105,7 +105,6 @@ int	my_unset(int ac, char **av)
 	int	i;
 
 	i = 1;
-//	g_minishell.envs = tab_to_list(env);
 	if (ac > 1)
 	{
 		while (av[i])

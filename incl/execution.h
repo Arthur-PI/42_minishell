@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:33:41 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/16 10:57:06 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/16 13:35:38 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include "parser.h"
 # include "libft.h"
 
-
 	/*exec.c*/
 int		exec(char **av, char *cmd);
 
@@ -32,7 +31,7 @@ int		exec(char **av, char *cmd);
 int		pipex(int fdin, int tpout, int ret, t_list *command);
 int		executing(t_list *command);
 
-int	redir_input(int fdin, t_list *command);
-int	redir_output(int tpout, int fdin, t_list *command);
+int		redir_input(int fdin, t_list *command);
+int		redir_output(int tpout, int fdin, t_list *command);
 
 #endif

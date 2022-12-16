@@ -13,12 +13,13 @@
 #include "builtins.h"
 
 extern t_minishell	g_minishell;
+
 /*
-- cd with a directory that exists
-- cd with a directory that doesn't exist
-- cd with many arguments
-TODO cd with no argument
-*/
+ * - cd with a directory that exists
+ * - cd with a directory that doesn't exist
+ * - cd with many arguments
+ * TODO cd with no argument 
+ */
 char	*home(void)
 {
 	t_env	*env;
@@ -40,7 +41,6 @@ char	*home(void)
 // TODO FIX handle chdir return value in case of error
 int	cd(int ac, char **av)
 {
-
 	if (ac == 1)
 		chdir(home());
 	else if (ac > 2)

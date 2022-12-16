@@ -16,7 +16,7 @@
 int	exec(char **av, char *cmd)
 {
 	int	ret;
-	
+
 	ret = fork();
 	if (ret == -1)
 		return (-1);

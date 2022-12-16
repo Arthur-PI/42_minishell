@@ -37,15 +37,12 @@ void	*parse_line(char *line)
 	if (lst_expand_var(tokens) == -1)
 		return (ft_lstclear(&tokens, &free_token), NULL);
 	if (lst_remove_quotes(tokens) == -1)
-		return (printf("Error: unclosed quote\n"), ft_lstclear(&tokens, &free_token), NULL);
+		return (ft_lstclear(&tokens, &free_token), NULL);
 	if (valid_syntax(tokens))
 	{
 		commands = tokens_to_commands(tokens);
 		if (commands)
-		{
-		//	print_commands(commands);
 			executing(commands);
-		}
 		ft_lstclear(&commands, &free_command);
 	}
 	ft_lstclear(&tokens, &free_token);

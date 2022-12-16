@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:39 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/11 15:21:53 by apigeon          ###   ########.fr       */
+/*   Updated: 2022/12/16 13:35:21 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void			remove_quotes(char *s);
 char			*replace_envs(char *s);
 void			print_tokens(t_list *tokens);
 t_token			*new_token(char *value, t_token_type type);
-int			lst_remove_quotes(t_list *lst);
-int			lst_expand_var(t_list *lst);
+int				lst_remove_quotes(t_list *lst);
+int				lst_expand_var(t_list *lst);
 void			print_commands(t_list *commands);
 int				valid_syntax(t_list *tokens);
 void			free_command(void *ptr);
