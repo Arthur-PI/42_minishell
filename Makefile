@@ -29,7 +29,7 @@ TEST	?= false
 NOERROR	?= false
 
 ifeq ($(DEBUG),true)
-	CFLAGS += -g3 -Os
+	CFLAGS += -g3
 endif
 
 ifeq ($(NOERROR),false)
