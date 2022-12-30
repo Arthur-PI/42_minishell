@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:47:15 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/12 23:07:52 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/24 07:24:42 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int	cd(int ac, char **av)
 {
 
 	if (ac == 1)
-		chdir(home());
+	{
+		if (chdir(home()) == -1)
+			return (1);
+	}
 	else if (ac > 2)
 		return (printf("cd: string not in pwd: %s\n", av[1]), 1);
 	else if (ac == 2)
