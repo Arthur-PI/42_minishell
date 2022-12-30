@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/16 10:57:02 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/30 05:33:23 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int	pipex(int fdin, int tpout, int ret, t_list *command)
 
 	while (command != NULL)
 	{
-
 		cmd = command->content;
 		dup2(fdin, 0);
 		close(fdin);

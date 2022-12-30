@@ -6,19 +6,21 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 16:29:02 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/16 11:01:51 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/30 05:33:37 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	redir_input(int fdin, t_list *command)
+int	redir_input(int tpin, t_list *command)
 {
 	t_command	*cmd;
 	t_list		*tmp_command;
 	t_list		*tmp_rd;
 	t_redirect	*redirect;
+	int			fdin;
 
+	fdin = dup(tpin);
 	tmp_command = command;
 	while (tmp_command != NULL)
 	{
@@ -27,15 +29,16 @@ int	redir_input(int fdin, t_list *command)
 		while (tmp_rd != NULL)
 		{
 			redirect = tmp_rd->content;
-			if (redirect->file && redirect->type == RD_IN)
+			if (redirect->type == RD_IN)
+			{
 				redirect->fd = open(redirect->file, O_RDONLY);
-			else
-				redirect->fd = dup(fdin);
+				fdin = dup(redirect->fd);
+			}
 			tmp_rd = tmp_rd->next;
 		}
 		tmp_command = tmp_command->next;
 	}
-	return (redirect->fd);
+	return (fdin);
 }
 
 int	redir_output(int tpout, int fdin, t_list *command)
@@ -44,11 +47,10 @@ int	redir_output(int tpout, int fdin, t_list *command)
 	t_command	*cmd;
 	int			fdout;
 
+	fdout = dup(tpout);
 	while (command != NULL)
 	{
 		cmd = command->content;
-		if (!cmd->redirects)
-			fdout = dup(tpout);
 		while (cmd->redirects != NULL)
 		{
 			redirect = cmd->redirects->content;
