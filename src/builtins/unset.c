@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/14 15:22:43 by tperes           ###   ########.fr       */
+/*   Updated: 2022/12/31 09:08:53 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 extern t_minishell	g_minishell;
 
-// TODO Norme
-// TODO free -> invalid read of size 8 3x (main et ft_delete) comme pour my_env
-// TODO FIX -> je comprends mais je pense juste que tu comprends mal
-// comment fonctionne strcmp et c'est pour ca, j'explique discord
 t_env	*get_env_el(char *av)
 {
 	t_env	*envs;
@@ -33,7 +29,7 @@ t_env	*get_env_el(char *av)
 			return (envs);
 		lst = lst->next;
 	}
-	return (envs);
+	return (NULL);
 }
 
 t_list	*ft_delete(char *av)
@@ -62,7 +58,6 @@ t_list	*ft_delete(char *av)
 	return (lst_new);
 }
 
-// TODO fonction qui check les arguments de unset
 static char	*print_name(char *av)
 {
 	int	i;
@@ -82,6 +77,8 @@ static int	check_arg(char *av)
 	i = 0;
 	while (av[i])
 	{
+		if (av[i] == '=')
+			return (0);
 		if (av[i] < '0')
 			return (print_name(av), 0);
 		else if (av[i] > '9' && av[i] < 'A')
@@ -98,14 +95,11 @@ static int	check_arg(char *av)
 	return (1);
 }
 
-// FIXED ? pareil que pour export, si check_arg est faux
-// tu vas delete celui d'apres sans le checker. Un else
 int	my_unset(int ac, char **av)
 {
 	int	i;
 
 	i = 1;
-//	g_minishell.envs = tab_to_list(env);
 	if (ac > 1)
 	{
 		while (av[i])
