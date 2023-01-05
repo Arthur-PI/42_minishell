@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:08:12 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/12 21:44:48 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/03 12:06:31 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ static int	check_char(char *av)
 	int	i;
 
 	i = 0;
-	while (av[i] != '=')
+	while (av[i])
 	{
 		if (av[i] < '0')
 			return (0);
-		else if (av[i] > '9' && av[i] < 'A')
+		else if (av[i] > '9' && av[i] < '=')
+			return (0);
+		else if (av[i] > '=' && av[i] < 'A')
 			return (0);
 		else if (av[i] > 'Z' && av[i] < '_')
 			return (0);
@@ -63,23 +65,24 @@ int	valid_name(char *av)
 	int	i;
 
 	i = 0;
-	while (av[i] != '=')
+	while (av[i])
 	{
-		if (av[0] > '0' && av[0] < '9')
+		if ((av[0] > '0' && av[0] < '9') || !check_char(av))
 		{
+			if (ft_strchr(av, '=') == NULL)
+			{
+				printf("export: not an identifier: %s\n", av);
+				return (1);
+			}
 			av = print_name(av);
 			printf("export: not an identifier: %s\n", av);
-			return (0);
-		}
-		if (!check_char(av))
-		{
-			av = print_name(av);
-			printf("export: not valid in this context: %s\n", av);
-			return (0);
+			return (1);
 		}
 		i++;
 	}
-	return (1);
+	if (ft_strchr(av, '=') == NULL)
+		return (2);
+	return (0);
 }
 
 // TODO export test test
@@ -90,9 +93,12 @@ int	valid_name(char *av)
 int	my_export(int ac, char **av)
 {
 	int		i;
+	int		ret;
+	int		valid;
 	t_list	*lst;
 
 	lst = g_minishell.envs;
+	ret = 0;
 	if (ac == 1)
 		return (my_env(ac, av));
 	else
@@ -100,10 +106,15 @@ int	my_export(int ac, char **av)
 		i = 1;
 		while (av[i])
 		{
-			if (valid_name(av[i]) != 0)
+			valid = valid_name(av[i]);
+			if (valid == 0)
 				g_minishell.envs = add_env(lst, av[i]);
+			else if (valid == 2 && ret == 0)
+				ret = 0;
+			else
+				ret = 1;
 			i++;
 		}
 	}
-	return (0);
+	return (ret);
 }
