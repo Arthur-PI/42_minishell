@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:38:27 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/02 15:38:34 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/03 14:49:56 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,7 @@ int	pwd(int ac)
 {
 	char	buf[MAXPATHLEN];
 
-	if (ac != 1)
-	{
-		printf("pwd: too many arguments\n");
-		return (0);
-	}
+	(void)ac;
 	if (getcwd(buf, sizeof(buf)) == NULL)
 		return (0);
 	printf("%s\n", buf);
