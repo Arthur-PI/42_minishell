@@ -71,6 +71,8 @@ SRCS	+=	builtins/echo.c \
 			parser/tokens_to_commands.c \
 			parser/heredoc.c \
 			parser/lst_remove_quotes.c \
+			parser/create_command.c \
+			parser/process_rd.c \
 			signal.c \
 			execution/exec.c \
 			execution/pipe.c \

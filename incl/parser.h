@@ -23,7 +23,7 @@
 # define ERROR_MALLOC 1
 # define NO_ERROR 0
 
-# define FILE_ERROR_MSG "Error: '%s' not such file/directory or permission denied\n"
+# define FILE_ERROR_MSG "Error: '%s' not such file or permission denied\n"
 
 typedef enum e_token_type
 {
@@ -79,5 +79,7 @@ int				valid_syntax(t_list *tokens);
 void			free_command(void *ptr);
 t_list			*tokens_to_commands(t_list *tokens);
 int				handle_heredoc(char *stop);
+t_command		*create_command(t_token *token);
+int				process_rd(t_token *t, t_command **c, t_list **ts);
 
 #endif
