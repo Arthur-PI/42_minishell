@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/31 09:08:53 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/03 14:37:48 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,6 @@ t_list	*ft_delete(char *av)
 	return (lst_new);
 }
 
-static char	*print_name(char *av)
-{
-	int	i;
-
-	i = 0;
-	while (av[i] != '=')
-		i++;
-	av[i] = '\0';
-	printf("unset: %s: invalid parameter name\n", av);
-	return (av);
-}
-
 static int	check_arg(char *av)
 {
 	int	i;
@@ -80,15 +68,15 @@ static int	check_arg(char *av)
 		if (av[i] == '=')
 			return (0);
 		if (av[i] < '0')
-			return (print_name(av), 0);
+			return (0);
 		else if (av[i] > '9' && av[i] < 'A')
-			return (print_name(av), 0);
+			return (0);
 		else if (av[i] > 'Z' && av[i] < '_')
-			return (print_name(av), 0);
+			return (0);
 		else if (av[i] > '_' && av[i] < 'a')
-			return (print_name(av), 0);
+			return (0);
 		else if (av[i] > 'z')
-			return (print_name(av), 0);
+			return (0);
 		else
 			i++;
 	}
