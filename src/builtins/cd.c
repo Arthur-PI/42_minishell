@@ -6,20 +6,13 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:47:15 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/06 09:16:51 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/06 15:40:46 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
 extern t_minishell	g_minishell;
-
-/*
-- cd with a directory that exists
-- cd with a directory that doesn't exist
-- cd with many arguments
-TODO cd with no argument
-*/
 
 char	*home(void)
 {
