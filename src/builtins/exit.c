@@ -12,6 +12,8 @@
 
 #include "builtins.h"
 
+extern t_minishell	g_minishell;
+
 static int	atoi_exit(const char *str)
 {
 	int		i;

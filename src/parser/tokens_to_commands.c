@@ -59,7 +59,7 @@ static int	process_pipe(t_token *token, t_list **commands, t_command *command)
 		ft_lstadd_back(commands, ft_lstnew(command));
 		command = NULL;
 	}
-	return (-1);
+	return (1);
 }
 
 t_list	*tokens_to_commands(t_list *tokens)
