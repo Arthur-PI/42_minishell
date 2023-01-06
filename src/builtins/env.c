@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:35:44 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/12 17:21:56 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/06 15:15:52 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ t_list	*tab_to_list(char **env)
 
 // FIXED ? pas besoin de l'arg t_list *lst pcq normalement
 // les env sont dans g_minishell->envs
-// TODO FIX pk free_env(envs) ??
 int	my_env(int ac, char **av)
 {
 	t_env	*envs;
@@ -112,6 +111,7 @@ int	my_env(int ac, char **av)
 			lst = lst->next;
 		}
 	}
+	g_minishell.exit_status = 0;
 	return (0);
 }
 

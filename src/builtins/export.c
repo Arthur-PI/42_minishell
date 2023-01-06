@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:08:12 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/03 12:06:31 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/06 09:07:05 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,6 @@ int	my_export(int ac, char **av)
 			i++;
 		}
 	}
+	g_minishell.exit_status = ret;
 	return (ret);
 }

@@ -6,11 +6,13 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:54:55 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/01 16:49:24 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/06 09:05:14 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "minishell.h"
+
+extern t_minishell	g_minishell; 
 
 static int	echo_newline(char **av)
 {
@@ -52,5 +54,6 @@ int	echo(int ac, char **av)
 	}
 	if (!newline_option)
 		printf("\n");
+	g_minishell.exit_status = 0;
 	return (0);
 }

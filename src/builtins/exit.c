@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:09:07 by tperes            #+#    #+#             */
-/*   Updated: 2022/11/03 19:00:26 by apigeon          ###   ########.fr       */
+/*   Updated: 2023/01/06 15:07:54 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ int	my_exit(int ac, char **av)
 	while (ac > 2)
 	{
 		printf("minishell: exit: too many arguments\n");
+		g_minishell.exit_status = 1;
 		return (1);
 	}
+	g_minishell.exit_status = status;
 	exit(status);
 }
