@@ -25,11 +25,13 @@ static char	*extract_env_name(char *s, size_t start)
 
 	start++;
 	end = start;
-	if (s[start] && !ft_isdigit(s[end++]))
-	{
-		while (is_name_char(s[end]))
-			end++;
-	}
+	if (s[end] == '?')
+		return (ft_strdup("?"));
+	if (ft_isdigit(s[end]) || !is_name_char(s[end]))
+		return (ft_strdup(""));
+	end++;
+	while (is_name_char(s[end]))
+		end++;
 	env_name = ft_substr(s, start, end - start);
 	return (env_name);
 }
@@ -58,6 +60,8 @@ static char	*get_env_value(char *name)
 	char	*env_value;
 
 	env_value = NULL;
+	if (ft_strcmp(name, "?") == 0)
+		return (ft_itoa(g_minishell.exit_status));
 	env = get_env(name);
 	if (env)
 		env_value = ft_strdup(env->value);
@@ -72,7 +76,10 @@ static char	*replace_env(char *s, char *old, uint *end, uint *start)
 
 	tmp = ft_substr(s, *start, (*end) - (*start));
 	old = ft_concat(old, tmp);
+	*start = *end;
 	env = extract_env_name(s, *end);
+	if (env[0] == 0)
+		return (free(env), old);
 	env_value = get_env_value(env);
 	old = ft_concat(old, env_value);
 	*end += ft_strlen(env);
@@ -91,11 +98,11 @@ char	*replace_envs(char *s)
 	char	quote;
 	char	*new;
 
-	i = -1;
+	i = 0;
 	start = 0;
 	new = NULL;
 	quote = 0;
-	while (s[++i])
+	while (s[i])
 	{
 		if (is_quote(s[i]) && quote == 0)
 			quote = s[i];
@@ -103,6 +110,7 @@ char	*replace_envs(char *s)
 			quote = 0;
 		if (quote != '\'' && s[i] == '$')
 			new = replace_env(s, new, &i, &start);
+		i++;
 	}
 	new = ft_concat(new, ft_substr(s, start, i - start));
 	free(s);
