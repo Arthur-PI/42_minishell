@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "minishell.h"
+#include "parser.h"
 
 extern t_minishell	g_minishell;
 

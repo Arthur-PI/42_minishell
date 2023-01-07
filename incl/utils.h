@@ -14,6 +14,8 @@
 # define UTILS_H
 
 # include <stdbool.h>
+# include <sys/types.h>
+
 # include "libft.h"
 
 char	*ft_concat(char *s1, char *s2);
