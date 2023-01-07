@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "execution.h"
+#include "libft.h"
 #include "minishell.h"
 
 t_minishell	g_minishell;
@@ -43,7 +45,6 @@ static void	routine(void)
 	char	*line;
 	t_list	*commands;
 
-	(void)commands;
 	while (1)
 	{
 		line = get_line();
@@ -51,6 +52,10 @@ static void	routine(void)
 			break ;
 		commands = parse_line(line);
 		free(line);
+		if (!commands)
+			break ;
+		executing(commands);
+		ft_lstclear(&commands, &free_command);
 	}
 	ft_lstclear(&g_minishell.envs, free_env);
 }

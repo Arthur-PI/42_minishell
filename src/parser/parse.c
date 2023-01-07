@@ -26,12 +26,13 @@ void	free_token(void *ptr)
 
 /* TODO make an exit function that clear g_minishell
  */
-void	*parse_line(char *line)
+t_list	*parse_line(char *line)
 {
 	t_list	*tokens;
 	t_list	*commands;
 
 	tokens = get_tokens(line);
+	commands = NULL;
 	if (!tokens)
 		return (NULL);
 	if (lst_expand_var(tokens) == -1)
@@ -39,12 +40,7 @@ void	*parse_line(char *line)
 	if (lst_remove_quotes(tokens) == -1)
 		return (ft_lstclear(&tokens, &free_token), NULL);
 	if (valid_syntax(tokens))
-	{
 		commands = tokens_to_commands(tokens);
-		if (commands)
-			executing(commands);
-		ft_lstclear(&commands, &free_command);
-	}
 	ft_lstclear(&tokens, &free_token);
-	return (NULL);
+	return (commands);
 }

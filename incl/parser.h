@@ -65,7 +65,7 @@ typedef struct s_command
 
 int				is_operator(char c);
 void			free_token(void *ptr);
-void			*parse_line(char *line);
+t_list			*parse_line(char *line);
 t_list			*get_tokens(char *line);
 t_token_type	get_token_type(char *token_value);
 void			remove_quotes(char *s);
