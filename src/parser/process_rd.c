@@ -29,7 +29,7 @@ static int	get_open_flag(t_redirect_type type)
 	if (type == RD_IN)
 		return (O_RDONLY);
 	if (type == RD_OUT)
-		return (O_WRONLY | O_CREAT);
+		return (O_WRONLY | O_CREAT | O_TRUNC);
 	if (type == RD_APPEND)
 		return (O_WRONLY | O_CREAT | O_APPEND);
 	return (O_RDWR);
@@ -45,7 +45,7 @@ static int	open_fd(t_redirect_type type, t_token *name)
 		fd = handle_heredoc(s);
 	else
 	{
-		fd = open(s, get_open_flag(type));
+		fd = open(s, get_open_flag(type), 0644);
 		if (fd == -1)
 			printf(FILE_ERROR_MSG, s);
 	}
