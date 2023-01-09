@@ -27,13 +27,18 @@ LINKS	= -lft -lreadline
 DEBUG	?= false
 TEST	?= false
 NOERROR	?= false
+ASAN	?= false
 
 ifeq ($(DEBUG),true)
-	CFLAGS += -g3
+	CFLAGS	+= -g3
 endif
 
 ifeq ($(NOERROR),false)
-	CFLAGS += -Werror
+	CFLAGS	+= -Werror
+endif
+
+ifeq ($(ASAN), true)
+	CFLAGS	+= -fsanitize=address
 endif
 
 ifeq ($(TEST),true)
@@ -124,6 +129,13 @@ run: $(NAME)
 
 val: $(NAME)
 	@$(VALGRIND) ./$(NAME) $(ARGS)
+
+info:
+	@echo "$(BLUE)NAME$(RESET): $(NAME)"
+	@echo "$(BLUE)CFLAGS$(RESET): $(CFLAGS)"
+	@echo "$(BLUE)INCLUDE$(RESET): $(INCLUDE)"
+	@echo "$(BLUE)LFLAGS$(RESET): $(LFLAGS)"
+	@echo "$(BLUE)LINKS$(RESET): $(LINKS)"
 
 clean:
 	@$(MAKE) clean -C $(LIBFT_DIR)

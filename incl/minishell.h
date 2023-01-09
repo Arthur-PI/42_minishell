@@ -15,7 +15,6 @@
 
 # include <stdio.h>
 # include <signal.h>
-# include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -23,14 +22,7 @@
 # include "builtins.h"
 # include "parser.h"
 # include "execution.h"
-# include "utils.h"
-
-typedef struct s_minishell
-{
-	int		signal;
-	int		exit_status;
-	t_list	*envs;
-}				t_minishell;
+# include "struct.h"
 
 void	handle_signals(void);
 void	handle_signals_heredoc(void);

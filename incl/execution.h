@@ -19,10 +19,10 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include "minishell.h"
-# include "builtins.h"
-# include "parser.h"
+
 # include "libft.h"
+# include "struct.h"
+# include "builtins.h"
 
 	/*exec.c*/
 int		exec(char **av, char *cmd);

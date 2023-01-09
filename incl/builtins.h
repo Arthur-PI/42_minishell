@@ -17,14 +17,9 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <sys/param.h>
-# include "libft.h"
-# include "minishell.h"
 
-typedef struct s_env
-{
-	char	*name;
-	char	*value;
-}				t_env;
+# include "libft.h"
+# include "struct.h"
 
 int		pwd(int ac);
 int		echo(int ac, char **av);
