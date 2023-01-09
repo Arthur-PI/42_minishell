@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 16:29:02 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/09 06:49:28 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/09 11:55:26 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	redir_output(int tpout, int fdin, t_list *command)
 			if (redirect->type == RD_OUT)
 			{
 				fdout = dup(fdin);
-				fdout = open(redirect->file, O_TRUNC |
-					O_WRONLY);
 			}
 			cmd->redirects = cmd->redirects->next;
 		}
