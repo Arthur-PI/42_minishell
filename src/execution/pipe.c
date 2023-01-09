@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/07 15:26:36 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/09 12:08:54 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	pipex(int fdin, int tpout, int ret, t_list *command)
 	t_command	*cmd;
 	int			fdout;
 	int			fd_pipe[2];
+	int	i;
 
 	while (command != NULL)
 	{
@@ -97,6 +98,12 @@ int	pipex(int fdin, int tpout, int ret, t_list *command)
 		}
 		dup2(fdout, 1);
 		close(fdout);
+		i = 0;
+		while (cmd->args[i])
+		{
+			printf("%s\n", cmd->args[i]);
+			i++;
+		}
 		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
 			ret = exec(cmd->args, get_path_cmd(cmd->args[0]));
 		command = command->next;
@@ -114,12 +121,13 @@ int	executing(t_list *command)
 
 	tpin = dup(0);
 	ret = 0;
+	status = 0;
 	tpout = dup(1);
 	fdin = redir_input(tpin, command);
 	if (fdin == -1)
 		return (0);
 	ret = pipex(fdin, tpout, ret, command);
-	if (ret != 0)
+	if (ret > 0)
 		waitpid(ret, &status, 0);
 	if (WIFEXITED(status))
 		g_minishell.exit_status = WEXITSTATUS(status);
