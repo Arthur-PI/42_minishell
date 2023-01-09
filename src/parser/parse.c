@@ -39,8 +39,9 @@ t_list	*parse_line(char *line)
 		return (ft_lstclear(&tokens, &free_token), NULL);
 	if (lst_remove_quotes(tokens) == -1)
 		return (ft_lstclear(&tokens, &free_token), NULL);
-	if (valid_syntax(tokens))
-		commands = tokens_to_commands(tokens);
+	if (!valid_syntax(tokens))
+		return (ft_lstclear(&tokens, &free_token), NULL);
+	commands = tokens_to_commands(tokens);
 	ft_lstclear(&tokens, &free_token);
 	return (commands);
 }

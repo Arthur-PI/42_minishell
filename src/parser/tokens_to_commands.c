@@ -52,16 +52,23 @@ static int	process_word(t_token *token, t_command **command_addr)
 	return (1);
 }
 
-static int	process_pipe(t_token *token, t_list **commands, t_command *command)
+// TODO free command if error
+static int	process_pipe(t_token *token, t_list **commands, t_command **command)
 {
+	t_list	*new;
+
 	if (token->type == TOKEN_PIPE)
 	{
-		ft_lstadd_back(commands, ft_lstnew(command));
-		command = NULL;
+		new = ft_lstnew(*command);
+		if (!new)
+			return (-1);
+		ft_lstadd_back(commands, new);
+		*command = NULL;
 	}
 	return (1);
 }
 
+// TODO free commands and command if error
 t_list	*tokens_to_commands(t_list *tokens)
 {
 	t_list		*commands;
@@ -73,7 +80,7 @@ t_list	*tokens_to_commands(t_list *tokens)
 	{
 		if (process_word(tokens->content, &command) == -1)
 			return (NULL);
-		if (process_pipe(tokens->content, &commands, command) == -1)
+		if (process_pipe(tokens->content, &commands, &command) == -1)
 			return (NULL);
 		if (process_rd(tokens->content, &command, &tokens) == -1)
 			return (NULL);
