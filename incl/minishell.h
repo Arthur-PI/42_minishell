@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:25 by apigeon           #+#    #+#             */
-/*   Updated: 2023/01/06 08:59:58 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/09 17:54:21 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/history.h>
 
 # include "libft.h"
+# include "ft_printf.h"
 # include "builtins.h"
 # include "parser.h"
 # include "execution.h"
