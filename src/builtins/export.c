@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:08:12 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/06 09:07:05 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/09 11:52:41 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,20 +101,17 @@ int	my_export(int ac, char **av)
 	ret = 0;
 	if (ac == 1)
 		return (my_env(ac, av));
-	else
+	i = 1;
+	while (av[i])
 	{
-		i = 1;
-		while (av[i])
-		{
-			valid = valid_name(av[i]);
-			if (valid == 0)
-				g_minishell.envs = add_env(lst, av[i]);
-			else if (valid == 2 && ret == 0)
-				ret = 0;
-			else
-				ret = 1;
-			i++;
-		}
+		valid = valid_name(av[i]);
+		if (valid == 0)
+			g_minishell.envs = add_env(lst, av[i]);
+		else if (valid == 2 && ret == 0)
+			ret = 0;
+		else
+			ret = 1;
+		i++;
 	}
 	g_minishell.exit_status = ret;
 	return (ret);

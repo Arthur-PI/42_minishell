@@ -6,13 +6,13 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:54:55 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/06 09:05:14 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/09 11:47:58 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_minishell	g_minishell; 
+extern t_minishell	g_minishell;
 
 static int	echo_newline(char **av)
 {
