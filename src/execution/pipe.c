@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/09 12:08:54 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/09 19:18:17 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*get_path_cmd(char *cmd)
 	t_list	*lst;
 	char	**path;
 	int		i;
+	char	*tmp;
 
 	env = NULL;
 	lst = g_minishell.envs;
@@ -36,9 +37,14 @@ char	*get_path_cmd(char *cmd)
 	i = 0;
 	while (path[i])
 	{
+		tmp = path[i];
 		path[i] = ft_strjoin(path[i], "/");
-		if (access(ft_strjoin(path[i], cmd), F_OK) == 0)
-			return (ft_strjoin(path[i], cmd));
+		free(tmp);
+		tmp = path[i];
+		path[i] = ft_strjoin(path[i], cmd);
+		free(tmp);
+		if (access(path[i], F_OK) == 0)
+			return (path[i]);
 		i++;
 	}
 	return (NULL);
@@ -49,7 +55,7 @@ int	builtins(int ac, char **av)
 	if (ft_strcmp(av[0], "echo") == 0)
 		return (echo(ac, av));
 	else if (ft_strcmp(av[0], "cd") == 0)
-		return (printf("my cd\n"), cd(ac, av));
+		return (cd(ac, av));
 	else if (ft_strcmp(av[0], "exit") == 0)
 		return (my_exit(ac, av));
 	else if (ft_strcmp(av[0], "pwd") == 0)
@@ -80,7 +86,6 @@ int	pipex(int fdin, int tpout, int ret, t_list *command)
 	t_command	*cmd;
 	int			fdout;
 	int			fd_pipe[2];
-	int	i;
 
 	while (command != NULL)
 	{
@@ -88,7 +93,7 @@ int	pipex(int fdin, int tpout, int ret, t_list *command)
 		dup2(fdin, 0);
 		close(fdin);
 		if (command->next == NULL)
-			fdout = redir_output(tpout, fdin, command);
+			fdout = redir_output(tpout, command);
 		else
 		{
 			if (pipe(fd_pipe) == -1)
@@ -98,12 +103,6 @@ int	pipex(int fdin, int tpout, int ret, t_list *command)
 		}
 		dup2(fdout, 1);
 		close(fdout);
-		i = 0;
-		while (cmd->args[i])
-		{
-			printf("%s\n", cmd->args[i]);
-			i++;
-		}
 		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
 			ret = exec(cmd->args, get_path_cmd(cmd->args[0]));
 		command = command->next;
