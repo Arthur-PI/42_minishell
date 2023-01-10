@@ -6,13 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/01/10 16:14:57 by tperes           ###   ########.fr       */
-||||||| parent of b170b64 (bug fix killing processes)
-/*   Updated: 2023/01/09 19:18:17 by tperes           ###   ########.fr       */
-=======
 /*   Updated: 2023/01/10 14:10:57 by tperes           ###   ########.fr       */
->>>>>>> b170b64 (bug fix killing processes)
 /*                                                                            */
 /* ************************************************************************** */
 
