@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/09 19:18:17 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/10 16:14:57 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,40 +15,6 @@
 #include <errno.h>
 
 extern t_minishell	g_minishell;
-
-char	*get_path_cmd(char *cmd)
-{
-	t_env	*env;
-	t_list	*lst;
-	char	**path;
-	int		i;
-	char	*tmp;
-
-	env = NULL;
-	lst = g_minishell.envs;
-	while (lst != NULL)
-	{
-		env = lst->content;
-		if (env == get_env_el("PATH"))
-			break ;
-		lst = lst->next;
-	}
-	path = ft_split(env->value, ':');
-	i = 0;
-	while (path[i])
-	{
-		tmp = path[i];
-		path[i] = ft_strjoin(path[i], "/");
-		free(tmp);
-		tmp = path[i];
-		path[i] = ft_strjoin(path[i], cmd);
-		free(tmp);
-		if (access(path[i], F_OK) == 0)
-			return (path[i]);
-		i++;
-	}
-	return (NULL);
-}
 
 int	builtins(int ac, char **av)
 {
