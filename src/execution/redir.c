@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 16:29:02 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/09 14:50:04 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/10 14:18:32 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,9 @@ int	redir_input(int tpin, t_list *command)
 		while (tmp_rd != NULL)
 		{
 			redirect = tmp_rd->content;
-			if (redirect->type == RD_IN)
-			{
-				printf("%s\n", redirect->file);
+			if (redirect->type == RD_IN
+				|| redirect->type == RD_HEREDOC)
 				fdin = dup(redirect->fd);
-			}
 			tmp_rd = tmp_rd->next;
 		}
 		tmp_command = tmp_command->next;
