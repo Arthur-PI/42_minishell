@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:33:41 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/16 13:35:38 by apigeon          ###   ########.fr       */
+/*   Updated: 2023/01/10 16:15:24 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int		pipex(int fdin, int tpout, int ret, t_list *command);
 int		executing(t_list *command);
 
 int		redir_input(int fdin, t_list *command);
-int		redir_output(int tpout, int fdin, t_list *command);
+int		redir_output(int tpout, t_list *command);
+
+char	*get_path(char **path, char *cmd);
+char	*get_path_cmd(char *cmd);
 
 #endif
