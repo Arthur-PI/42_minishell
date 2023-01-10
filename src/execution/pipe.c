@@ -6,10 +6,11 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/10 16:47:23 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/10 21:15:32 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "execution.h"
 #include "parser.h"
 #include <errno.h>
@@ -56,8 +57,6 @@ int	pipex(int fdin, int tpout, t_list *command)
 	while (command != NULL)
 	{
 		cmd = command->content;
-		dup2(fdin, 0);
-		close(fdin);
 		if (command->next == NULL)
 			fdout = redir_output(tpout, command);
 		else
@@ -71,20 +70,22 @@ int	pipex(int fdin, int tpout, t_list *command)
 		close(fdout);
 		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
 			cmd->pid = exec(cmd->args, get_path_cmd(cmd->args[0]));
+		dup2(fdin, 0);
+		close(fdin);
 		command = command->next;
 	}
 	return (cmd->pid);
 }
 
-void	killing_processes(t_list *command)
+void	killing_processes(t_list *command, int status)
 {
 	t_command	*cmd;
 
 	while (command->next != NULL)
 	{
 		cmd = command->content;
-		printf("ici\n");
-		kill(cmd->pid, SIGKILL);
+		printf("ici %d\n", cmd->pid);
+		kill(cmd->pid, SIGINT);
 		command = command->next;
 	}
 }
@@ -106,8 +107,8 @@ int	executing(t_list *command)
 		return (0);
 	ret = pipex(fdin, tpout, command);
 	if (ret > 0)
-		waitpid(ret, &status, 0);
-	killing_processes(command);
+		waitpid(ret, &status, WUNTRACED);
+	killing_processes(command, status);
 	if (WIFEXITED(status) && g_minishell.exit_status != 130)
 		g_minishell.exit_status = WEXITSTATUS(status);
 	return (dup2(tpin, 0), dup2(tpout, 1), close(tpin), close(tpout), 0);
