@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/10 21:15:32 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/11 10:00:42 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	pipex(int fdin, int tpout, t_list *command)
 	return (cmd->pid);
 }
 
-void	killing_processes(t_list *command, int status)
+void	killing_processes(t_list *command)
 {
 	t_command	*cmd;
 
@@ -108,7 +108,7 @@ int	executing(t_list *command)
 	ret = pipex(fdin, tpout, command);
 	if (ret > 0)
 		waitpid(ret, &status, WUNTRACED);
-	killing_processes(command, status);
+	killing_processes(command);
 	if (WIFEXITED(status) && g_minishell.exit_status != 130)
 		g_minishell.exit_status = WEXITSTATUS(status);
 	return (dup2(tpin, 0), dup2(tpout, 1), close(tpin), close(tpout), 0);
