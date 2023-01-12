@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/11 10:00:42 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/12 19:13:52 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,16 @@ int	pipex(int fdin, int tpout, t_list *command)
 	t_command	*cmd;
 	int			fdout;
 	int			fd_pipe[2];
+	char		*tmp;
 
 	while (command != NULL)
 	{
 		cmd = command->content;
+		fdin = redir_input(fdin, command);
+		if (fdin == -1)
+			return (-1);
+		dup2(fdin, 0);
+		close(fdin);
 		if (command->next == NULL)
 			fdout = redir_output(tpout, command);
 		else
@@ -68,10 +74,12 @@ int	pipex(int fdin, int tpout, t_list *command)
 		}
 		dup2(fdout, 1);
 		close(fdout);
+		tmp = get_path_cmd(cmd->args[0]);
 		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
-			cmd->pid = exec(cmd->args, get_path_cmd(cmd->args[0]));
-		dup2(fdin, 0);
-		close(fdin);
+			cmd->pid = exec(cmd->args, tmp);
+		else
+			cmd->pid = 0;
+		free(tmp);
 		command = command->next;
 	}
 	return (cmd->pid);
@@ -85,7 +93,7 @@ void	killing_processes(t_list *command)
 	{
 		cmd = command->content;
 		printf("ici %d\n", cmd->pid);
-		kill(cmd->pid, SIGINT);
+		kill(cmd->pid, SIGKILL);
 		command = command->next;
 	}
 }
@@ -94,7 +102,6 @@ int	executing(t_list *command)
 {
 	int	tpin;
 	int	tpout;
-	int	fdin;
 	int	ret;
 	int	status;
 
@@ -102,12 +109,11 @@ int	executing(t_list *command)
 	ret = 0;
 	status = 0;
 	tpout = dup(1);
-	fdin = redir_input(tpin, command);
-	if (fdin == -1)
-		return (0);
-	ret = pipex(fdin, tpout, command);
+	ret = pipex(tpin, tpout, command);
+	if (ret == -1)
+		return (-1);
 	if (ret > 0)
-		waitpid(ret, &status, WUNTRACED);
+		waitpid(ret, &status, 0);
 	killing_processes(command);
 	if (WIFEXITED(status) && g_minishell.exit_status != 130)
 		g_minishell.exit_status = WEXITSTATUS(status);
