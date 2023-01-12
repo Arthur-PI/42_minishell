@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:09:07 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/06 15:07:54 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/12 16:52:14 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	my_exit(int ac, char **av)
 		if (atoi_exit(av[1]) == 0 && av[1][0] != '0')
 		{
 			printf("minishell: exit: %s: numeric argument required\n", av[1]);
+			ft_lstclear(&g_minishell.envs, free_env);
 			exit(2);
 		}
 		status = atoi_exit(av[1]);
@@ -63,5 +64,6 @@ int	my_exit(int ac, char **av)
 		return (1);
 	}
 	g_minishell.exit_status = status;
+	ft_lstclear(&g_minishell.envs, free_env);
 	exit(status);
 }

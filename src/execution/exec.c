@@ -6,12 +6,14 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:32:29 by tperes            #+#    #+#             */
-/*   Updated: 2022/12/30 05:32:53 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/12 17:30:35 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include <errno.h>
+
+extern t_minishell	g_minishell;
 
 int	exec(char **av, char *cmd)
 {
@@ -23,7 +25,11 @@ int	exec(char **av, char *cmd)
 	if (ret == 0)
 	{
 		if (execve(cmd, av, NULL) == -1)
+		{
 			perror("Error");
+			ft_lstclear(&g_minishell.envs, free_env);
+			exit(127);
+		}
 	}
 	return (ret);
 }

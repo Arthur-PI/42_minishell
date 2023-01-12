@@ -6,7 +6,7 @@
 #    By: apigeon <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 16:08:04 by apigeon           #+#    #+#              #
-#    Updated: 2022/12/15 16:31:46 by tperes           ###   ########.fr        #
+#    Updated: 2023/01/10 16:16:23 by tperes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ SRCS	+=	builtins/echo.c \
 			execution/exec.c \
 			execution/pipe.c \
 			execution/redir.c \
+			execution/get_path.c \
 			utils.c \
 
 ### OBJECTS ###

@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 17:53:37 by apigeon           #+#    #+#             */
-/*   Updated: 2023/01/07 17:53:38 by apigeon          ###   ########.fr       */
+/*   Updated: 2023/01/10 13:51:02 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_command
 	char	*cmd;
 	char	**args;
 	t_list	*redirects;
+	int	pid;
 }				t_command;
 
 #endif
