@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:14:12 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/10 16:33:27 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/12 17:39:14 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ char	*get_path(char **path, char *cmd)
 	return (NULL);
 }
 
+void	free_path(char **path)
+{
+	int	i;
+
+	i = 0;
+	while (path[i])
+	{
+		free(path[i]);
+		i++;
+	}
+	free(path);
+}
+
 char	*get_path_cmd(char *cmd)
 {
 	t_env	*env;
@@ -52,7 +65,10 @@ char	*get_path_cmd(char *cmd)
 		lst = lst->next;
 	}
 	path = ft_split(env->value, ':');
-	tmp = get_path(path, cmd);
+	if (get_path(path, cmd) == NULL)
+		return (NULL);
+	tmp = ft_strdup(get_path(path, cmd));
+	free_path(path);
 	if (tmp != NULL)
 		return (tmp);
 	return (NULL);

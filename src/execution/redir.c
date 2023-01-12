@@ -6,35 +6,50 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 16:29:02 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/10 14:18:32 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/12 19:22:39 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
+extern t_minishell	g_minishell;
+
+int	redir_file(t_command *cmd, int fdin)
+{
+	t_redirect	*redirect;
+	t_list		*tmp_rd;
+
+	tmp_rd = cmd->redirects;
+	while (tmp_rd != NULL)
+	{
+		redirect = tmp_rd->content;
+		if (redirect->type == RD_IN
+			|| redirect->type == RD_HEREDOC)
+		{
+			fdin = dup(redirect->fd);
+			if (fdin == -1)
+				return (-1);
+		}
+		tmp_rd = tmp_rd->next;
+	}
+	return (fdin);
+}
+
 int	redir_input(int tpin, t_list *command)
 {
 	t_command	*cmd;
-	t_list		*tmp_command;
-	t_list		*tmp_rd;
-	t_redirect	*redirect;
 	int			fdin;
 
 	fdin = dup(tpin);
-	tmp_command = command;
-	while (tmp_command != NULL)
+	if (fdin == -1)
+		return (-1);
+	while (command != NULL)
 	{
-		cmd = tmp_command->content;
-		tmp_rd = cmd->redirects;
-		while (tmp_rd != NULL)
-		{
-			redirect = tmp_rd->content;
-			if (redirect->type == RD_IN
-				|| redirect->type == RD_HEREDOC)
-				fdin = dup(redirect->fd);
-			tmp_rd = tmp_rd->next;
-		}
-		tmp_command = tmp_command->next;
+		cmd = command->content;
+		fdin = redir_file(cmd, fdin);
+		if (fdin == -1)
+			return (-1);
+		command = command->next;
 	}
 	return (fdin);
 }
@@ -46,6 +61,8 @@ int	redir_output(int tpout, t_list *command)
 	int			fdout;
 
 	fdout = dup(tpout);
+	if (fdout == -1)
+		return (-1);
 	while (command != NULL)
 	{
 		cmd = command->content;
