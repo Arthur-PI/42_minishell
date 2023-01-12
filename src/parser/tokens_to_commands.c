@@ -68,6 +68,12 @@ static int	process_pipe(t_token *token, t_list **commands, t_command **command)
 	return (1);
 }
 
+static void	panic_free(t_list **commands, t_command *command)
+{
+	ft_lstclear(commands, &free_command);
+	free_command(command);
+}
+
 // TODO free commands and command if error
 t_list	*tokens_to_commands(t_list *tokens)
 {
@@ -79,11 +85,11 @@ t_list	*tokens_to_commands(t_list *tokens)
 	while (tokens)
 	{
 		if (process_word(tokens->content, &command) == -1)
-			return (NULL);
+			return (panic_free(&commands, command), NULL);
 		if (process_pipe(tokens->content, &commands, &command) == -1)
-			return (NULL);
+			return (panic_free(&commands, command), NULL);
 		if (process_rd(tokens->content, &command, &tokens) == -1)
-			return (NULL);
+			return (panic_free(&commands, command), NULL);
 		tokens = tokens->next;
 	}
 	if (command)

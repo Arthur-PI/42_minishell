@@ -46,7 +46,8 @@ static int	skip_quote(char *line, int i)
 		while (line[i] && line[i] != quote)
 			i++;
 	}
-	i++;
+	if (line[i])
+		i++;
 	return (i);
 }
 

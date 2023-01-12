@@ -24,7 +24,7 @@
 # define ERROR_MALLOC 1
 # define NO_ERROR 0
 
-# define FILE_ERROR_MSG "Error: '%s' not such file or permission denied\n"
+# define FILE_ERROR_MSG "minishell: no such file or directory: %s\n"
 
 int				is_operator(char c);
 void			free_token(void *ptr);
