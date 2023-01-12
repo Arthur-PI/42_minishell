@@ -18,10 +18,14 @@ t_command	*create_command(t_token *token)
 
 	cmd = malloc(sizeof(*cmd));
 	if (!cmd)
-		return (NULL);
+		exit(12);
 	cmd->cmd = NULL;
 	if (token)
+	{
 		cmd->cmd = ft_strdup(token->value);
+		if (!cmd->cmd)
+			exit(12);
+	}
 	cmd->args = NULL;
 	cmd->redirects = NULL;
 	return (cmd);

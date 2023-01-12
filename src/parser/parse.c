@@ -32,7 +32,6 @@ t_list	*parse_line(char *line)
 	t_list	*commands;
 
 	tokens = get_tokens(line);
-	commands = NULL;
 	if (!tokens)
 		return (NULL);
 	if (lst_expand_var(tokens) == -1)

@@ -55,20 +55,28 @@ static int	open_fd(t_redirect_type type, t_token *name)
 static bool	add_redirect(t_command *cmd, t_list *rd_type, t_list *file)
 {
 	int				fd;
+	t_list			*new;
 	t_redirect		*rd;
 	t_redirect_type	type;
 
 	if (!file)
-		return (NULL);
+		return (false);
 	type = get_redirection_type(((t_token *) rd_type->content)->type);
 	fd = open_fd(type, file->content);
 	if (fd == -1)
 		return (false);
 	rd = malloc(sizeof(*rd));
+	if (!rd)
+		exit(12);
 	rd->file = ft_strdup(((t_token *)file->content)->value);
+	if (!rd->file)
+		exit(12);
 	rd->type = type;
 	rd->fd = fd;
-	ft_lstadd_back(&cmd->redirects, ft_lstnew(rd));
+	new = ft_lstnew(rd);
+	if (!new)
+		exit(12);
+	ft_lstadd_back(&cmd->redirects, new);
 	return (true);
 }
 

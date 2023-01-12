@@ -75,13 +75,23 @@ static char	*replace_env(char *s, char *old, uint *end, uint *start)
 	char	*env_value;
 
 	tmp = ft_substr(s, *start, (*end) - (*start));
+	if (!tmp)
+		exit(12);
 	old = ft_concat(old, tmp);
+	if (!old)
+		exit(12);
 	*start = *end;
 	env = extract_env_name(s, *end);
+	if (!env)
+		exit(12);
 	if (env[0] == 0)
 		return (free(env), old);
 	env_value = get_env_value(env);
+	if (!env_value)
+		exit(12);
 	old = ft_concat(old, env_value);
+	if (!old)
+		exit(12);
 	*end += ft_strlen(env);
 	free(env);
 	*start = (*end) + 1;
@@ -114,5 +124,7 @@ char	*replace_envs(char *s)
 	}
 	new = ft_concat(new, ft_substr(s, start, i - start));
 	free(s);
+	if (!new)
+		exit(12);
 	return (new);
 }
