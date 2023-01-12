@@ -22,6 +22,8 @@ static void	string_array_add(char ***array, char *s)
 	while (*array && (*array)[len])
 		len++;
 	new = malloc((len + 2) * sizeof(*new));
+	if (!new)
+		exit(12);
 	i = 0;
 	while (i < len)
 	{
@@ -29,6 +31,8 @@ static void	string_array_add(char ***array, char *s)
 		i++;
 	}
 	new[i] = ft_strdup(s);
+	if (!new[i])
+		exit(12);
 	new[i + 1] = NULL;
 	if (*array)
 		free(*array);
@@ -45,14 +49,17 @@ static int	process_word(t_token *token, t_command **command_addr)
 		if (*command_addr == NULL)
 			*command_addr = create_command(token);
 		else if (command->cmd == NULL)
+		{
 			command->cmd = ft_strdup(token->value);
+			if (!command->cmd)
+				exit(12);
+		}
 		command = *command_addr;
 		string_array_add(&command->args, token->value);
 	}
 	return (1);
 }
 
-// TODO free command if error
 static int	process_pipe(t_token *token, t_list **commands, t_command **command)
 {
 	t_list	*new;
@@ -61,7 +68,7 @@ static int	process_pipe(t_token *token, t_list **commands, t_command **command)
 	{
 		new = ft_lstnew(*command);
 		if (!new)
-			return (-1);
+			exit(12);
 		ft_lstadd_back(commands, new);
 		*command = NULL;
 	}
@@ -74,7 +81,6 @@ static void	panic_free(t_list **commands, t_command *command)
 	free_command(command);
 }
 
-// TODO free commands and command if error
 t_list	*tokens_to_commands(t_list *tokens)
 {
 	t_list		*commands;

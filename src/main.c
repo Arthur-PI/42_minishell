@@ -62,9 +62,8 @@ static void	routine(void)
 		if (!is_empty(line))
 		{
 			commands = parse_line(line);
-			if (!commands)
-				break ;
-			executing(commands);
+			// if (commands)
+				// executing(commands);
 			ft_lstclear(&commands, &free_command);
 		}
 		free(line);
@@ -78,7 +77,7 @@ void	init_minishell(char **envp)
 {
 	g_minishell.envs = tab_to_list(envp);
 	if (envp && envp[0] && !g_minishell.envs)
-		exit(1);
+		exit(12);
 	g_minishell.signal = 0;
 	g_minishell.exit_status = 0;
 }

@@ -42,7 +42,7 @@ int	lst_remove_quotes(t_list *lst)
 		token = lst->content;
 		if (!is_quotes_valid(token->value))
 		{
-			printf("Error: unclosed quote\n");
+			printf("minishell: unclosed quote\n");
 			return (-1);
 		}
 		remove_quotes(token->value);

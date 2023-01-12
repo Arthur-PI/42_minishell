@@ -25,14 +25,16 @@ static void	add_token(t_list **lst, char *line, int start, int end)
 	t_token	*token;
 
 	token = create_token(ft_substr(line, start, end - start));
+	if (!token)
+		exit(12);
 	el = ft_lstnew(token);
-	ft_lstadd_back(lst, el);
-	if (!el || !token)
+	if (!el)
 	{
 		free_token(token);
 		ft_lstclear(lst, &free_token);
-		exit(1);
+		exit(12);
 	}
+	ft_lstadd_back(lst, el);
 }
 
 static int	skip_quote(char *line, int i)

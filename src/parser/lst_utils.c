@@ -21,8 +21,14 @@ static void	extract_word(const char *s, uint start, uint end, t_list **new)
 	if (s[end] && s[end + 1] == 0)
 		end++;
 	word = ft_substr(s, start, end - start);
+	if (!word)
+		exit(12);
 	token = new_token(word, TOKEN_WORD);
+	if (!token)
+		exit(12);
 	tmp = ft_lstnew(token);
+	if (!tmp)
+		exit(12);
 	ft_lstadd_back(new, tmp);
 }
 
