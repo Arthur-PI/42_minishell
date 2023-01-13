@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 16:29:02 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/12 19:22:39 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/13 13:11:32 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ int	redir_output(int tpout, t_list *command)
 		while (cmd->redirects != NULL)
 		{
 			redirect = cmd->redirects->content;
-			if (redirect->type == RD_OUT)
-			{
-				fdout = dup(fdin);
-			}
+			dup2(redirect->fd, fdout);
 			cmd->redirects = cmd->redirects->next;
 		}
 		command = command->next;
