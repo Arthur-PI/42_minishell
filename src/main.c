@@ -62,22 +62,16 @@ static void	routine(void)
 		if (!is_empty(line))
 		{
 			commands = parse_line(line);
-			// if (commands)
-				// executing(commands);
+			if (commands)
+				executing(commands);
 			ft_lstclear(&commands, &free_command);
 		}
 		free(line);
-		if (!commands)
-			break ;
-		executing(commands);
-		ft_lstclear(&commands, &free_command);
 	}
-	if (line)
-		free(line);
 	ft_lstclear(&g_minishell.envs, free_env);
 }
 
-void	init_minishell(char **envp)
+static void	init_minishell(char **envp)
 {
 	g_minishell.envs = tab_to_list(envp);
 	if (envp && envp[0] && !g_minishell.envs)
@@ -93,5 +87,5 @@ int	main(int ac, char **av, char **envp)
 	init_minishell(envp);
 	handle_signals();
 	routine();
-	return (0);
+	return (g_minishell.exit_status);
 }
