@@ -11,9 +11,15 @@
 /* ************************************************************************** */
 
 #include "execution.h"
-#include <errno.h>
 
 extern t_minishell	g_minishell;
+
+static void	exit_error(const char *format, const char *s, int code)
+{
+	printf(format, s);
+	ft_lstclear(&g_minishell.envs, free_env);
+	exit(code);
+}
 
 int	exec(char **av, char *cmd)
 {
@@ -24,12 +30,10 @@ int	exec(char **av, char *cmd)
 		return (-1);
 	if (ret == 0)
 	{
+		if (cmd == NULL)
+			exit_error("minishell: %s: command not found\n", av[0], 127);
 		if (execve(cmd, av, NULL) == -1)
-		{
-			printf("%s: command not found\n", av[0]);
-			ft_lstclear(&g_minishell.envs, free_env);
-			exit(127);
-		}
+			exit_error("minishell: %s: Permission denied\n", cmd, 126);
 	}
 	return (ret);
 }
