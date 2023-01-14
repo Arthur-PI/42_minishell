@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/11 15:41:57 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/14 15:51:20 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	killing_processes(t_list *command)
 	while (command->next != NULL)
 	{
 		cmd = command->content;
-		printf("ici %d\n", cmd->pid);
 		kill(cmd->pid, SIGKILL);
 		command = command->next;
 	}
