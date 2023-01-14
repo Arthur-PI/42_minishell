@@ -26,7 +26,7 @@ int	exec(char **av, char *cmd)
 	{
 		if (execve(cmd, av, NULL) == -1)
 		{
-			perror("Error");
+			printf("%s: command not found\n", av[0]);
 			ft_lstclear(&g_minishell.envs, free_env);
 			exit(127);
 		}
