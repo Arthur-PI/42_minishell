@@ -6,50 +6,23 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/07 15:26:36 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/14 15:51:20 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "execution.h"
 #include "parser.h"
 #include <errno.h>
 
 extern t_minishell	g_minishell;
 
-char	*get_path_cmd(char *cmd)
-{
-	t_env	*env;
-	t_list	*lst;
-	char	**path;
-	int		i;
-
-	env = NULL;
-	lst = g_minishell.envs;
-	while (lst != NULL)
-	{
-		env = lst->content;
-		if (env == get_env_el("PATH"))
-			break ;
-		lst = lst->next;
-	}
-	path = ft_split(env->value, ':');
-	i = 0;
-	while (path[i])
-	{
-		path[i] = ft_strjoin(path[i], "/");
-		if (access(ft_strjoin(path[i], cmd), F_OK) == 0)
-			return (ft_strjoin(path[i], cmd));
-		i++;
-	}
-	return (NULL);
-}
-
 int	builtins(int ac, char **av)
 {
 	if (ft_strcmp(av[0], "echo") == 0)
 		return (echo(ac, av));
 	else if (ft_strcmp(av[0], "cd") == 0)
-		return (printf("my cd\n"), cd(ac, av));
+		return (cd(ac, av));
 	else if (ft_strcmp(av[0], "exit") == 0)
 		return (my_exit(ac, av));
 	else if (ft_strcmp(av[0], "pwd") == 0)
@@ -75,19 +48,23 @@ int	nbr_args(char **av)
 }
 
 // TODO FIX handle pipe return value in case of error (-1)
-int	pipex(int fdin, int tpout, int ret, t_list *command)
+int	pipex(int fdin, int tpout, t_list *command)
 {
 	t_command	*cmd;
 	int			fdout;
 	int			fd_pipe[2];
+	char		*tmp;
 
 	while (command != NULL)
 	{
 		cmd = command->content;
+		fdin = redir_input(fdin, command);
+		if (fdin == -1)
+			return (-1);
 		dup2(fdin, 0);
 		close(fdin);
 		if (command->next == NULL)
-			fdout = redir_output(tpout, fdin, command);
+			fdout = redir_output(tpout, command);
 		else
 		{
 			if (pipe(fd_pipe) == -1)
@@ -97,31 +74,47 @@ int	pipex(int fdin, int tpout, int ret, t_list *command)
 		}
 		dup2(fdout, 1);
 		close(fdout);
+		tmp = get_path_cmd(cmd->args[0]);
 		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
-			ret = exec(cmd->args, get_path_cmd(cmd->args[0]));
+			cmd->pid = exec(cmd->args, tmp);
+		else
+			cmd->pid = 0;
+		free(tmp);
 		command = command->next;
 	}
-	return (ret);
+	return (cmd->pid);
+}
+
+void	killing_processes(t_list *command)
+{
+	t_command	*cmd;
+
+	while (command->next != NULL)
+	{
+		cmd = command->content;
+		kill(cmd->pid, SIGKILL);
+		command = command->next;
+	}
 }
 
 int	executing(t_list *command)
 {
 	int	tpin;
 	int	tpout;
-	int	fdin;
 	int	ret;
 	int	status;
 
 	tpin = dup(0);
 	ret = 0;
+	status = 0;
 	tpout = dup(1);
-	fdin = redir_input(tpin, command);
-	if (fdin == -1)
-		return (0);
-	ret = pipex(fdin, tpout, ret, command);
-	if (ret != 0)
+	ret = pipex(tpin, tpout, command);
+	if (ret == -1)
+		return (-1);
+	if (ret > 0)
 		waitpid(ret, &status, 0);
-	if (WIFEXITED(status))
+	killing_processes(command);
+	if (WIFEXITED(status) && g_minishell.exit_status != 130)
 		g_minishell.exit_status = WEXITSTATUS(status);
 	return (dup2(tpin, 0), dup2(tpout, 1), close(tpin), close(tpout), 0);
 }

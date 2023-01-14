@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:54 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/11 13:55:34 by apigeon          ###   ########.fr       */
+/*   Updated: 2023/01/10 20:45:03 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ static void	routine(void)
 			ft_lstclear(&commands, &free_command);
 		}
 		free(line);
+		if (!commands)
+			break ;
+		executing(commands);
+		ft_lstclear(&commands, &free_command);
 	}
 	if (line)
 		free(line);
