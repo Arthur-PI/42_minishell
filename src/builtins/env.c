@@ -73,7 +73,7 @@ t_list	*add_env(t_list *lst, char *env)
 	{
 		free_env(envs);
 		ft_lstclear(&lst, &free_env);
-		exit(1);
+		exit(12);
 	}
 	return (lst);
 }
