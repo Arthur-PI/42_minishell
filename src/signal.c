@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 
 extern t_minishell	g_minishell;
 
@@ -23,14 +24,6 @@ static void	sighandler(int signum)
 	rl_redisplay();
 }
 
-static void	sighandler_heredoc(int signum)
-{
-	(void)signum;
-	printf("\n");
-	close(STDIN_FILENO);
-	g_minishell.signal = 1;
-}
-
 void	handle_signals(void)
 {
 	signal(SIGINT, &sighandler);
@@ -40,5 +33,11 @@ void	handle_signals(void)
 
 void	handle_signals_heredoc(void)
 {
-	signal(SIGINT, &sighandler_heredoc);
+	signal(SIGINT, SIG_IGN);
+}
+
+void	handle_signals_heredoc_child(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
