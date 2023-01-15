@@ -46,7 +46,7 @@ int	my_exit(int ac, char **av)
 	int	status;
 
 	printf("exit\n");
-	status = 0;
+	status = g_minishell.exit_status;
 	if (ac > 1)
 	{
 		if (atoi_exit(av[1]) == 0 && av[1][0] != '0')
@@ -57,13 +57,12 @@ int	my_exit(int ac, char **av)
 		}
 		status = atoi_exit(av[1]);
 	}
-	while (ac > 2)
+	if (ac > 2)
 	{
 		printf("minishell: exit: too many arguments\n");
 		g_minishell.exit_status = 1;
 		return (1);
 	}
-	g_minishell.exit_status = status;
 	ft_lstclear(&g_minishell.envs, free_env);
 	exit(status);
 }
