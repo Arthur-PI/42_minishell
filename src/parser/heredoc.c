@@ -54,6 +54,6 @@ int	handle_heredoc(char *stop)
 	wait(&status);
 	handle_signals();
 	if (status == SIGINT)
-		return (printf("\n"), close(fd[0]), -1);
+		return (close(fd[0]), -1);
 	return (fd[0]);
 }

@@ -22,6 +22,14 @@ static void	sighandler(int signum)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	g_minishell.exit_status = 1;
+}
+
+static void	sighandler_heredoc(int signum)
+{
+	(void)signum;
+	printf("\n");
+	g_minishell.exit_status = 1;
 }
 
 void	handle_signals(void)
@@ -33,7 +41,7 @@ void	handle_signals(void)
 
 void	handle_signals_heredoc(void)
 {
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, &sighandler_heredoc);
 }
 
 void	handle_signals_heredoc_child(void)
