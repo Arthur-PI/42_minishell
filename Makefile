@@ -83,6 +83,7 @@ SRCS	+=	builtins/echo.c \
 			execution/pipe.c \
 			execution/redir.c \
 			execution/get_path.c \
+			execution/list_to_tab.c \
 			utils.c \
 
 ### OBJECTS ###
