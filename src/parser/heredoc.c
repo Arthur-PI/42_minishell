@@ -43,7 +43,7 @@ int	handle_heredoc(char *stop)
 	pid = fork();
 	if (!pid)
 	{
-		handle_signals_heredoc_child();
+		reset_signals();
 		close(fd[0]);
 		heredoc_readlines(stop, fd[1]);
 		close(fd[1]);
