@@ -11,17 +11,9 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/wait.h>
 
 extern t_minishell	g_minishell;
-
-void	ft_putstr_fd1(const char *s, int fd)
-{
-	if (s)
-	{
-		write(fd, s, ft_strlen(s));
-		write(fd, "\n", 1);
-	}
-}
 
 static void	heredoc_readlines(char *stop, int fd)
 {
@@ -43,22 +35,25 @@ static void	heredoc_readlines(char *stop, int fd)
 int	handle_heredoc(char *stop)
 {
 	int		fd[2];
-	int		stdin_clone;
+	int		pid;
+	int		status;
 
 	if (pipe(fd) == -1)
 		return (-1);
-	stdin_clone = dup(STDIN_FILENO);
-	handle_signals_heredoc();
-	heredoc_readlines(stop, fd[1]);
-	close(fd[1]);
-	if (g_minishell.signal == 1)
+	pid = fork();
+	if (!pid)
 	{
+		handle_signals_heredoc_child();
 		close(fd[0]);
-		dup2(stdin_clone, STDIN_FILENO);
-		g_minishell.exit_status = 130;
-		fd[0] = -1;
+		heredoc_readlines(stop, fd[1]);
+		close(fd[1]);
+		exit(0);
 	}
-	close(stdin_clone);
+	handle_signals_heredoc();
+	close(fd[1]);
+	wait(&status);
 	handle_signals();
+	if (status == SIGINT)
+		return (printf("\n"), close(fd[0]), -1);
 	return (fd[0]);
 }

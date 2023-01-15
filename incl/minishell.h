@@ -27,5 +27,6 @@
 
 void	handle_signals(void);
 void	handle_signals_heredoc(void);
+void	handle_signals_heredoc_child(void);
 
 #endif
