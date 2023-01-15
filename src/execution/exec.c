@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "minishell.h"
 
 extern t_minishell	g_minishell;
 
@@ -30,10 +30,13 @@ int	exec(char **av, char *cmd)
 		return (-1);
 	if (ret == 0)
 	{
+		reset_signals();
 		if (cmd == NULL)
 			exit_error("minishell: %s: command not found\n", av[0], 127);
 		if (execve(cmd, av, list_to_tab(g_minishell.envs)) == -1)
 			exit_error("minishell: %s: Permission denied\n", cmd, 126);
 	}
+	else
+		handle_signals_exec();
 	return (ret);
 }

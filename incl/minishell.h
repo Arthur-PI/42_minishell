@@ -26,7 +26,8 @@
 # include "struct.h"
 
 void	handle_signals(void);
+void	handle_signals_exec(void);
 void	handle_signals_heredoc(void);
-void	handle_signals_heredoc_child(void);
+void	reset_signals(void);
 
 #endif
