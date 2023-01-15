@@ -14,6 +14,22 @@
 
 extern t_minishell	g_minishell;
 
+static char	*concat_path_command(char *path, char *cmd)
+{
+	char	*tmp;
+	char	*cmd_path;
+
+	if (path[ft_strlen(path) - 1] != '/')
+	{
+		tmp = ft_strjoin(path, "/");
+		cmd_path = ft_strjoin(tmp, cmd);
+		free(tmp);
+	}
+	else
+		cmd_path = ft_strjoin(path, cmd);
+	return (cmd_path);
+}
+
 char	*get_path(char **path, char *cmd)
 {
 	int		i;
@@ -24,18 +40,19 @@ char	*get_path(char **path, char *cmd)
 	cmd_path = NULL;
 	while (path[i])
 	{
-		tmp = path[i];
-		path[i] = ft_strjoin(tmp, "/");
-		free(tmp);
-		tmp = path[i];
-		path[i] = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(path[i], F_OK) == 0)
+		tmp = concat_path_command(path[i], cmd);
+		if (!tmp)
+			exit(12);
+		if (access(tmp, F_OK) == 0)
 		{
-			cmd_path = path[i];
-			if (access(path[i], X_OK) == 0)
-				return (path[i]);
+			if (cmd_path)
+				free(cmd_path);
+			cmd_path = tmp;
+			if (access(cmd_path, X_OK) == 0)
+				return (cmd_path);
 		}
+		else
+			free(tmp);
 		i++;
 	}
 	return (cmd_path);
@@ -67,11 +84,8 @@ char	*get_path_cmd(char *cmd)
 	if (!path)
 		exit(12);
 	cmd_path = get_path(path, cmd);
+	free_path(path);
 	if (cmd_path == NULL)
 		return (NULL);
-	cmd_path = ft_strdup(cmd_path);
-	if (!cmd_path)
-		exit(12);
-	free_path(path);
 	return (cmd_path);
 }
