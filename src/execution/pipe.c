@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/16 15:58:35 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/16 16:33:36 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	executing(t_list *command)
 	if (last_pid > 0)
 	{
 		waitpid(last_pid, &status, 0);
-		if (WIFEXITED(status) && g_minishell.exit_status != 130)
+		if (WIFEXITED(status) && g_minishell.exit_status != 130 &&
+			last_pid != 0)
 			g_minishell.exit_status = WEXITSTATUS(status);
 	}
 	while (wait(&status) != -1)
