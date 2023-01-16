@@ -14,25 +14,48 @@
 
 extern t_minishell	g_minishell;
 
+static char	*concat_path_command(char *path, char *cmd)
+{
+	char	*tmp;
+	char	*cmd_path;
+
+	if (path[ft_strlen(path) - 1] != '/')
+	{
+		tmp = ft_strjoin(path, "/");
+		cmd_path = ft_strjoin(tmp, cmd);
+		free(tmp);
+	}
+	else
+		cmd_path = ft_strjoin(path, cmd);
+	return (cmd_path);
+}
+
 char	*get_path(char **path, char *cmd)
 {
 	int		i;
 	char	*tmp;
+	char	*cmd_path;
 
 	i = 0;
+	cmd_path = NULL;
 	while (path[i])
 	{
-		tmp = path[i];
-		path[i] = ft_strjoin(tmp, "/");
-		free(tmp);
-		tmp = path[i];
-		path[i] = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(path[i], F_OK) == 0)
-			return (path[i]);
+		tmp = concat_path_command(path[i], cmd);
+		if (!tmp)
+			exit(12);
+		if (access(tmp, F_OK) == 0)
+		{
+			if (cmd_path)
+				free(cmd_path);
+			cmd_path = tmp;
+			if (access(cmd_path, X_OK) == 0)
+				return (cmd_path);
+		}
+		else
+			free(tmp);
 		i++;
 	}
-	return (NULL);
+	return (cmd_path);
 }
 
 void	free_path(char **path)
@@ -51,25 +74,18 @@ void	free_path(char **path)
 char	*get_path_cmd(char *cmd)
 {
 	t_env	*env;
-	t_list	*lst;
 	char	**path;
-	char	*tmp;
+	char	*cmd_path;
 
-	env = NULL;
-	lst = g_minishell.envs;
-	while (lst != NULL)
-	{
-		env = lst->content;
-		if (env == get_env_el("PATH"))
-			break ;
-		lst = lst->next;
-	}
-	path = ft_split(env->value, ':');
-	if (get_path(path, cmd) == NULL)
+	env = get_env_el("PATH");
+	if (!env)
 		return (NULL);
-	tmp = ft_strdup(get_path(path, cmd));
+	path = ft_split(env->value, ':');
+	if (!path)
+		exit(12);
+	cmd_path = get_path(path, cmd);
 	free_path(path);
-	if (tmp != NULL)
-		return (tmp);
-	return (NULL);
+	if (cmd_path == NULL)
+		return (NULL);
+	return (cmd_path);
 }

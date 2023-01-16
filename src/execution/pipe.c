@@ -74,12 +74,14 @@ int	pipex(int fdin, int tpout, t_list *command)
 		}
 		dup2(fdout, 1);
 		close(fdout);
-		tmp = get_path_cmd(cmd->args[0]);
 		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
+		{
+			tmp = get_path_cmd(cmd->args[0]);
 			cmd->pid = exec(cmd->args, tmp);
+			free(tmp);
+		}
 		else
 			cmd->pid = 0;
-		free(tmp);
 		command = command->next;
 	}
 	return (cmd->pid);

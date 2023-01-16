@@ -15,7 +15,7 @@
 CC		= cc
 CFLAGS	= -Wall -Wextra
 CFLAGS	+= -Wshadow -Wpedantic -Wuninitialized -Wmissing-include-dirs -Wundef -Winvalid-pch
-CFLAGS	+= -Winit-self -Wswitch-enum -Wswitch-default -Wformat=2 -Wformat-nonliteral -Wformat-security -Wformat-y2k
+CFLAGS	+= -Winit-self -Wswitch-enum -Wswitch-default -Wformat-security -Wformat-y2k
 CFLAGS	+= -Wdouble-promotion -Wfloat-equal -Wpointer-arith
 CFLAGS	+= -MMD -MP
 INCLUDE	= -I$(H_DIR) -I$(LIBFT_DIR)/$(H_DIR)
