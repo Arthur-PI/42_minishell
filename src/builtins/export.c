@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:08:12 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/09 11:52:41 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/16 16:46:50 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ static char	*print_name(char *av)
 	return (av);
 }
 
+static char	*print_name1(char *av)
+{
+	int	i;
+
+	i = 0;
+	while (av[i])
+		i++;
+	av[i] = '\0';
+	printf("export: not an identifier: %s\n", av);
+	return (av);
+}
+
 // TODO JSP ADVICE? alors j'avais pas pense a une fonction qui check
 // tous les chars en meme temps mais pk pas. Aussi au lieu d'eliminer
 // les chars que tu veux pas, c'est mieux de return 1 avec les chars
@@ -42,6 +54,8 @@ static int	check_char(char *av)
 	i = 0;
 	while (av[i])
 	{
+		if (av[i] == '=')
+			break ;
 		if (av[i] < '0')
 			return (0);
 		else if (av[i] > '9' && av[i] < '=')
@@ -67,6 +81,8 @@ int	valid_name(char *av)
 	i = 0;
 	while (av[i])
 	{
+		if (av[0] == '=')
+			return (print_name1(av), 1);
 		if ((av[0] > '0' && av[0] < '9') || !check_char(av))
 		{
 			if (ft_strchr(av, '=') == NULL)
