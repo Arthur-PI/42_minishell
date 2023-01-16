@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:47:15 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/06 15:40:46 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/16 17:24:10 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ int	cd(int ac, char **av)
 	else if (ac > 2)
 	{
 		g_minishell.exit_status = 1;
-		return (printf("cd: too many arguments: %s\n", av[1]), 1);
+		return (printf(" too many arguments\n"), 1);
 	}
 	else if (ac == 2)
 	{
 		if (chdir(av[1]) == -1)
 		{
-			printf("cd: no such file or directory: %s\n", av[1]);
+			printf(" No such file or directory\n");
 			g_minishell.exit_status = 1;
 			return (1);
 		}
