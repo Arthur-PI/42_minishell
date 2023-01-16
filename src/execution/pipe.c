@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/14 15:51:20 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/16 15:58:35 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,12 @@ int	pipex(int fdin, int tpout, t_list *command)
 		close(fdout);
 		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
 		{
-			tmp = get_path_cmd(cmd->args[0]);
+			if (ft_strncmp(cmd->args[0], "./", 2) == 0 
+		 		|| ft_strncmp(cmd->args[0], "../", 2) == 0
+				|| ft_strncmp(cmd->args[0], "/", 1) == 0)
+    	    	tmp = ft_strdup(cmd->args[0]);
+			else
+				tmp = get_path_cmd(cmd->args[0]);
 			cmd->pid = exec(cmd->args, tmp);
 			free(tmp);
 		}
