@@ -19,16 +19,18 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <signal.h>
 
 # include "libft.h"
 # include "struct.h"
 # include "builtins.h"
 
 	/*exec.c*/
-int		exec(char **av, char *cmd);
+int		exec(char **av, char *cmd, int fd[2], int fd_in);
+
+int		pipex(t_list *command);
 
 	/*pipe.c*/
-int		pipex(int fdin, int tpout, t_list *command);
 int		executing(t_list *command);
 
 int		redir_input(int fdin, t_list *command);
