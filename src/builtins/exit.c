@@ -51,7 +51,7 @@ int	my_exit(int ac, char **av)
 	{
 		if (atoi_exit(av[1]) == 0 && av[1][0] != '0')
 		{
-			printf(" numeric argument required\n");
+			printf("minishell: exit: %s: numeric argument required\n", av[1]);
 			ft_lstclear(&g_minishell.envs, free_env);
 			exit(2);
 		}
@@ -59,7 +59,7 @@ int	my_exit(int ac, char **av)
 	}
 	while (ac > 2)
 	{
-		printf(" too many arguments\n");
+		printf("minishell: exit: too many arguments\n");
 		g_minishell.exit_status = 1;
 		return (1);
 	}

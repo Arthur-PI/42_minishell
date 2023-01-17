@@ -49,7 +49,7 @@ int	cd(int ac, char **av)
 	{
 		if (chdir(av[1]) == -1)
 		{
-			printf(" No such file or directory\n");
+			printf("minishell: cd: %s: No such file or directory\n", av[1]);
 			g_minishell.exit_status = 1;
 			return (1);
 		}
