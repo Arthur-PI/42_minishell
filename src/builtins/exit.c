@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:09:07 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/12 16:52:14 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/17 20:27:42 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 extern t_minishell	g_minishell;
 
-static int	atoi_exit(const char *str)
+static long long	atoi_exit(const char *str)
 {
 	int		i;
 	int		sign;
-	long	n;
+	long long	n;
 
 	i = 0;
 	while (ft_isspace(str[i]))
@@ -49,7 +49,9 @@ int	my_exit(int ac, char **av)
 	status = 0;
 	if (ac > 1)
 	{
-		if (atoi_exit(av[1]) == 0 && av[1][0] != '0')
+		if ((av[1][0] == '-' && ft_strcmp(av[1], "-9223372036854775809") >= 0)
+			|| ft_strcmp(av[1], "9223372036854775808") >= 0
+			|| (atoi_exit(av[1]) == 0 && av[1][0] != '0'))
 		{
 			printf("minishell: exit: %s: numeric argument required\n", av[1]);
 			ft_lstclear(&g_minishell.envs, free_env);
