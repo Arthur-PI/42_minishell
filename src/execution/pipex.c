@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 09:27:51 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/11 14:22:42 by apigeon          ###   ########.fr       */
+/*   Updated: 2023/01/17 13:42:57 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ int	nbr_args(char **av)
 	return (i);
 }
 
-int	handle_redirects(int fd_read_write[2], int fd_pipe[2], int have_next)
+int	handle_redirects(int fd_rw[2], int fd_pipe[2], int next, t_list *command)
 {
-	fd_read_write[0] = fd_pipe[0];
-	if (have_next)
+	fd_rw[0] = redir_input(fd_pipe[0], command);
+	if (next)
 	{
 		if (pipe(fd_pipe) == -1)
 			return (-1);
-		fd_read_write[1] = fd_pipe[1];
+		fd_rw[1] = fd_pipe[1];
 	}
 	else
-		fd_read_write[1] = dup(STDOUT_FILENO);
+		fd_rw[1] = redir_output(dup(STDOUT_FILENO), command);
 	return (0);
 }
 
@@ -61,7 +61,7 @@ int	pipex(t_list *command)
 {
 	int			last_pid;
 	int			fd_pipe[2];
-	int			fd_read_write[2];
+	int			fd_rw[2];
 	char		*tmp;
 	t_command	*cmd;
 
@@ -71,11 +71,11 @@ int	pipex(t_list *command)
 	while (command)
 	{
 		cmd = command->content;
-		handle_redirects(fd_read_write, fd_pipe, command->next != NULL);
+		handle_redirects(fd_rw, fd_pipe, command->next != NULL, command);
 		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
 		{
 			tmp = get_path_cmd(cmd->args[0]);
-			last_pid = exec(cmd->args, tmp, fd_read_write, fd_pipe[0]);
+			last_pid = exec(cmd->args, tmp, fd_rw, fd_pipe[0]);
 			free(tmp);
 		}
 		else
