@@ -120,6 +120,7 @@ int	executing(t_list *command)
 		return (-1);
 	if (ret > 0)
 		waitpid(ret, &status, 0);
+	handle_signals();
 	killing_processes(command);
 	if (WIFEXITED(status) && g_minishell.exit_status != 130)
 		g_minishell.exit_status = WEXITSTATUS(status);

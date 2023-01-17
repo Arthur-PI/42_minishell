@@ -37,4 +37,6 @@ int		redir_output(int tpout, t_list *command);
 char	*get_path(char **path, char *cmd);
 char	*get_path_cmd(char *cmd);
 
+char	**list_to_tab(t_list *lst);
+
 #endif
