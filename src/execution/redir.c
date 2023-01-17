@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 16:29:02 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/17 13:52:42 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/17 14:20:13 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@ int	redir_file(t_command *cmd, int fdin)
 	return (fdin);
 }
 
-int	redir_input(int tpin, t_list *command)
+int	redir_input(int fdin, t_list *command)
 {
 	t_command	*cmd;
-	int			fdin;
 
-	fdin = dup(tpin);
 	if (fdin == -1)
 		return (-1);
 	while (command != NULL)
@@ -54,13 +52,11 @@ int	redir_input(int tpin, t_list *command)
 	return (fdin);
 }
 
-int	redir_output(int tpout, t_list *command)
+int	redir_output(int fdout, t_list *command)
 {
 	t_redirect	*redirect;
 	t_command	*cmd;
-	int			fdout;
 
-	fdout = dup(tpout);
 	if (fdout == -1)
 		return (-1);
 	while (command != NULL)
