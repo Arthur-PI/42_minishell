@@ -74,7 +74,12 @@ int	pipex(t_list *command)
 		handle_redirects(fd_rw, fd_pipe, command->next != NULL, command);
 		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
 		{
-			tmp = get_path_cmd(cmd->args[0]);
+			if (ft_strncmp(cmd->args[0], "./", 2) == 0
+				|| ft_strncmp(cmd->args[0], "../", 2) == 0
+				|| ft_strncmp(cmd->args[0], "/", 1) == 0)
+				tmp = ft_strdup(cmd->args[0]);
+			else
+				tmp = get_path_cmd(cmd->args[0]);
 			last_pid = exec(cmd->args, tmp, fd_rw, fd_pipe[0]);
 			free(tmp);
 		}
