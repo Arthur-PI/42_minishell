@@ -58,12 +58,7 @@ int	valid_name(char *av)
 	{
 		if ((av[0] > '0' && av[0] < '9') || !check_char(av))
 		{
-			if (ft_strchr(av, '=') == NULL)
-			{
-				printf(" not a valid identifier\n");
-				return (1);
-			}
-			printf(" not a valid identifier\n");
+			printf("minishell: export: `%s': not a valid identifier\n", av);
 			return (1);
 		}
 		i++;
