@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:09:07 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/17 20:27:42 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/17 20:32:29 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	my_exit(int ac, char **av)
 	int	status;
 
 	printf("exit\n");
-	status = 0;
+	status = g_minishell.exit_status;
 	if (ac > 1)
 	{
 		if ((av[1][0] == '-' && ft_strcmp(av[1], "-9223372036854775809") >= 0)
@@ -59,13 +59,12 @@ int	my_exit(int ac, char **av)
 		}
 		status = atoi_exit(av[1]);
 	}
-	while (ac > 2)
+	if (ac > 2)
 	{
 		printf("minishell: exit: too many arguments\n");
 		g_minishell.exit_status = 1;
 		return (1);
 	}
-	g_minishell.exit_status = status;
 	ft_lstclear(&g_minishell.envs, free_env);
 	exit(status);
 }
