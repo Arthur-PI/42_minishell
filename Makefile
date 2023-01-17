@@ -82,6 +82,7 @@ SRCS	+=	builtins/echo.c \
 			signal2.c \
 			execution/exec.c \
 			execution/pipe.c \
+			execution/pipex.c \
 			execution/redir.c \
 			execution/get_path.c \
 			execution/list_to_tab.c \
