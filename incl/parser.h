@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:39 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/16 18:38:15 by apigeon          ###   ########.fr       */
+/*   Updated: 2023/01/18 17:13:52 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define ERROR_MALLOC 1
 # define NO_ERROR 0
 
-# define FILE_ERROR_MSG "minishell: no such file or directory: %s\n"
+# define FILE_ERROR_MSG "minishell: %s: No such file or directory\n"
 
 int				is_operator(char c);
 void			free_token(void *ptr);
