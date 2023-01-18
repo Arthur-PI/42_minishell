@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   list_to_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 18:20:25 by apigeon           #+#    #+#             */
-/*   Updated: 2023/01/09 17:54:21 by tperes           ###   ########.fr       */
+/*   Created: 2022/10/31 13:59:39 by apigeon           #+#    #+#             */
+/*   Updated: 2022/12/16 18:38:15 by apigeon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "execution.h"
 
-# include <stdio.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+char	**list_to_tab(t_list *lst)
+{
+	uint	i;
+	t_env	*env;
+	char	*s;
+	char	*tmp;
+	char	**tab;
 
-# include "libft.h"
-# include "ft_printf.h"
-# include "builtins.h"
-# include "parser.h"
-# include "execution.h"
-# include "struct.h"
-
-void	handle_signals(void);
-void	handle_signals_exec(void);
-void	handle_signals_heredoc(void);
-void	reset_signals(void);
-
-#endif
+	i = 0;
+	tab = malloc((ft_lstsize(lst) + 1) * sizeof(*tab));
+	if (!tab)
+		exit(12);
+	while (lst)
+	{
+		env = lst->content;
+		tmp = ft_strjoin(env->name, "=");
+		s = ft_strjoin(tmp, env->value);
+		free(tmp);
+		tab[i++] = s;
+		lst = lst->next;
+	}
+	tab[i] = NULL;
+	return (tab);
+}
