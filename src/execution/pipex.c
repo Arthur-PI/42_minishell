@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 09:27:51 by apigeon           #+#    #+#             */
-/*   Updated: 2023/01/18 18:25:05 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/18 19:24:10 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	handle_redirects(int fd_rw[2], int fd_pipe[2], int next, t_list *command)
 	{
 		if (pipe(fd_pipe) == -1)
 			return (-1);
-		fd_rw[1] = fd_pipe[1];
+		fd_rw[1] = redir_output(fd_pipe[1], command);
 	}
 	else
 		fd_rw[1] = redir_output(dup(STDOUT_FILENO), command);

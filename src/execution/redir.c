@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 16:29:02 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/17 14:20:13 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/18 19:27:17 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,10 @@ int	redir_input(int fdin, t_list *command)
 
 	if (fdin == -1)
 		return (-1);
-	while (command != NULL)
-	{
-		cmd = command->content;
-		fdin = redir_file(cmd, fdin);
-		if (fdin == -1)
-			return (-1);
-		command = command->next;
-	}
+	cmd = command->content;
+	fdin = redir_file(cmd, fdin);
+	if (fdin == -1)
+		return (-1);
 	return (fdin);
 }
 
@@ -59,17 +55,13 @@ int	redir_output(int fdout, t_list *command)
 
 	if (fdout == -1)
 		return (-1);
-	while (command != NULL)
+	cmd = command->content;
+	while (cmd->redirects != NULL)
 	{
-		cmd = command->content;
-		while (cmd->redirects != NULL)
-		{
-			redirect = cmd->redirects->content;
-			if (redirect->type == RD_OUT || redirect->type == RD_APPEND)
-				dup2(redirect->fd, fdout);
-			cmd->redirects = cmd->redirects->next;
-		}
-		command = command->next;
+		redirect = cmd->redirects->content;
+		if (redirect->type == RD_OUT || redirect->type == RD_APPEND)
+			dup2(redirect->fd, fdout);
+		cmd->redirects = cmd->redirects->next;
 	}
 	return (fdout);
 }
