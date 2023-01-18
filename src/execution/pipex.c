@@ -6,28 +6,36 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 09:27:51 by apigeon           #+#    #+#             */
-/*   Updated: 2023/01/17 13:42:57 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/18 18:25:05 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "minishell.h"
 
-int	builtins(int ac, char **av)
+void	piping(int fd[2], int fd_in)
 {
-	if (ft_strcmp(av[0], "echo") == 0)
-		return (echo(ac, av));
-	else if (ft_strcmp(av[0], "cd") == 0)
-		return (cd(ac, av));
+	dup2(fd[0], STDIN_FILENO);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
+	close(fd[1]);
+	close(fd_in);
+}
+
+int	builtins(int ac, char **av, int fd[2], int fd_in)
+{
+	if (ft_strcmp(av[0], "cd") == 0)
+		return (piping(fd, fd_in), cd(ac, av));
 	else if (ft_strcmp(av[0], "exit") == 0)
-		return (my_exit(ac, av));
+		return (piping(fd, fd_in), my_exit(ac, av));
 	else if (ft_strcmp(av[0], "pwd") == 0)
-		return (pwd(ac));
+		return (piping(fd, fd_in), pwd(ac));
 	else if (ft_strcmp(av[0], "env") == 0)
-		return (my_env(ac, av));
+		return (piping(fd, fd_in), my_env(ac, av));
 	else if (ft_strcmp(av[0], "unset") == 0)
-		return (my_unset(ac, av));
+		return (piping(fd, fd_in), my_unset(ac, av));
 	else if (ft_strcmp(av[0], "export") == 0)
-		return (my_export(ac, av));
+		return (piping(fd, fd_in), my_export(ac, av));
 	else
 		return (2);
 }
@@ -72,7 +80,7 @@ int	pipex(t_list *command)
 	{
 		cmd = command->content;
 		handle_redirects(fd_rw, fd_pipe, command->next != NULL, command);
-		if (builtins(nbr_args(cmd->args), cmd->args) == 2)
+		if (builtins(nbr_args(cmd->args), cmd->args, fd_rw, fd_pipe[0]) == 2)
 		{
 			if (ft_strncmp(cmd->args[0], "./", 2) == 0
 				|| ft_strncmp(cmd->args[0], "../", 2) == 0

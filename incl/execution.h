@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:33:41 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/10 13:51:44 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/18 18:04:13 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,10 @@ char	*get_path(char **path, char *cmd);
 char	*get_path_cmd(char *cmd);
 
 char	**list_to_tab(t_list *lst);
+
+int	nbr_args(char **av);
+int	builtins(int ac, char **av, int fd[2], int fd_in);
+
+void	piping(int fd[2], int fd_in);
 
 #endif

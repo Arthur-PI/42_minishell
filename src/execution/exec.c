@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:32:29 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/16 17:58:03 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/18 18:28:30 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,7 @@ int	exec(char **av, char *cmd, int fd[2], int fd_in)
 	if (pid == 0)
 	{
 		reset_signals();
-		dup2(fd[0], STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		close(fd[1]);
-		close(fd_in);
+		piping(fd, fd_in);
 		if (cmd == NULL)
 			exit_error("minishell: %s: command not found\n", av[0], 127);
 		if (stat(cmd, &buf) != -1)
@@ -48,6 +44,8 @@ int	exec(char **av, char *cmd, int fd[2], int fd_in)
 				|| ft_strncmp(av[0], "../", 2) == 0
 				|| ft_strncmp(av[0], "/", 1) == 0))
 			exit_error("minishell: %s: No such file or directory\n", av[0], 127);
+		if (ft_strcmp(av[0], "echo") == 0)
+			echo(nbr_args(av), av);
 		else if (execve(cmd, av, NULL) == -1)
 			exit_error("minishell: %s: Permission denied\n", cmd, 126);
 	}
