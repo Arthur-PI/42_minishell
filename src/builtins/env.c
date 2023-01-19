@@ -67,14 +67,20 @@ t_list	*add_env(t_list *lst, char *env)
 	t_env	*envs;
 
 	envs = create_env(env);
-	new = ft_lstnew(envs);
-	ft_lstadd_back(&lst, new);
-	if (envs == NULL || new == NULL)
+	if (envs == NULL)
 	{
 		free_env(envs);
 		ft_lstclear(&lst, &free_env);
 		exit(12);
 	}
+	new = ft_lstnew(envs);
+	if (new == NULL)
+	{
+		free_env(envs);
+		ft_lstclear(&lst, &free_env);
+		exit(12);
+	}
+	ft_lstadd_back(&lst, new);
 	return (lst);
 }
 
