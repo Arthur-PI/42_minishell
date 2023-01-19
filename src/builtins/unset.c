@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/06 15:08:54 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/19 21:05:46 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,32 @@ t_env	*get_env_el(char *av)
 t_list	*ft_delete(char *av)
 {
 	t_env	*env;
+	t_env	*del_env;
 	t_list	*lst;
 	t_list	*lst_new;
+	t_list	*tmp;
 
 	lst = g_minishell.envs;
 	lst_new = NULL;
+	del_env = NULL;
 	while (lst != NULL)
 	{
 		env = lst->content;
-		if (env == get_env_el(av))
+		if (ft_strncmp(av, env->name, ft_strlen(env->name) + 1) == 0)
 		{
+			del_env = env;
+			tmp = lst;
 			lst = lst->next;
-			if (!lst)
-				break ;
-			env = lst->content;
+			free(tmp);
+			continue ;
 		}
-		if (!lst)
-			break ;
 		ft_lstadd_back(&lst_new, ft_lstnew(env));
+		tmp = lst;
 		lst = lst->next;
+		free(tmp);
 	}
+	if (del_env)
+		free_env(del_env);
 	return (lst_new);
 }
 
