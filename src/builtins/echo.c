@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:54:55 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/18 17:55:19 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/19 16:40:15 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ int	echo(int ac, char **av)
 	}
 	if (!newline_option)
 		ft_printf("\n");
-	g_minishell.exit_status = 0;
+	ft_lstclear(&g_minishell.envs, free_env);
 	exit(0);
 }
