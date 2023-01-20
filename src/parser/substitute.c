@@ -48,7 +48,10 @@ static char	*get_env_value(char *name)
 		return (ft_itoa(g_minishell.exit_status));
 	env = get_env_el(name);
 	if (env)
+	{
 		env_value = ft_strdup(env->value);
+		exit(12);
+	}
 	return (env_value);
 }
 
@@ -72,7 +75,7 @@ static char	*replace_env(char *s, char *old, uint *end, uint *start)
 		return (free(env), old);
 	env_value = get_env_value(env);
 	if (!env_value)
-		exit(12);
+		env_value = ft_strdup("");
 	old = ft_concat(old, env_value);
 	if (!old)
 		exit(12);

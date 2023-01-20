@@ -35,20 +35,6 @@ static char	*get_line(void)
 	return (line);
 }
 
-static bool	is_empty(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (!ft_isspace(s[i]))
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
 static void	routine(void)
 {
 	char	*line;

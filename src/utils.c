@@ -51,3 +51,17 @@ int	is_quote(int c)
 		return (true);
 	return (false);
 }
+
+bool	is_empty(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (!ft_isspace(s[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}

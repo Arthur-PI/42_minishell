@@ -47,5 +47,6 @@ int				handle_heredoc(char *stop);
 t_command		*create_command(t_token *token);
 int				process_rd(t_token *t, t_command **c, t_list **ts);
 bool			is_directory(const char *path);
+bool			is_empty(const char *s);
 
 #endif
