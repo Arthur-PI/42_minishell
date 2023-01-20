@@ -36,22 +36,6 @@ static char	*extract_env_name(char *s, size_t start)
 	return (env_name);
 }
 
-static t_env	*get_env(char *s)
-{
-	t_env	*env;
-	t_list	*envs;
-
-	envs = g_minishell.envs;
-	while (envs)
-	{
-		env = envs->content;
-		if (ft_strcmp(s, env->name) == 0)
-			return (env);
-		envs = envs->next;
-	}
-	return (NULL);
-}
-
 // given an environment variable name, give its value.
 // e.g. env = "$NAME" -> "Arthur"
 static char	*get_env_value(char *name)
@@ -62,7 +46,7 @@ static char	*get_env_value(char *name)
 	env_value = NULL;
 	if (ft_strcmp(name, "?") == 0)
 		return (ft_itoa(g_minishell.exit_status));
-	env = get_env(name);
+	env = get_env_el(name);
 	if (env)
 		env_value = ft_strdup(env->value);
 	return (env_value);
@@ -93,9 +77,8 @@ static char	*replace_env(char *s, char *old, uint *end, uint *start)
 	if (!old)
 		exit(12);
 	*end += ft_strlen(env);
-	free(env);
 	*start = (*end) + 1;
-	return (old);
+	return (free(env), old);
 }
 
 // return a copy of s with all environment variables replace by there values.

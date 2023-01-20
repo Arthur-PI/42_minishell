@@ -21,6 +21,7 @@
 # include "struct.h"
 # include "libft.h"
 # include "utils.h"
+# include "builtins.h"
 
 # define ERROR_MALLOC 1
 # define NO_ERROR 0
