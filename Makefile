@@ -87,6 +87,7 @@ SRCS	+=	builtins/echo.c \
 			execution/get_path.c \
 			execution/list_to_tab.c \
 			utils.c \
+			is_directory.c \
 
 ### OBJECTS ###
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
