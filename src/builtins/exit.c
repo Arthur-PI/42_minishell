@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:09:07 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/17 20:32:29 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/20 12:35:58 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ extern t_minishell	g_minishell;
 
 static long long	atoi_exit(const char *str)
 {
-	int		i;
-	int		sign;
+	int			i;
+	int			sign;
 	long long	n;
 
 	i = 0;
