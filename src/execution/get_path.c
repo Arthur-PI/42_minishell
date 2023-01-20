@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:14:12 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/19 16:43:31 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/20 10:52:02 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	*get_path_cmd(char *cmd)
 
 	if (ft_strcmp(cmd, "echo") == 0)
 		return (ft_strdup("echo"));
+	if (ft_strcmp(cmd, "env") == 0)
+		return (ft_strdup("env"));
 	env = get_env_el("PATH");
 	if (!env)
 		return (NULL);

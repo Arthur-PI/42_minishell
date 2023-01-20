@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:32:29 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/18 18:28:30 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/20 10:51:31 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	exec(char **av, char *cmd, int fd[2], int fd_in)
 			exit_error("minishell: %s: No such file or directory\n", av[0], 127);
 		if (ft_strcmp(av[0], "echo") == 0)
 			echo(nbr_args(av), av);
+		else if (ft_strcmp(av[0], "env") == 0)
+			my_env(nbr_args(av), av);
 		else if (execve(cmd, av, NULL) == -1)
 			exit_error("minishell: %s: Permission denied\n", cmd, 126);
 	}

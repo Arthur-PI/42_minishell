@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 09:27:51 by apigeon           #+#    #+#             */
-/*   Updated: 2023/01/18 19:24:10 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/20 10:50:00 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	builtins(int ac, char **av, int fd[2], int fd_in)
 		return (piping(fd, fd_in), my_exit(ac, av));
 	else if (ft_strcmp(av[0], "pwd") == 0)
 		return (piping(fd, fd_in), pwd(ac));
-	else if (ft_strcmp(av[0], "env") == 0)
-		return (piping(fd, fd_in), my_env(ac, av));
 	else if (ft_strcmp(av[0], "unset") == 0)
 		return (piping(fd, fd_in), my_unset(ac, av));
 	else if (ft_strcmp(av[0], "export") == 0)
