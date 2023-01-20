@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 15:08:12 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/16 17:24:30 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/17 20:33:25 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@ extern t_minishell	g_minishell;
 
 // ADVICE faire une fonction qui check si un charactere est
 // valide pour un name au lieu d'avoir un if a ralonge
+
+static char	*print_name1(char *av)
+{
+	int	i;
+
+	i = 0;
+	while (av[i])
+		i++;
+	av[i] = '\0';
+	printf("export: not an identifier: %s\n", av);
+	return (av);
+}
 
 // TODO JSP ADVICE? alors j'avais pas pense a une fonction qui check
 // tous les chars en meme temps mais pk pas. Aussi au lieu d'eliminer
@@ -31,6 +43,8 @@ static int	check_char(char *av)
 	i = 0;
 	while (av[i])
 	{
+		if (av[i] == '=')
+			break ;
 		if (av[i] < '0')
 			return (0);
 		else if (av[i] > '9' && av[i] < '=')
@@ -56,6 +70,8 @@ int	valid_name(char *av)
 	i = 0;
 	while (av[i])
 	{
+		if (av[0] == '=')
+			return (print_name1(av), 1);
 		if ((av[0] > '0' && av[0] < '9') || !check_char(av))
 		{
 			printf("minishell: export: `%s': not a valid identifier\n", av);

@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:54:55 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/09 17:51:24 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/17 15:28:12 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	echo(int ac, char **av)
 		ft_printf("%s", av[i]);
 		i++;
 		if (i != ac)
-			printf(" ");
+			ft_printf(" ");
 	}
 	if (!newline_option)
 		ft_printf("\n");
