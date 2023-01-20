@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:35:44 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/06 15:15:52 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/20 10:36:08 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ int	my_env(int ac, char **av)
 		}
 	}
 	g_minishell.exit_status = 0;
-	return (0);
+	ft_lstclear(&g_minishell.envs, free_env);
+	exit(0);
 }
 
 // Fonction 1: char** -> t_list de t_env
