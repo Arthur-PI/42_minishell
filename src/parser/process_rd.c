@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "minishell.h"
 
 extern t_minishell	g_minishell;
 
@@ -40,25 +39,28 @@ static int	get_open_flag(t_redirect_type type)
 
 static int	open_fd(t_redirect_type type, t_token *name)
 {
-	int			fd;
-	char		*s;
-	struct stat	stats;
+	int		fd;
+	char	*s;
 
 	s = name->value;
 	if (type == RD_HEREDOC)
 		fd = handle_heredoc(s);
 	else
 	{
-		fd = open(s, get_open_flag(type), 0644);
+		fd = -1;
+		if (type == RD_IN && access(s, F_OK))
+			printf("minishell: %s: No such file or directory\n", s);
+		else if (type == RD_IN && access(s, R_OK))
+			printf("minishell: %s: Permission denied\n", s);
+		else if (type == (RD_OUT | RD_APPEND)
+			&& !access(s, F_OK) && access(s, W_OK))
+			printf("minishell: %s: Permission denied\n", s);
+		else if (type == (RD_OUT | RD_APPEND) && is_directory(s))
+			printf("minishell: %s: Is a directory\n", s);
+		else
+			fd = open(s, get_open_flag(type), 0644);
 		if (fd == -1)
-		{
-			stat(s, &stats);
-			if (stats.st_mode < 100200)
-				printf("minishell: %s: Permission denied\n", s);
-			else
-				printf(FILE_ERROR_MSG, s);
 			g_minishell.exit_status = 1;
-		}
 	}
 	return (fd);
 }
