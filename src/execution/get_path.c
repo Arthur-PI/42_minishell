@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:14:12 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/20 10:52:02 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/20 13:14:03 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,19 @@ void	free_path(char **path)
 		i++;
 	}
 	free(path);
+}
+
+char	*file_to_execute(char *cmd)
+{
+	char	*tmp;
+
+	if (ft_strncmp(cmd, "./", 2) == 0
+		|| ft_strncmp(cmd, "../", 2) == 0
+		|| ft_strncmp(cmd, "/", 1) == 0)
+		tmp = ft_strdup(cmd);
+	else
+		tmp = get_path_cmd(cmd);
+	return (tmp);
 }
 
 char	*get_path_cmd(char *cmd)

@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 09:27:51 by apigeon           #+#    #+#             */
-/*   Updated: 2023/01/20 10:50:00 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/20 13:12:47 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,7 @@ int	pipex(t_list *command)
 		handle_redirects(fd_rw, fd_pipe, command->next != NULL, command);
 		if (builtins(nbr_args(cmd->args), cmd->args, fd_rw, fd_pipe[0]) == 2)
 		{
-			if (ft_strncmp(cmd->args[0], "./", 2) == 0
-				|| ft_strncmp(cmd->args[0], "../", 2) == 0
-				|| ft_strncmp(cmd->args[0], "/", 1) == 0)
-				tmp = ft_strdup(cmd->args[0]);
-			else
-				tmp = get_path_cmd(cmd->args[0]);
+			tmp = file_to_execute(cmd->args[0]);
 			last_pid = exec(cmd->args, tmp, fd_rw, fd_pipe[0]);
 			free(tmp);
 		}
