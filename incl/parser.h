@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 
 # include "struct.h"
 # include "libft.h"
@@ -44,5 +45,6 @@ t_list			*tokens_to_commands(t_list *tokens);
 int				handle_heredoc(char *stop);
 t_command		*create_command(t_token *token);
 int				process_rd(t_token *t, t_command **c, t_list **ts);
+bool			is_directory(const char *path);
 
 #endif

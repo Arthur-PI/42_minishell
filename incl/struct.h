@@ -40,10 +40,10 @@ typedef enum e_token_type
 
 typedef enum e_redirect_type
 {
-	RD_IN,
-	RD_OUT,
-	RD_APPEND,
-	RD_HEREDOC,
+	RD_IN = 1,
+	RD_OUT = 2,
+	RD_APPEND = 4,
+	RD_HEREDOC = 8,
 }			t_redirect_type;
 
 typedef struct s_token

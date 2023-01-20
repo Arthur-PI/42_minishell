@@ -6,11 +6,13 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 21:48:59 by apigeon           #+#    #+#             */
-/*   Updated: 2023/01/05 21:49:01 by apigeon          ###   ########.fr       */
+/*   Updated: 2023/01/20 12:02:04 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+extern t_minishell	g_minishell;
 
 static t_redirect_type	get_redirection_type(t_token_type type)
 {
@@ -45,9 +47,20 @@ static int	open_fd(t_redirect_type type, t_token *name)
 		fd = handle_heredoc(s);
 	else
 	{
-		fd = open(s, get_open_flag(type), 0644);
+		fd = -1;
+		if (type == RD_IN && access(s, F_OK))
+			printf("minishell: %s: No such file or directory\n", s);
+		else if (type == RD_IN && access(s, R_OK))
+			printf("minishell: %s: Permission denied\n", s);
+		else if (type == (RD_OUT | RD_APPEND)
+			&& !access(s, F_OK) && access(s, W_OK))
+			printf("minishell: %s: Permission denied\n", s);
+		else if (type == (RD_OUT | RD_APPEND) && is_directory(s))
+			printf("minishell: %s: Is a directory\n", s);
+		else
+			fd = open(s, get_open_flag(type), 0644);
 		if (fd == -1)
-			printf(FILE_ERROR_MSG, s);
+			g_minishell.exit_status = 1;
 	}
 	return (fd);
 }
