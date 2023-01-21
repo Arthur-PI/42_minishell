@@ -50,4 +50,6 @@ void	piping(int fd[2], int fd_in);
 
 char	*file_to_execute(char *cmd);
 
+void	free_tab(char **tab);
+
 #endif

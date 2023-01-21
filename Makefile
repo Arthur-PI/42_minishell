@@ -87,6 +87,7 @@ SRCS	+=	builtins/echo.c \
 			execution/redir.c \
 			execution/get_path.c \
 			execution/list_to_tab.c \
+			execution/free_tab.c \
 			utils.c \
 			is_directory.c \
 

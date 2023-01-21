@@ -38,6 +38,7 @@ void	piping(int fd[2], int fd_in)
 
 void	exec_or_error(char *cmd, char **av)
 {
+	char		**tab;
 	struct stat	buf;
 
 	if (cmd == NULL || ft_strlen(av[0]) == 0)
@@ -54,8 +55,13 @@ void	exec_or_error(char *cmd, char **av)
 			av[0], 127, cmd);
 	if (builtins(nbr_args(av), av) == 0)
 		ft_lstclear(&g_minishell.envs, free_env);
-	else if (execve(cmd, av, list_to_tab(g_minishell.envs)) == -1)
+	else
+	{
+		tab = list_to_tab(g_minishell.envs);
+		execve(cmd, av, tab);
+		free_tab(tab);
 		exit_error("minishell: %s: Permission denied\n", cmd, 126, cmd);
+	}
 }
 
 void	quit_properly(char *s)
