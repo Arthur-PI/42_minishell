@@ -59,6 +59,7 @@ void	quit_properly(char *s)
 {
 	free(s);
 	ft_lstclear((t_list **)&g_minishell.commands, &free_command);
+	ft_lstclear(&g_minishell.envs, &free_env);
 	exit(g_minishell.exit_status);
 }
 
