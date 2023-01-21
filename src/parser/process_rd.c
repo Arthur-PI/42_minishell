@@ -26,17 +26,6 @@ static t_redirect_type	get_redirection_type(t_token_type type)
 		return (RD_HEREDOC);
 }
 
-static int	get_open_flag(t_redirect_type type)
-{
-	if (type == RD_IN)
-		return (O_RDONLY);
-	if (type == RD_OUT)
-		return (O_WRONLY | O_CREAT | O_TRUNC);
-	if (type == RD_APPEND)
-		return (O_WRONLY | O_CREAT | O_APPEND);
-	return (O_RDWR);
-}
-
 static int	open_fd(t_redirect_type type, t_token *name)
 {
 	int		fd;
@@ -47,7 +36,7 @@ static int	open_fd(t_redirect_type type, t_token *name)
 		fd = handle_heredoc(s);
 	else
 	{
-		fd = -1;
+		fd = -2;
 		if (type == RD_IN && access(s, F_OK))
 			printf("minishell: %s: No such file or directory\n", s);
 		else if (type == RD_IN && access(s, R_OK))
@@ -59,29 +48,21 @@ static int	open_fd(t_redirect_type type, t_token *name)
 			printf("minishell: %s: Is a directory\n", s);
 		else
 			fd = open(s, get_open_flag(type), 0644);
-		if (fd == -1)
+		if (fd == -2)
 			g_minishell.exit_status = 1;
 	}
 	return (fd);
 }
 
-static bool	add_redirect(t_command *cmd, t_list *rd_type, t_list *file)
+static void	add_rd_to_list(t_list **redirects, t_token *file, int fd, int type)
 {
-	int				fd;
 	t_list			*new;
 	t_redirect		*rd;
-	t_redirect_type	type;
 
-	if (!file)
-		return (false);
-	type = get_redirection_type(((t_token *) rd_type->content)->type);
-	fd = open_fd(type, file->content);
-	if (fd == -1)
-		return (false);
 	rd = malloc(sizeof(*rd));
 	if (!rd)
 		exit(12);
-	rd->file = ft_strdup(((t_token *)file->content)->value);
+	rd->file = ft_strdup(file->value);
 	if (!rd->file)
 		exit(12);
 	rd->type = type;
@@ -89,19 +70,39 @@ static bool	add_redirect(t_command *cmd, t_list *rd_type, t_list *file)
 	new = ft_lstnew(rd);
 	if (!new)
 		exit(12);
-	ft_lstadd_back(&cmd->redirects, new);
-	return (true);
+	ft_lstadd_back(redirects, new);
+}
+
+static int	add_redirect(t_command *cmd, t_list *rd_type, t_list *file)
+{
+	int				fd;
+	t_redirect_type	type;
+
+	if (!file)
+		return (1);
+	type = get_redirection_type(((t_token *) rd_type->content)->type);
+	fd = open_fd(type, file->content);
+	if (fd == -1)
+		return (1);
+	if (fd == -2)
+		fd = -1;
+	add_rd_to_list(&cmd->redirects, file->content, fd, type);
+	if (fd == -1)
+		return (2);
+	return (0);
 }
 
 int	process_rd(t_token *token, t_command **command, t_list **tokens)
 {
+	int	ret;
+
+	ret = 0;
 	if (token->type != TOKEN_WORD && token->type != TOKEN_PIPE)
 	{
 		if (*command == NULL)
 			*command = create_command(NULL);
-		if (!add_redirect(*command, *tokens, (*tokens)->next))
-			return (-1);
+		ret = add_redirect(*command, *tokens, (*tokens)->next);
 		*tokens = (*tokens)->next;
 	}
-	return (1);
+	return (ret);
 }

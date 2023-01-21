@@ -65,3 +65,14 @@ bool	is_empty(const char *s)
 	}
 	return (true);
 }
+
+int	get_open_flag(t_redirect_type type)
+{
+	if (type == RD_IN)
+		return (O_RDONLY);
+	if (type == RD_OUT)
+		return (O_WRONLY | O_CREAT | O_TRUNC);
+	if (type == RD_APPEND)
+		return (O_WRONLY | O_CREAT | O_APPEND);
+	return (O_RDWR);
+}
