@@ -42,7 +42,7 @@ int	cd(int ac, char **av)
 	else if (ac > 2)
 	{
 		g_minishell.exit_status = 1;
-		return (printf(" too many arguments\n"), 1);
+		return (printf("minishell: cd: too many arguments\n"), 1);
 	}
 	else if (ac == 2)
 	{
