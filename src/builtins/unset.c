@@ -102,9 +102,6 @@ int	my_unset(int ac, char **av)
 				lst = g_minishell.envs;
 			if (check_arg(av[i]))
 				g_minishell.envs = ft_delete(lst, del_env, av[i]);
-			else
-				printf("minishell: unset: `%s': not a valid identifier\n",
-					av[i]);
 			i++;
 		}
 	}
