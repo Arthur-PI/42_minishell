@@ -50,6 +50,8 @@ int	ifbuiltins(char **av)
 
 int	builtins_parent(int ac, char **av, int fd[2], int fd_in)
 {
+	if (fd[0] == -1 || fd[1] == -1)
+		return (1);
 	piping(fd, fd_in);
 	if (ft_strcmp(av[0], "cd") == 0)
 		return (cd(ac, av));
