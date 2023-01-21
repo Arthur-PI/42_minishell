@@ -50,18 +50,20 @@ int	redir_input(int fdin, t_list *command)
 
 int	redir_output(int fdout, t_list *command)
 {
+	t_list		*redirects;
 	t_redirect	*redirect;
 	t_command	*cmd;
 
 	if (fdout == -1)
 		return (-1);
 	cmd = command->content;
-	while (cmd->redirects != NULL)
+	redirects = cmd->redirects;
+	while (redirects != NULL)
 	{
-		redirect = cmd->redirects->content;
+		redirect = redirects->content;
 		if (redirect->type == RD_OUT || redirect->type == RD_APPEND)
 			dup2(redirect->fd, fdout);
-		cmd->redirects = cmd->redirects->next;
+		redirects = redirects->next;
 	}
 	return (fdout);
 }

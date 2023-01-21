@@ -54,6 +54,8 @@ int	exec(char **av, char *cmd, int fd[2], int fd_in)
 	if (pid == 0)
 	{
 		reset_signals();
+		if (fd[0] == -1 || fd[1] == -1)
+			exit(1);
 		piping(fd, fd_in);
 		exec_or_error(cmd, av);
 	}

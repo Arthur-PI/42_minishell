@@ -48,5 +48,6 @@ t_command		*create_command(t_token *token);
 int				process_rd(t_token *t, t_command **c, t_list **ts);
 bool			is_directory(const char *path);
 bool			is_empty(const char *s);
+int				get_open_flag(t_redirect_type type);
 
 #endif

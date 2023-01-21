@@ -94,7 +94,7 @@ t_list	*tokens_to_commands(t_list *tokens)
 			return (panic_free(&commands, command), NULL);
 		if (process_pipe(tokens->content, &commands, &command) == -1)
 			return (panic_free(&commands, command), NULL);
-		if (process_rd(tokens->content, &command, &tokens) == -1)
+		if (process_rd(tokens->content, &command, &tokens) == 1)
 			return (panic_free(&commands, command), NULL);
 		tokens = tokens->next;
 	}

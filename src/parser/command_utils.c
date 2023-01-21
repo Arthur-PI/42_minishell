@@ -12,6 +12,22 @@
 
 #include "parser.h"
 
+static void	print_redirects(t_list *redirects)
+{
+	t_redirect	*redirect;
+
+	printf("{");
+	while (redirects)
+	{
+		redirect = redirects->content;
+		printf("%s: %d", redirect->file, redirect->fd);
+		if (redirects->next)
+			printf(", ");
+		redirects = redirects->next;
+	}
+	printf("}");
+}
+
 static void	print_command(t_command *command)
 {
 	int		i;
@@ -30,10 +46,9 @@ static void	print_command(t_command *command)
 		free(tmp);
 		i++;
 	}
-	i = 0;
-	if (command->redirects)
-		i = ft_lstsize(command->redirects);
-	printf("Command -> (%s) (rd=%d)\n", s, i);
+	printf("Command -> (%s) (rd = ", s);
+	print_redirects(command->redirects);
+	printf(")\n");
 	free(s);
 }
 
@@ -57,7 +72,7 @@ static void	free_redirect(void *ptr)
 	if (rd)
 	{
 		free(rd->file);
-		if (rd->fd != 1)
+		if (rd->fd != 1 && rd->fd != -1)
 			close(rd->fd);
 		free(rd);
 	}

@@ -48,8 +48,8 @@ typedef enum e_redirect_type
 
 typedef struct s_token
 {
-	t_token_type	type;
 	char			*value;
+	t_token_type	type;
 }				t_token;
 
 typedef struct s_redirect
@@ -61,10 +61,10 @@ typedef struct s_redirect
 
 typedef struct s_command
 {
+	int		pid;
 	char	*cmd;
 	char	**args;
 	t_list	*redirects;
-	int	pid;
 }				t_command;
 
 #endif

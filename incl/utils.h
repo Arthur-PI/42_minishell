@@ -15,8 +15,10 @@
 
 # include <stdbool.h>
 # include <sys/types.h>
+# include <fcntl.h>
 
 # include "libft.h"
+# include "struct.h"
 
 char	*ft_concat(char *s1, char *s2);
 int		is_name_char(int c);
