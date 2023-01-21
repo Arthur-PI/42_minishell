@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:54 by apigeon           #+#    #+#             */
-/*   Updated: 2023/01/10 20:45:03 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/21 14:43:35 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	routine(void)
 			if (commands)
 				executing(commands);
 			ft_lstclear(&commands, &free_command);
+			g_minishell.commands = NULL;
 		}
 		free(line);
 	}
@@ -64,6 +65,7 @@ static void	init_minishell(char **envp)
 		exit(12);
 	g_minishell.signal = 0;
 	g_minishell.exit_status = 0;
+	g_minishell.commands = NULL;
 }
 
 int	main(int ac, char **av, char **envp)
