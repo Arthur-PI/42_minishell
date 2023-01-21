@@ -51,6 +51,13 @@ void	exec_or_error(char *cmd, char **av)
 		exit_error("minishell: %s: Permission denied\n", cmd, 126);
 }
 
+void	quit_properly(char *s)
+{
+	free(s);
+	ft_lstclear((t_list **)&g_minishell.commands, &free_command);
+	exit(g_minishell.exit_status);
+}
+
 int	exec(char **av, char *cmd, int fd[2], int fd_in)
 {
 	int			pid;
@@ -62,12 +69,10 @@ int	exec(char **av, char *cmd, int fd[2], int fd_in)
 	{
 		reset_signals();
 		if (fd[0] == -1 || fd[1] == -1)
-			exit(1);
+			quit_properly(cmd);
 		piping(fd, fd_in);
 		exec_or_error(cmd, av);
-		free(cmd);
-		ft_lstclear((t_list **)&g_minishell.commands, &free_command);
-		exit(g_minishell.exit_status);
+		quit_properly(cmd);
 	}
 	handle_signals_exec();
 	close(fd[0]);
