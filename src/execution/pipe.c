@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:24:06 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/17 20:34:25 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/21 12:17:05 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,47 @@ void	reset_std(int tpin, int tpout)
 	dup2(tpout, STDOUT_FILENO);
 	close(tpin);
 	close(tpout);
+}
+
+int	ifbuiltins(char **av)
+{
+	if (ft_strcmp(av[0], "cd") == 0)
+		return (0);
+	else if (ft_strcmp(av[0], "exit") == 0)
+		return (0);
+	else if (ft_strcmp(av[0], "env") == 0)
+		return (0);
+	else if (ft_strcmp(av[0], "echo") == 0)
+		return (0);
+	else if (ft_strcmp(av[0], "pwd") == 0)
+		return (0);
+	else if (ft_strcmp(av[0], "unset") == 0)
+		return (0);
+	else if (ft_strcmp(av[0], "export") == 0)
+		return (0);
+	else
+		return (2);
+}
+
+int	builtins_parent(int ac, char **av, int fd[2], int fd_in)
+{
+	piping(fd, fd_in);
+	if (ft_strcmp(av[0], "cd") == 0)
+		return (cd(ac, av));
+	else if (ft_strcmp(av[0], "exit") == 0)
+		return (my_exit(ac, av));
+	else if (ft_strcmp(av[0], "env") == 0)
+		return (my_env(ac, av));
+	else if (ft_strcmp(av[0], "echo") == 0)
+		return (echo(ac, av));
+	else if (ft_strcmp(av[0], "pwd") == 0)
+		return (pwd(ac));
+	else if (ft_strcmp(av[0], "unset") == 0)
+		return (my_unset(ac, av));
+	else if (ft_strcmp(av[0], "export") == 0)
+		return (my_export(ac, av));
+	else
+		return (2);
 }
 
 int	executing(t_list *command)

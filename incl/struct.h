@@ -6,7 +6,7 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 17:53:37 by apigeon           #+#    #+#             */
-/*   Updated: 2023/01/10 13:51:02 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/21 12:54:21 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_minishell
 {
 	int		signal;
 	int		exit_status;
+	void	*commands;
 	t_list	*envs;
 }				t_minishell;
 
