@@ -44,7 +44,6 @@ int	is_name_char(int c)
 	return (false);
 }
 
-// return true if c is " or ' else, return false
 int	is_quote(int c)
 {
 	if (c == '\'' || c == '"')

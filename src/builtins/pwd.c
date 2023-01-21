@@ -13,10 +13,6 @@
 #include "builtins.h"
 
 extern t_minishell	g_minishell;
-/* TODO
-- variable env
-- lien symbolique
-*/
 
 int	pwd(int ac)
 {

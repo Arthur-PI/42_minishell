@@ -19,8 +19,6 @@ static void	usage(char *prog_name)
 	printf("%s: too many arguments\n", prog_name);
 }
 
-/* TODO make an exit function that free what is in g_minishell
- */
 static char	*get_line(void)
 {
 	char	*line;

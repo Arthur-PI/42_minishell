@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <sys/wait.h>
 
 extern t_minishell	g_minishell;
 

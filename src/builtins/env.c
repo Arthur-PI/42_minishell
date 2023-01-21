@@ -13,9 +13,6 @@
 #include "builtins.h"
 
 extern t_minishell	g_minishell;
-/* TODO invalid read of size 8 avec free(lst) ligne 75
- * TODO norme
- */
 
 void	free_env(void *ptr)
 {
@@ -30,8 +27,6 @@ void	free_env(void *ptr)
 	}
 }
 
-// FIXED ? ft_substr peut return NULL (free new_env)
-// FIXED ? ft_substr peut return NULL (free new_env et new_env->name)
 t_env	*create_env(char *env)
 {
 	int		i;
@@ -57,10 +52,6 @@ t_env	*create_env(char *env)
 	return (new_env);
 }
 
-// FIXED ? ft_lstnew peut return NULL, a gerer (exit proprement et free lst_env)
-// FIXED ? pareil pour create_env, peut return NULL, a gerer proprement
-// TODO FIX si envs NULL -> Erreur, NULL pointer free
-// TODO FIX ne pas crash si erreur, juste cascade le NULL
 t_list	*add_env(t_list *lst, char *env)
 {
 	t_list	*new;
@@ -99,8 +90,6 @@ t_list	*tab_to_list(char **env)
 	return (lst_env);
 }
 
-// FIXED ? pas besoin de l'arg t_list *lst pcq normalement
-// les env sont dans g_minishell->envs
 int	my_env(int ac, char **av)
 {
 	t_env	*envs;
@@ -120,9 +109,3 @@ int	my_env(int ac, char **av)
 	g_minishell.exit_status = 0;
 	return (0);
 }
-
-// Fonction 1: char** -> t_list de t_env
-// Fonction 2: affiche tout ce qu'il y a dans la t_list de t_env
-// Fonction 3: on cree et ajoute un t_env a la t_list
-// Fonction 4: on supprime un t_env de la t_list
-// Fonction 5: t_list -> char **

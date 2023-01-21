@@ -17,8 +17,6 @@ static t_token	*create_token(char *value)
 	return (new_token(value, get_token_type(value)));
 }
 
-/* TODO make an exit function that clears g_minishell
- */
 static void	add_token(t_list **lst, char *line, int start, int end)
 {
 	t_list	*el;

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
 #include "minishell.h"
 
 int	builtins(int ac, char **av)
@@ -75,7 +74,6 @@ int	forks(t_list *command, int fd_rw[2], int fd_pipe[2])
 	return (last_pid);
 }
 
-// TODO FIX handle pipe return value in case of error (-1)
 int	pipex(t_list *command)
 {
 	int			last_pid;

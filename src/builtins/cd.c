@@ -32,7 +32,6 @@ char	*home(void)
 	return (home);
 }
 
-// TODO FIX handle chdir return value in case of error
 int	cd(int ac, char **av)
 {
 	if (ac == 1)
