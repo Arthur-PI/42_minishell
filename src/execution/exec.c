@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:32:29 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/21 13:42:53 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/21 14:18:00 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	exec_or_error(char *cmd, char **av)
 {
 	struct stat	buf;
 
-	if (cmd == NULL)
+	if (cmd == NULL || ft_strlen(av[0]) == 0)
 		exit_error("minishell: %s: command not found\n", av[0], 127);
 	if (stat(cmd, &buf) != -1)
 	{
