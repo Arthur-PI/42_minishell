@@ -49,5 +49,6 @@ int				process_rd(t_token *t, t_command **c, t_list **ts);
 bool			is_directory(const char *path);
 bool			is_empty(const char *s);
 int				get_open_flag(t_redirect_type type);
+bool			is_rdout(t_redirect_type type);
 
 #endif

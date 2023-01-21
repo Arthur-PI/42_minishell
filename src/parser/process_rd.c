@@ -37,14 +37,13 @@ static int	open_fd(t_redirect_type type, t_token *name)
 	else
 	{
 		fd = -2;
-		if (type == RD_IN && access(s, F_OK))
+		if ((type == RD_IN && access(s, F_OK)) || (is_rdout(type) && s[0] == 0))
 			printf("minishell: %s: No such file or directory\n", s);
 		else if (type == RD_IN && access(s, R_OK))
 			printf("minishell: %s: Permission denied\n", s);
-		else if (type == (RD_OUT | RD_APPEND)
-			&& !access(s, F_OK) && access(s, W_OK))
+		else if (is_rdout(type) && access(s, F_OK) == 0 && access(s, W_OK) != 0)
 			printf("minishell: %s: Permission denied\n", s);
-		else if (type == (RD_OUT | RD_APPEND) && is_directory(s))
+		else if (is_rdout(type) && is_directory(s))
 			printf("minishell: %s: Is a directory\n", s);
 		else
 			fd = open(s, get_open_flag(type), 0644);
