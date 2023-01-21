@@ -42,10 +42,14 @@ void	lst_remove_empty(t_list **lst)
 			else
 				*lst = tokens->next;
 			free_token(token);
+			free(tokens);
 		}
 		else
 			prev = tokens;
-		tokens = tokens->next;
+		if (prev)
+			tokens = prev->next;
+		else
+			tokens = *lst;
 	}
 }
 
@@ -59,9 +63,9 @@ t_list	*parse_line(char *line)
 		return (NULL);
 	if (lst_expand_var(tokens) == -1)
 		return (ft_lstclear(&tokens, &free_token), NULL);
+	lst_remove_empty(&tokens);
 	if (lst_remove_quotes(tokens) == -1)
 		return (ft_lstclear(&tokens, &free_token), NULL);
-	lst_remove_empty(&tokens);
 	if (!valid_syntax(tokens))
 		return (ft_lstclear(&tokens, &free_token), NULL);
 	commands = tokens_to_commands(tokens);

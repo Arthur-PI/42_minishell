@@ -50,7 +50,8 @@ static char	*get_env_value(char *name)
 	if (env)
 	{
 		env_value = ft_strdup(env->value);
-		exit(12);
+		if (!env_value)
+			exit(12);
 	}
 	return (env_value);
 }
