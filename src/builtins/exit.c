@@ -6,11 +6,11 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:09:07 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/20 12:35:58 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/21 14:49:00 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "minishell.h"
 
 extern t_minishell	g_minishell;
 
@@ -41,6 +41,13 @@ static long long	atoi_exit(const char *str)
 	return (n * sign);
 }
 
+static void	free_exit(int status)
+{
+	ft_lstclear(&g_minishell.envs, free_env);
+	ft_lstclear((t_list **)&g_minishell.commands, &free_command);
+	exit(status);
+}
+
 int	my_exit(int ac, char **av)
 {
 	int	status;
@@ -54,8 +61,7 @@ int	my_exit(int ac, char **av)
 			|| (atoi_exit(av[1]) == 0 && av[1][0] != '0'))
 		{
 			printf("minishell: exit: %s: numeric argument required\n", av[1]);
-			ft_lstclear(&g_minishell.envs, free_env);
-			exit(2);
+			free_exit(2);
 		}
 		status = atoi_exit(av[1]);
 	}
@@ -65,6 +71,6 @@ int	my_exit(int ac, char **av)
 		g_minishell.exit_status = 1;
 		return (1);
 	}
-	ft_lstclear(&g_minishell.envs, free_env);
+	free_exit(status);
 	exit(status);
 }
