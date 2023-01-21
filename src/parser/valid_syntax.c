@@ -38,6 +38,20 @@ static int	is_next_word(t_list *tokens)
 	return (true);
 }
 
+static void	print_syntax_error(t_list *lst)
+{
+	char	*token_value;
+	t_token	*token;
+
+	token_value = "newline";
+	if (lst)
+	{
+		token = lst->content;
+		token_value = token->value;
+	}
+	printf("minishell: syntax error near unexpected token `%s'\n", token_value);
+}
+
 int	valid_syntax(t_list *tokens)
 {
 	int		previous;
@@ -50,13 +64,13 @@ int	valid_syntax(t_list *tokens)
 		if (token->type == TOKEN_PIPE)
 		{
 			if (!previous)
-				return (false);
+				return (print_syntax_error(tokens), false);
 			previous = false;
 		}
 		else if (is_token_redirect(token->type))
 		{
 			if (!is_next_word(tokens))
-				return (false);
+				return (print_syntax_error(tokens->next), false);
 			previous = true;
 		}
 		if (token->type == TOKEN_WORD)

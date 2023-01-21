@@ -109,7 +109,7 @@ UNAME_S = $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	VALGRIND = leaks --list --groupByType --atExit --
 else
-	VALGRIND = valgrind --track-origins=yes --leak-check=full --suppressions=.ignore_readline_leaks
+	VALGRIND = valgrind --track-origins=yes --leak-check=full --suppressions=.ignore_readline_leaks --show-leak-kinds=all
 endif
 
 ### RULES ###
