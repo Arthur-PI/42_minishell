@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 16:13:42 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/06 15:08:54 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/20 12:43:02 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,31 @@ t_env	*get_env_el(char *av)
 	return (NULL);
 }
 
-t_list	*ft_delete(char *av)
+t_list	*ft_delete(t_list *lst, t_env *del_env, char *av)
 {
 	t_env	*env;
-	t_list	*lst;
 	t_list	*lst_new;
+	t_list	*tmp;
 
-	lst = g_minishell.envs;
 	lst_new = NULL;
 	while (lst != NULL)
 	{
 		env = lst->content;
-		if (env == get_env_el(av))
+		if (ft_strncmp(av, env->name, ft_strlen(env->name) + 1) == 0)
 		{
+			del_env = env;
+			tmp = lst;
 			lst = lst->next;
-			if (!lst)
-				break ;
-			env = lst->content;
+			free(tmp);
+			continue ;
 		}
-		if (!lst)
-			break ;
 		ft_lstadd_back(&lst_new, ft_lstnew(env));
+		tmp = lst;
 		lst = lst->next;
+		free(tmp);
 	}
+	if (del_env)
+		free_env(del_env);
 	return (lst_new);
 }
 
@@ -85,15 +87,19 @@ static int	check_arg(char *av)
 
 int	my_unset(int ac, char **av)
 {
-	int	i;
+	int		i;
+	t_list	*lst;
+	t_env	*del_env;
 
 	i = 1;
+	del_env = NULL;
+	lst = g_minishell.envs;
 	if (ac > 1)
 	{
 		while (av[i])
 		{
 			if (check_arg(av[i]))
-				g_minishell.envs = ft_delete(av[i]);
+				g_minishell.envs = ft_delete(lst, del_env, av[i]);
 			i++;
 		}
 	}
