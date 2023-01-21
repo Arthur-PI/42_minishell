@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:32:29 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/21 14:53:34 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/21 15:14:29 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ void	piping(int fd[2], int fd_in)
 {
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
-	close(fd[0]);
-	close(fd[1]);
-	close(fd_in);
+	if (fd[0] != -1)
+		close(fd[0]);
+	if (fd[1] != -1)
+		close(fd[1]);
+	if (fd_in != -1)
+		close(fd_in);
 }
 
 void	exec_or_error(char *cmd, char **av)
@@ -79,7 +82,9 @@ int	exec(char **av, char *cmd, int fd[2], int fd_in)
 		quit_properly(cmd);
 	}
 	handle_signals_exec();
-	close(fd[0]);
-	close(fd[1]);
+	if (fd[0] != -1)
+		close(fd[0]);
+	if (fd[1] != -1)
+		close(fd[1]);
 	return (pid);
 }
