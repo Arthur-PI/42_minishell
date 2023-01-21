@@ -74,6 +74,18 @@ int	valid_name(char *av)
 	return (0);
 }
 
+void	print_envs(t_list *envs)
+{
+	t_env	*env;
+
+	while (envs)
+	{
+		env = envs->content;
+		printf("export %s=\"%s\"\n", env->name, env->value);
+		envs = envs->next;
+	}
+}
+
 int	my_export(int ac, char **av)
 {
 	int		i;
@@ -84,7 +96,7 @@ int	my_export(int ac, char **av)
 	lst = g_minishell.envs;
 	ret = 0;
 	if (ac == 1)
-		return (my_env(ac, av));
+		print_envs(lst);
 	i = 1;
 	while (av[i])
 	{
