@@ -6,7 +6,7 @@
 /*   By: tperes <tperes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 16:32:29 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/20 13:27:01 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/21 13:42:53 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ static void	exit_error(const char *format, const char *s, int code)
 	printf(format, s);
 	ft_lstclear(&g_minishell.envs, free_env);
 	exit(code);
+}
+
+void	piping(int fd[2], int fd_in)
+{
+	dup2(fd[0], STDIN_FILENO);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
+	close(fd[1]);
+	close(fd_in);
 }
 
 void	exec_or_error(char *cmd, char **av)
@@ -36,10 +45,8 @@ void	exec_or_error(char *cmd, char **av)
 			|| ft_strncmp(av[0], "../", 2) == 0
 			|| ft_strncmp(av[0], "/", 1) == 0))
 		exit_error("minishell: %s: No such file or directory\n", av[0], 127);
-	if (ft_strcmp(av[0], "echo") == 0)
-		echo(nbr_args(av), av);
-	else if (ft_strcmp(av[0], "env") == 0)
-		my_env(nbr_args(av), av);
+	if (builtins(nbr_args(av), av) == 0)
+		ft_lstclear(&g_minishell.envs, free_env);
 	else if (execve(cmd, av, list_to_tab(g_minishell.envs)) == -1)
 		exit_error("minishell: %s: Permission denied\n", cmd, 126);
 }
@@ -56,6 +63,9 @@ int	exec(char **av, char *cmd, int fd[2], int fd_in)
 		reset_signals();
 		piping(fd, fd_in);
 		exec_or_error(cmd, av);
+		free(cmd);
+		ft_lstclear((t_list **)&g_minishell.commands, &free_command);
+		exit(g_minishell.exit_status);
 	}
 	handle_signals_exec();
 	close(fd[0]);

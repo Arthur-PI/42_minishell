@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:14:12 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/20 13:14:03 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/21 12:38:29 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,20 @@ char	*file_to_execute(char *cmd)
 		|| ft_strncmp(cmd, "../", 2) == 0
 		|| ft_strncmp(cmd, "/", 1) == 0)
 		tmp = ft_strdup(cmd);
+	else if (ft_strcmp(cmd, "echo") == 0)
+		tmp = ft_strdup("echo");
+	else if (ft_strcmp(cmd, "env") == 0)
+		tmp = ft_strdup("env");
+	else if (ft_strcmp(cmd, "cd") == 0)
+		tmp = ft_strdup("cd");
+	else if (ft_strcmp(cmd, "export") == 0)
+		tmp = ft_strdup("export");
+	else if (ft_strcmp(cmd, "pwd") == 0)
+		tmp = ft_strdup("pwd");
+	else if (ft_strcmp(cmd, "unset") == 0)
+		tmp = ft_strdup("unset");
+	else if (ft_strcmp(cmd, "exit") == 0)
+		tmp = ft_strdup("exit");
 	else
 		tmp = get_path_cmd(cmd);
 	return (tmp);
@@ -90,10 +104,6 @@ char	*get_path_cmd(char *cmd)
 	char	**path;
 	char	*cmd_path;
 
-	if (ft_strcmp(cmd, "echo") == 0)
-		return (ft_strdup("echo"));
-	if (ft_strcmp(cmd, "env") == 0)
-		return (ft_strdup("env"));
 	env = get_env_el("PATH");
 	if (!env)
 		return (NULL);

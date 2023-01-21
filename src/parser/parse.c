@@ -6,11 +6,14 @@
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:50:12 by apigeon           #+#    #+#             */
-/*   Updated: 2022/12/16 11:06:22 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/21 12:50:18 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "minishell.h"
+
+extern t_minishell	g_minishell;
 
 void	free_token(void *ptr)
 {
@@ -69,6 +72,7 @@ t_list	*parse_line(char *line)
 	if (!valid_syntax(tokens))
 		return (ft_lstclear(&tokens, &free_token), NULL);
 	commands = tokens_to_commands(tokens);
+	g_minishell.commands = commands;
 	ft_lstclear(&tokens, &free_token);
 	return (commands);
 }
