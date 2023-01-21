@@ -50,5 +50,6 @@ bool			is_directory(const char *path);
 bool			is_empty(const char *s);
 int				get_open_flag(t_redirect_type type);
 bool			is_rdout(t_redirect_type type);
+int				handle_open_error(const char *s, int type);
 
 #endif

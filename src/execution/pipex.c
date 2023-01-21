@@ -66,7 +66,10 @@ int	forks(t_list *command, int fd_rw[2], int fd_pipe[2])
 	{
 		cmd = command->content;
 		handle_redirects(fd_rw, fd_pipe, command->next != NULL, command);
-		tmp = file_to_execute(cmd->args[0]);
+		if (!cmd->args)
+			tmp = ft_strdup("");
+		else
+			tmp = file_to_execute(cmd->args[0]);
 		last_pid = exec(cmd->args, tmp, fd_rw, fd_pipe[0]);
 		free(tmp);
 		command = command->next;
@@ -85,7 +88,7 @@ int	pipex(t_list *command)
 	fd_pipe[0] = dup(STDIN_FILENO);
 	fd_pipe[1] = -1;
 	cmd = command->content;
-	if (command->next == NULL && ifbuiltins(cmd->args) == 0)
+	if (cmd->args && command->next == NULL && ifbuiltins(cmd->args) == 0)
 	{
 		handle_redirects(fd_rw, fd_pipe, command->next != NULL, command);
 		builtins_parent(nbr_args(cmd->args), cmd->args, fd_rw, fd_pipe[0]);

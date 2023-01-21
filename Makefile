@@ -74,6 +74,7 @@ SRCS	+=	builtins/echo.c \
 			parser/command_utils.c \
 			parser/valid_syntax.c \
 			parser/tokens_to_commands.c \
+			parser/handle_open_error.c \
 			parser/heredoc.c \
 			parser/lst_remove_quotes.c \
 			parser/create_command.c \
