@@ -88,9 +88,10 @@ int	executing(t_list *command)
 	if (last_pid > 0)
 	{
 		waitpid(last_pid, &status, 0);
-		if (WIFEXITED(status) && g_minishell.exit_status != 130
-			&& last_pid != 0)
+		if (WIFEXITED(status))
 			g_minishell.exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			g_minishell.exit_status = WTERMSIG(status) + 128;
 	}
 	while (wait(&status) != -1)
 		continue ;
