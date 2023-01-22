@@ -47,7 +47,7 @@ static char	*get_env_value(char *name)
 	if (ft_strcmp(name, "?") == 0)
 		return (ft_itoa(g_minishell.exit_status));
 	env = get_env_el(name);
-	if (env)
+	if (env && env->value)
 	{
 		env_value = ft_strdup(env->value);
 		if (!env_value)

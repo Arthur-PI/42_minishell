@@ -64,7 +64,8 @@ t_list	*add_env(t_list *lst, char *env)
 	old = get_env_el(envs->name);
 	if (old)
 	{
-		free(old->value);
+		if (old->value)
+			free(old->value);
 		old->value = envs->value;
 		return (free(envs->name), free(envs), lst);
 	}
@@ -106,7 +107,8 @@ int	my_env(int ac, char **av)
 		while (lst != NULL)
 		{
 			envs = lst->content;
-			printf("%s=%s\n", envs->name, envs->value);
+			if (envs->value)
+				printf("%s=%s\n", envs->name, envs->value);
 			lst = lst->next;
 		}
 	}

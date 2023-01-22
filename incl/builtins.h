@@ -33,5 +33,6 @@ t_list	*add_env(t_list *lst, char *env);
 t_env	*get_env_el(char *s);
 t_list	*tab_to_list(char **env);
 t_env	*create_env(char *env);
+t_list	*add_empty_env(t_list *lst, char *s);
 
 #endif

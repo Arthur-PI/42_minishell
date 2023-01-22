@@ -105,7 +105,7 @@ char	*get_path_cmd(char *cmd)
 	char	*cmd_path;
 
 	env = get_env_el("PATH");
-	if (!env)
+	if (!env || !env->value)
 		return (NULL);
 	path = ft_split(env->value, ':');
 	if (!path)

@@ -65,6 +65,7 @@ SRCS	+=	builtins/echo.c \
 			builtins/env.c \
 			builtins/export.c \
 			builtins/unset.c \
+			builtins/add_empty_env.c \
 			parser/parse.c \
 			parser/lexer.c \
 			parser/substitute.c \

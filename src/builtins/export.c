@@ -14,7 +14,7 @@
 
 extern t_minishell	g_minishell;
 
-static char	*print_name1(char *av)
+static char	*print_name(char *av)
 {
 	int	i;
 
@@ -57,11 +57,11 @@ int	valid_name(char *av)
 {
 	int	i;
 
+	if (av[0] == '=')
+		return (print_name(av), 1);
 	i = 0;
 	while (av[i])
 	{
-		if (av[0] == '=')
-			return (print_name1(av), 1);
 		if ((av[0] > '0' && av[0] < '9') || !check_char(av))
 		{
 			printf("minishell: export: `%s': not a valid identifier\n", av);
@@ -81,7 +81,11 @@ void	print_envs(t_list *envs)
 	while (envs)
 	{
 		env = envs->content;
-		printf("export %s=\"%s\"\n", env->name, env->value);
+		printf("export %s", env->name);
+		if (env->value)
+			printf("=\"%s\"\n", env->value);
+		else
+			printf("\n");
 		envs = envs->next;
 	}
 }
@@ -103,8 +107,8 @@ int	my_export(int ac, char **av)
 		valid = valid_name(av[i]);
 		if (valid == 0)
 			g_minishell.envs = add_env(lst, av[i]);
-		else if (valid == 2 && ret == 0)
-			ret = 0;
+		else if (valid == 2)
+			g_minishell.envs = add_empty_env(lst, av[i]);
 		else
 			ret = 1;
 		i++;
