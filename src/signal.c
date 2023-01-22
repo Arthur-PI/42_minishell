@@ -28,7 +28,7 @@ static void	sighandler_heredoc(int signum)
 {
 	(void)signum;
 	printf("\n");
-	g_minishell.exit_status = 1;
+	g_minishell.exit_status = 130;
 }
 
 void	handle_signals(void)
