@@ -25,6 +25,7 @@
 # include "execution.h"
 # include "struct.h"
 
+char	*readinput(const char *prompt);
 void	handle_signals(void);
 void	handle_signals_exec(void);
 void	handle_signals_heredoc(void);

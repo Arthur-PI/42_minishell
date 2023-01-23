@@ -27,6 +27,7 @@ typedef struct s_minishell
 	int		exit_status;
 	void	*commands;
 	t_list	*envs;
+	char	*prompt;
 }				t_minishell;
 
 typedef enum e_token_type

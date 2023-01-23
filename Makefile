@@ -81,6 +81,7 @@ SRCS	+=	builtins/echo.c \
 			parser/create_command.c \
 			parser/process_rd.c \
 			parser/is_rdout.c \
+			readinput.c \
 			signal.c \
 			signal2.c \
 			execution/exec.c \

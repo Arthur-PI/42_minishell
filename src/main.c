@@ -22,10 +22,8 @@ static void	usage(char *prog_name)
 static char	*get_line(void)
 {
 	char	*line;
-	char	*prompt;
 
-	prompt = "minishell$ ";
-	line = readline(prompt);
+	line = readinput(g_minishell.prompt);
 	if (!line)
 		return (NULL);
 	else if (*line)
@@ -64,6 +62,7 @@ static void	init_minishell(char **envp)
 	g_minishell.signal = 0;
 	g_minishell.exit_status = 0;
 	g_minishell.commands = NULL;
+	g_minishell.prompt = "minishell$ ";
 }
 
 int	main(int ac, char **av, char **envp)
