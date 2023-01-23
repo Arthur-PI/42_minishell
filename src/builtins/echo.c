@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:54:55 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/21 11:36:22 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/23 09:35:23 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	echo(int ac, char **av)
 	if (ac > 1)
 	{
 		newline_option = echo_newline(av);
-		if (newline_option || ft_strcmp(av[1], "-") == 0)
+		if (newline_option)
 			i++;
 	}
 	while (i < ac)
