@@ -6,7 +6,7 @@
 /*   By: tperes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:54:55 by tperes            #+#    #+#             */
-/*   Updated: 2023/01/23 09:35:23 by tperes           ###   ########.fr       */
+/*   Updated: 2023/01/23 15:30:45 by tperes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 extern t_minishell	g_minishell;
 
-static int	echo_newline(char **av)
+static int	echo_newline(char **av, int j)
 {
 	int	i;
 
-	if (av[1][0] == '-')
+	if (av[j][0] == '-')
 	{
 		i = 1;
-		while (av[1][i])
+		while (av[j][i])
 		{
-			if (av[1][i] != 'n')
+			if (av[j][i] != 'n')
 				return (false);
 			i++;
 		}
@@ -39,12 +39,15 @@ int	echo(int ac, char **av)
 
 	i = 1;
 	newline_option = false;
-	if (ac > 1)
+	while (av[i])
 	{
-		newline_option = echo_newline(av);
-		if (newline_option)
-			i++;
+		newline_option = echo_newline(av, i);
+		if (!newline_option)
+			break ;
+		i++;
 	}
+	if (i != 1)
+		newline_option = 1;
 	while (i < ac)
 	{
 		ft_printf("%s", av[i]);
