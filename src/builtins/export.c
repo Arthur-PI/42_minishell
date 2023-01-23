@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "minishell.h"
 
 extern t_minishell	g_minishell;
 
@@ -22,7 +22,7 @@ static char	*print_name(char *av)
 	while (av[i])
 		i++;
 	av[i] = '\0';
-	printf("export: not an identifier: %s\n", av);
+	print_error("export: `%s': not an identifier", av, NULL);
 	return (av);
 }
 
@@ -64,7 +64,7 @@ int	valid_name(char *av)
 	{
 		if ((av[0] > '0' && av[0] < '9') || !check_char(av))
 		{
-			printf("minishell: export: `%s': not a valid identifier\n", av);
+			print_error("%s: `%s': not a valid identifier", "export", av);
 			return (1);
 		}
 		i++;

@@ -16,7 +16,7 @@ extern t_minishell	g_minishell;
 
 static void	exit_error(const char *format, const char *s, int code, char *cmd)
 {
-	printf(format, s);
+	print_error(format, s, NULL);
 	ft_lstclear(&g_minishell.envs, free_env);
 	ft_lstclear((t_list **)&g_minishell.commands, &free_command);
 	if (cmd)
@@ -42,17 +42,16 @@ void	exec_or_error(char *cmd, char **av)
 	struct stat	buf;
 
 	if (cmd == NULL || ft_strlen(av[0]) == 0)
-		exit_error("minishell: %s: command not found\n", av[0], 127, cmd);
+		exit_error("%s: command not found", av[0], 127, cmd);
 	if (stat(cmd, &buf) != -1)
 	{
 		if (S_ISDIR(buf.st_mode))
-			exit_error("minishell: %s: Is a directory\n", av[0], 126, cmd);
+			exit_error("%s: Is a directory", av[0], 126, cmd);
 	}
 	if (access(cmd, F_OK) == -1 && (ft_strncmp(av[0], "./", 2) == 0
 			|| ft_strncmp(av[0], "../", 2) == 0
 			|| ft_strncmp(av[0], "/", 1) == 0))
-		exit_error("minishell: %s: No such file or directory\n",
-			av[0], 127, cmd);
+		exit_error("%s: No such file or directory", av[0], 127, cmd);
 	if (builtins(nbr_args(av), av) == 0)
 		ft_lstclear(&g_minishell.envs, free_env);
 	else
@@ -60,7 +59,7 @@ void	exec_or_error(char *cmd, char **av)
 		tab = list_to_tab(g_minishell.envs);
 		execve(cmd, av, tab);
 		free_tab(tab);
-		exit_error("minishell: %s: Permission denied\n", cmd, 126, cmd);
+		exit_error("%s: Permission denied", cmd, 126, cmd);
 	}
 }
 

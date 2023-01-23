@@ -16,7 +16,7 @@ t_minishell	g_minishell;
 
 static void	usage(char *prog_name)
 {
-	printf("%s: too many arguments\n", prog_name);
+	print_error("%s: too many arguments\n", prog_name, NULL);
 }
 
 static char	*get_line(void)
