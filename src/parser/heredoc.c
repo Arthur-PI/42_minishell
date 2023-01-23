@@ -14,24 +14,35 @@
 
 extern t_minishell	g_minishell;
 
-static void	heredoc_readlines(char *stop, int fd)
+static void	heredoc_readlines(const char *stop, int fd)
 {
 	char	*line;
 	char	*line_expand;
 
-	line = readline("> ");
+	line = readinput("> ");
 	while (line && ft_strcmp(line, stop) != 0)
 	{
 		line_expand = replace_envs(line);
 		ft_putendl_fd(line_expand, fd);
 		free(line_expand);
-		line = readline("> ");
+		line = readinput("> ");
 	}
 	if (line)
 		free(line);
 }
 
-int	handle_heredoc(char *stop)
+static int	handle_heredoc_notty(const char *stop)
+{
+	int		fd[2];
+
+	if (pipe(fd) == -1)
+		return (-1);
+	heredoc_readlines(stop, fd[1]);
+	close(fd[1]);
+	return (fd[0]);
+}
+
+static int	handle_heredoc_fork(const char *stop)
 {
 	int		fd[2];
 	int		pid;
@@ -55,4 +66,11 @@ int	handle_heredoc(char *stop)
 	if (status == SIGINT)
 		return (close(fd[0]), -1);
 	return (fd[0]);
+}
+
+int	handle_heredoc(const char *stop)
+{
+	if (!isatty(STDIN_FILENO))
+		return (handle_heredoc_notty(stop));
+	return (handle_heredoc_fork(stop));
 }

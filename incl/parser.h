@@ -43,7 +43,7 @@ void			print_commands(t_list *commands);
 int				valid_syntax(t_list *tokens);
 void			free_command(void *ptr);
 t_list			*tokens_to_commands(t_list *tokens);
-int				handle_heredoc(char *stop);
+int				handle_heredoc(const char *stop);
 t_command		*create_command(t_token *token);
 int				process_rd(t_token *t, t_command **c, t_list **ts);
 bool			is_directory(const char *path);
