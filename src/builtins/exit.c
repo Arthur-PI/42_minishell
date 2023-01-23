@@ -90,14 +90,14 @@ int	my_exit(int ac, char **av)
 		value = atoi_exit(av[1]);
 		if (!verif_number(av) || !is_valid(av))
 		{
-			printf("minishell: exit: %s: numeric argument required\n", av[1]);
+			print_error("exit: %s: numeric argument required", av[1], NULL);
 			free_exit(2);
 		}
 		status = value;
 	}
 	if (ac > 2)
 	{
-		printf("minishell: exit: too many arguments\n");
+		print_error("exit: too many arguments", NULL, NULL);
 		g_minishell.exit_status = 1;
 		return (1);
 	}

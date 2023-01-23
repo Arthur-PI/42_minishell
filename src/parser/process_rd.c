@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
 extern t_minishell	g_minishell;
 
@@ -41,7 +41,7 @@ static int	open_fd(t_redirect_type type, t_token *name)
 			fd = open(s, get_open_flag(type), 0644);
 		if (fd == -1)
 		{
-			printf("minishell: %s: No such file or directory\n", s);
+			print_error("%s: No such file or directory", s, NULL);
 			fd = -2;
 		}
 		if (fd == -2)

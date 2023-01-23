@@ -26,8 +26,6 @@
 # define ERROR_MALLOC 1
 # define NO_ERROR 0
 
-# define FILE_ERROR_MSG "minishell: %s: No such file or directory\n"
-
 int				is_operator(char c);
 void			free_token(void *ptr);
 t_list			*parse_line(char *line);

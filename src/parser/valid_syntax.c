@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
+
+extern t_minishell	g_minishell;
 
 static int	is_token_redirect(t_token_type type)
 {
@@ -49,7 +51,8 @@ static void	print_syntax_error(t_list *lst)
 		token = lst->content;
 		token_value = token->value;
 	}
-	printf("minishell: syntax error near unexpected token `%s'\n", token_value);
+	print_error("syntax error near unexpected token `%s'", token_value, NULL);
+	g_minishell.exit_status = 2;
 }
 
 int	valid_syntax(t_list *tokens)

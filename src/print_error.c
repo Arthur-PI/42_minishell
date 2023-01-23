@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readinput.c                                        :+:      :+:    :+:   */
+/*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apigeon <apigeon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,25 +12,20 @@
 
 #include "minishell.h"
 
-extern t_minishell	g_minishell;
-
-char	*readinput(const char *prompt)
+void	print_error(const char *format, const char *arg1, const char *arg2)
 {
-	size_t	last;
-	char	*line;
+	int	save;
 
-	line = NULL;
-	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
-		line = readline(prompt);
+	save = dup(STDOUT_FILENO);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
+	printf("minishell: ");
+	if (arg2)
+		printf(format, arg1, arg2);
+	else if (arg1)
+		printf(format, arg1);
 	else
-	{
-		line = get_next_line(STDIN_FILENO);
-		if (line)
-		{
-			last = ft_strlen(line) - 1;
-			if (last >= 0 && line[last] == '\n')
-				line[last] = 0;
-		}
-	}
-	return (line);
+		printf("%s", format);
+	printf("\n");
+	dup2(save, STDOUT_FILENO);
+	close(save);
 }

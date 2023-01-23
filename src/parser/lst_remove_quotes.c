@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
 static bool	is_quotes_valid(const char *s)
 {
@@ -42,7 +42,7 @@ int	lst_remove_quotes(t_list *lst)
 		token = lst->content;
 		if (!is_quotes_valid(token->value))
 		{
-			printf("minishell: unclosed quote\n");
+			print_error("unclosed quote", NULL, NULL);
 			return (-1);
 		}
 		remove_quotes(token->value);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "minishell.h"
 
 extern t_minishell	g_minishell;
 
@@ -37,15 +37,15 @@ int	cd(int ac, char **av)
 		if (home && chdir(home) == -1)
 			return (1);
 		else if (!home)
-			return (printf("minishell: cd: HOME not set\n"), 1);
+			return (print_error("cd: HOME not set", NULL, NULL), 1);
 	}
 	else if (ac > 2)
-		return (printf("minishell: cd: too many arguments\n"), 1);
+		return (print_error("cd: too many arguments", NULL, NULL), 1);
 	else if (ac == 2)
 	{
 		if (chdir(av[1]) == -1)
 		{
-			printf("minishell: cd: %s: No such file or directory\n", av[1]);
+			print_error("cd: %s: No such file or directory", av[1], NULL);
 			return (1);
 		}
 	}

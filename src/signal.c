@@ -17,10 +17,13 @@ extern t_minishell	g_minishell;
 static void	sighandler(int signum)
 {
 	(void)signum;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (isatty(STDOUT_FILENO))
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 	g_minishell.exit_status = 1;
 }
 

@@ -30,5 +30,6 @@ void	handle_signals(void);
 void	handle_signals_exec(void);
 void	handle_signals_heredoc(void);
 void	reset_signals(void);
+void	print_error(const char *format, const char *arg1, const char *arg2);
 
 #endif

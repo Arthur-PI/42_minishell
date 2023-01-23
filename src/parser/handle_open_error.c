@@ -10,18 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
 int	handle_open_error(const char *s, int type)
 {
 	if ((type == RD_IN && access(s, F_OK)) || (is_rdout(type) && s[0] == 0))
-		printf("minishell: %s: No such file or directory\n", s);
+		print_error("%s: No such file or directory", s, NULL);
 	else if (type == RD_IN && access(s, R_OK))
-		printf("minishell: %s: Permission denied\n", s);
+		print_error("%s: Permission denied", s, NULL);
 	else if (is_rdout(type) && access(s, F_OK) == 0 && access(s, W_OK) != 0)
-		printf("minishell: %s: Permission denied\n", s);
+		print_error("%s: Permission denied", s, NULL);
 	else if (is_rdout(type) && is_directory(s))
-		printf("minishell: %s: Is a directory\n", s);
+		print_error("%s: Is a directory", s, NULL);
 	else
 		return (0);
 	return (1);
