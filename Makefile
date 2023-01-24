@@ -14,9 +14,6 @@
 ### COMPILATION ###
 CC		= cc
 CFLAGS	= -Wall -Wextra
-CFLAGS	+= -Wshadow -Wpedantic -Wuninitialized -Wmissing-include-dirs -Wundef -Winvalid-pch
-CFLAGS	+= -Winit-self -Wswitch-enum -Wswitch-default -Wformat-security -Wformat-y2k
-CFLAGS	+= -Wdouble-promotion -Wfloat-equal -Wpointer-arith
 CFLAGS	+= -MMD -MP
 INCLUDE	= -I$(H_DIR) -I$(LIBFT_DIR)/$(H_DIR)
 LFLAGS	= -L$(LIBFT_DIR)
@@ -28,13 +25,20 @@ DEBUG	?= false
 TEST	?= false
 NOERROR	?= false
 ASAN	?= false
-
-ifeq ($(DEBUG),true)
-	CFLAGS	+= -g3
-endif
+EXTRA	?= false
 
 ifeq ($(NOERROR),false)
 	CFLAGS	+= -Werror
+endif
+
+ifeq ($(EXTRA),true)
+	CFLAGS	+= -Wshadow -Wpedantic -Wuninitialized -Wmissing-include-dirs -Wundef -Winvalid-pch
+	CFLAGS	+= -Winit-self -Wswitch-enum -Wswitch-default -Wformat-security -Wformat-y2k
+	CFLAGS	+= -Wdouble-promotion -Wfloat-equal -Wpointer-arith
+endif
+
+ifeq ($(DEBUG),true)
+	CFLAGS	+= -g3
 endif
 
 ifeq ($(ASAN), true)

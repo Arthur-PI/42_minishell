@@ -27,8 +27,8 @@ char	*readinput(const char *prompt)
 		line = get_next_line(STDIN_FILENO);
 		if (line)
 		{
-			last = ft_strlen(line) - 1;
-			if (last >= 0 && line[last] == '\n')
+			last = ft_strlen(line);
+			if (last != 0 && line[last - 1] == '\n')
 				line[last] = 0;
 		}
 	}
