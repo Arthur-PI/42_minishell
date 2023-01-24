@@ -20,6 +20,7 @@
 
 # include "libft.h"
 # include "ft_printf.h"
+# include "get_next_line.h"
 # include "builtins.h"
 # include "parser.h"
 # include "execution.h"
