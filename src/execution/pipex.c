@@ -62,6 +62,7 @@ int	forks(t_list *command, int fd_rw[2], int fd_pipe[2])
 	char		*tmp;
 	int			last_pid;
 
+	last_pid = 0;
 	while (command)
 	{
 		cmd = command->content;
